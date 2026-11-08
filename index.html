@@ -382,6 +382,30 @@ dialog::backdrop{background:rgba(8,12,22,.55)}
 .ro .edit-hint{display:none}
 @media (max-width:359px){.brand-text{display:none}}
 
+/* scouting media */
+.vh{position:absolute !important;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.madd{position:relative;cursor:pointer}
+.madd:focus-within{outline:3px solid color-mix(in srgb, var(--info) 55%, transparent);outline-offset:1px}
+.mhead{display:flex;align-items:center;gap:8px;margin:14px 0 8px}
+.madds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.madds .btn{padding:5px 4px;font-size:13px;min-height:40px}
+.mgrid,.mstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.mstrip{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:6px}
+.mthumb{position:relative;aspect-ratio:1/1;border:0;padding:0;border-radius:10px;overflow:hidden;background:var(--surface-2);cursor:pointer;display:block;width:100%;box-shadow:inset 0 0 0 1px var(--border)}
+.mthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.mph{display:grid;place-items:center;height:100%;font-size:28px}
+.mplay{position:absolute;left:5px;top:5px;background:rgba(0,0,0,.62);color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px}
+.mst{position:absolute;right:5px;top:5px;background:rgba(240,182,74,.95);color:#1b2333;font-size:10.5px;font-weight:800;border-radius:6px;padding:1px 5px}
+.mcap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;font-size:11px;padding:12px 5px 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+dialog.wide{max-width:920px}
+.lb-media{position:relative;background:#05070c;border-radius:12px;overflow:hidden;min-height:220px;display:grid;place-items:center;margin-bottom:10px;touch-action:pan-y}
+.lb-media img,.lb-media video{display:block;max-width:100%;max-height:62vh;margin:0 auto}
+.lb-media .lb-ph{filter:blur(8px);opacity:.55;width:100%;height:100%;max-height:62vh;object-fit:contain}
+.lb-msg{position:absolute;left:0;right:0;bottom:14px;color:#fff;text-align:center;font-weight:700;font-size:14px;padding:0 12px}
+.lb-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.lb-nav span{text-align:center;flex:1}
+.ro .madds{display:none}
+
 @media (max-width:380px){
   main{padding:12px}
   .clocks{gap:6px} .clocks b{font-size:14.5px}
@@ -435,7 +459,7 @@ dialog::backdrop{background:rgba(8,12,22,.55)}
 (() => {
 'use strict';
 
-const APP_VERSION = '1.1.0';
+const APP_VERSION = '1.2.0';
 const KEY = 'cwk-apra-2026';
 const TKEY = 'cwk-apra-2026-timer';
 const DATA_VERSION = 1;
@@ -991,6 +1015,7 @@ function nextMatchCard() {
       ${item && item.plan ? `<div><b>แผน:</b> ${esc(item.plan)}</div>` : ''}
       ${item && item.goal ? `<div><b>เป้าหมาย:</b> ${esc(item.goal)}</div>` : ''}
       ${ot && ot.notes ? `<div><b>สเกาท์คู่แข่ง:</b> ${esc(ot.notes)}</div>` : ''}
+      ${opp && teamMedia(opp).length ? `<div><div class="mstrip">${teamMedia(opp).slice(-4).reverse().map(mediaThumb).join('')}</div><button class="link" data-action="go" data-tab="plan" data-key="planTab" data-val="teams">ภาพ/วิดีโอสเกาท์ ${tname(opp) ? esc(tname(opp)) : ''} ทั้งหมด (${teamMedia(opp).length}) →</button></div>` : ''}
     </div>
     <div class="alert ${soon > 0 && soon < 15 * 60000 ? 'bad' : ''}">รายงานตัวให้ทัน! ไม่รายงานตัวภายใน 2 นาทีหลังเริ่ม = แพ้ 0–2 (C5)</div>
     <div class="btn-row">
@@ -1284,7 +1309,7 @@ function subChecks() {
   ${checkCard('gear', 'เตรียมอุปกรณ์ & ตรวจสเปกหุ่น', 'อ้างอิงข้อ A1 และ D1–D20 ในกติกา')}`;
 }
 function subTeams() {
-  return groups().map((g) => `<h3 class="sec">กลุ่ม ${esc(g)}</h3>` + S.teams.filter((t) => t.group === g).map(teamCard).join('')).join('');
+  return mediaSummary() + groups().map((g) => `<h3 class="sec">กลุ่ม ${esc(g)}</h3>` + S.teams.filter((t) => t.group === g).map(teamCard).join('')).join('');
 }
 function teamCard(t) {
   const me = isMe(t.code); const st = standings(t.group).ranked.find((r) => r.code === t.code) || { p: 0, w: 0, d: 0, l: 0, pts: 0 };
@@ -1297,7 +1322,8 @@ function teamCard(t) {
   return `<article class="card team-card ${me ? 'mine' : ''}"><div class="row-between"><div><h3 style="margin:0">${esc(t.name)} ${me ? '<span class="badge gold">ทีมเรา</span>' : ''}</h3>
     <div class="meta">${esc(t.code)}${t.from ? ' • ' + esc(t.from) : ''} • แข่ง ${st.p} ชนะ ${st.w} เสมอ ${st.d} แพ้ ${st.l} • ${st.pts} แต้ม</div></div><button class="btn sm" data-action="team-edit" data-code="${esc(t.code)}">แก้ไข</button></div>
     ${vs ? `<div class="vsline">เจอ ${esc(shortMe())}: ${esc(vs.start)} น. • ${esc(vsTxt)}</div>` : ''}
-    <label class="field" style="margin-top:8px">${me ? 'บันทึกทีมเรา' : 'บันทึกสเกาท์ / จุดแข็ง-จุดอ่อน'}<textarea data-input="team-notes" data-code="${esc(t.code)}" rows="2" placeholder="${me ? 'เช่น หุ่นตัวไหนเล่นตำแหน่งใด แบตเตอรี่…' : 'เช่น หุ่นเร็ว เตะแรง ชอบบุกด้านซ้าย…'}">${esc(t.notes || '')}</textarea></label></article>`;
+    <label class="field" style="margin-top:8px">${me ? 'บันทึกทีมเรา' : 'บันทึกสเกาท์ / จุดแข็ง-จุดอ่อน'}<textarea data-input="team-notes" data-code="${esc(t.code)}" rows="2" placeholder="${me ? 'เช่น หุ่นตัวไหนเล่นตำแหน่งใด แบตเตอรี่…' : 'เช่น หุ่นเร็ว เตะแรง ชอบบุกด้านซ้าย…'}">${esc(t.notes || '')}</textarea></label>
+    ${mediaSection(t.code)}</article>`;
 }
 
 const VIEWS = { home: viewHome, schedule: viewSchedule, scores: viewScores, timer: viewTimer, plan: viewPlan };
@@ -1310,6 +1336,7 @@ function render() {
   const ro = readOnly();
   document.body.classList.toggle('ro', ro);
   $('#view').innerHTML = (ro ? roBar() : '') + VIEWS[tab]();
+  if (tab === 'plan' && S.ui.planTab === 'teams' && online() && !MEDIA.wanted) { MEDIA.wanted = true; connectMedia(); }
   if (ro) {
     $$('#view [data-input]').forEach((el) => { el.readOnly = true; });
     $$('#view select[data-change="ko-team"]').forEach((el) => { el.disabled = true; });
@@ -1344,8 +1371,8 @@ function navigate(tab) {
 /* ------------------------------------------------------------------
  * Modal + toast
  * ------------------------------------------------------------------ */
-function openModal(html) {
-  const d = $('#modal'); $('#modal-body').innerHTML = html;
+function openModal(html, cls) {
+  const d = $('#modal'); d.className = cls || ''; $('#modal-body').innerHTML = html;
   if (!d.open) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
 }
 function closeModal() { const d = $('#modal'); if (d.open) { if (d.close) d.close(); else d.removeAttribute('open'); } }
@@ -1469,10 +1496,10 @@ async function copyText(t) {
   ta.remove(); return ok;
 }
 function download(name, text, type) {
-  const blob = new Blob([text], { type: type || 'application/json' });
+  const blob = text instanceof Blob ? text : new Blob([text], { type: type || 'application/json' });
   const url = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
 }
 function stamp() { const d = new Date(); return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}`; }
 function validData(d) { return d && typeof d === 'object' && Array.isArray(d.teams) && Array.isArray(d.matches) && Array.isArray(d.schedule) && d.ko && typeof d.ko === 'object'; }
@@ -1604,6 +1631,19 @@ const ACTIONS = {
     save(); closeModal(); applyTheme(); navigate('home'); toast('คืนค่าเริ่มต้นแล้ว', true);
   },
   online() { openOnline(); },
+  'media-open'(el) { if (el.dataset.id) openMediaViewer(el.dataset.id); },
+  'media-share'(el) { shareMedia(el.dataset.id); },
+  async 'media-del'(el) {
+    const it = MEDIA.items.get(el.dataset.id); if (!it) return;
+    if (!confirm('ลบไฟล์นี้?' + (it.cloud === 'synced' ? '\n(ไฟล์จะหายจากทุกเครื่อง)' : ''))) return;
+    const list = teamMedia(it.team).slice().reverse(); const i = list.findIndex((x) => x.id === it.id);
+    const ok = await deleteMedia(it.id);
+    if (!ok) return;
+    const nb = list[i + 1] || list[i - 1];
+    if (nb && MEDIA.items.has(nb.id)) openMediaViewer(nb.id); else closeModal();
+    rerender(); toast('ลบไฟล์แล้ว');
+  },
+  'media-zip'(el) { exportZip(el.dataset.team || ''); },
   'net-push'() { pushNow(); },
   'net-lock'() {
     if (pendingCount() && !confirm('ยังมีการแก้ไขที่ยังไม่ได้ส่งขึ้นออนไลน์ ออกจากโหมดโค้ชจะทิ้งการแก้ไขนั้น ต้องการออกใช่ไหม?')) return;
@@ -1669,6 +1709,8 @@ const INPUTS = {
 };
 const CHANGES = {
   'net-name'(el) { SD.name = el.value.trim().slice(0, 30); saveSync(); },
+  'media-add'(el) { const files = Array.from(el.files || []); el.value = ''; addMedia(el.dataset.team, files); },
+  'media-caption'(el) { setCaption(el.dataset.id, el.value.trim().slice(0, 120)); },
   'ko-team'(el) {
     const k = el.dataset.k, side = el.dataset.side, v = el.value;
     const used = ['sf1', 'sf2'].flatMap((x) => ['a', 'b'].map((s) => (x === k && s === side) ? '' : S.ko[x][s])).filter(Boolean);
@@ -1713,8 +1755,8 @@ const SUBMITS = {
 /* ในโหมดผู้ชม ห้ามแก้ข้อมูลที่ใช้ร่วมกัน */
 const SHARED_ACTIONS = new Set(['score', 'score-clear', 'yellow', 'ko-et', 'ko-etr', 'ko-suggest', 'item-done', 'item-edit', 'item-add', 'item-delete',
   'shift-open', 'shift-apply', 'rule', 'check', 'check-del', 'check-reset', 'toggle-lists', 'toggle-edit', 'team-edit', 'import',
-  'reset-results', 'reset-checks', 'reset-all', 'undo']);
-const SHARED_FIELDS = new Set(['score', 'team-notes', 'ko-team', 'set', 'check-add', 'item-save', 'team-save']);
+  'reset-results', 'reset-checks', 'reset-all', 'undo', 'media-del']);
+const SHARED_FIELDS = new Set(['score', 'team-notes', 'ko-team', 'set', 'check-add', 'item-save', 'team-save', 'media-add', 'media-caption']);
 function roBlock() { toast('โหมดผู้ชม — แตะไอคอนเมฆด้านบนแล้วใส่รหัสโค้ชเพื่อแก้ไข'); }
 document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-action]');
@@ -1758,7 +1800,18 @@ $('#file-import').addEventListener('change', (e) => {
 window.addEventListener('hashchange', route);
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
 window.addEventListener('storage', (e) => { if (e.key === KEY || e.key === TKEY) { load(); memo.clear(); applyTheme(); if (!modalOpen()) rerender(); } });
-window.addEventListener('online', () => { if (!online()) return; if (SY.status !== 'live') connect(); else schedulePush(0); });
+window.addEventListener('online', () => { if (!online()) return; if (SY.status !== 'live') connect(); else { schedulePush(0); kickUpload(); } });
+$('#modal').addEventListener('close', () => { revokeView(); MEDIA.viewing = null; $$('#modal video').forEach((v) => { try { v.pause(); } catch (e) { /* ignore */ } }); });
+document.addEventListener('keydown', (e) => {
+  if (!MEDIA.viewing || !modalOpen() || /INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || '')) return;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { const b = $(`.lb-nav [data-dir="${e.key === 'ArrowLeft' ? 'prev' : 'next'}"]`); if (b && !b.disabled) b.click(); }
+});
+let swipeX = null;
+document.addEventListener('touchstart', (e) => { swipeX = e.target.closest && e.target.closest('.lb-media') && !e.target.closest('video') ? e.touches[0].clientX : null; }, { passive: true });
+document.addEventListener('touchend', (e) => {
+  if (swipeX === null) return; const dx = e.changedTouches[0].clientX - swipeX; swipeX = null;
+  if (Math.abs(dx) < 50) return; const b = $(`.lb-nav [data-dir="${dx > 0 ? 'prev' : 'next'}"]`); if (b && !b.disabled) b.click();
+});
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (T.running) keepAwake(true); tick(true); } });
 
 function applyTheme() {
@@ -1943,6 +1996,7 @@ function onStream(ev, isPatch) {
   const first = SY.status !== 'live';
   SY.status = 'live';
   applyRemote(first);
+  if (first) { MEDIA.err = ''; kickUpload(800); if (MEDIA.wanted && !MEDIA.es) connectMedia(); }
 }
 function applyRemote(first) {
   const tree = SY.tree || {};
@@ -2035,7 +2089,7 @@ async function unlock(pin) {
     let r = await put(JSON.stringify(pin));
     if (!r.ok && /^\d+$/.test(pin) && pin.length < 16) r = await put(pin); // เผื่อกรอกรหัสเป็นตัวเลขล้วนใน Firebase
     if (r.ok) {
-      SD.canEdit = true; saveSync(); closeModal();
+      SD.canEdit = true; saveSync(); closeModal(); MEDIA.err = ''; kickUpload(500);
       toast('ปลดล็อกโหมดโค้ชแล้ว — การแก้ไขจะขึ้นทุกเครื่องทันที');
       if (SY.status === 'live' && SD.synced && !Object.keys(SD.flat || {}).length) pushNow();
       rerender();
@@ -2109,6 +2163,430 @@ function openOnline() {
 }
 
 /* ------------------------------------------------------------------
+ * คลังภาพ/วิดีโอสเกาท์
+ * - เก็บในเครื่องด้วย IndexedDB (ใช้ได้ทั้งโหมดออฟไลน์และออนไลน์)
+ * - โหมดออนไลน์: โค้ชแชร์ให้ทุกเครื่อง (ภาพย่อ ≤1600px, วิดีโอไม่เกินขนาดที่กำหนด)
+ *   ข้อมูลอยู่ที่ media/<room>/index (รายการ + ภาพย่อ) และ media/<room>/blobs (ไฟล์จริงเป็นชิ้น)
+ * ------------------------------------------------------------------ */
+const MEDIA = { db: null, ready: false, failed: false, items: new Map(), es: null, wanted: false, remote: null, chain: Promise.resolve(), err: '', viewing: null, viewUrl: '', persistAsked: false };
+const CHUNK = 512 * 1024;
+const maxCloud = () => window.CWK_TEST_MAX_CLOUD || 25 * 1024 * 1024;
+/* ภาพถูกย่อแล้วจึงแชร์ได้เสมอ (เผื่อไฟล์แปลก ๆ ไม่เกิน 25 MB) • วิดีโอจำกัดตาม maxCloud */
+const canCloud = (it) => it.size <= (it.kind === 'photo' ? 25 * 1024 * 1024 : maxCloud());
+const THUMBS = new Map();
+
+function idbOpen() {
+  return new Promise((resolve, reject) => {
+    if (!('indexedDB' in window)) { reject(new Error('no indexedDB')); return; }
+    const r = indexedDB.open('cwk-apra-media', 1);
+    r.onupgradeneeded = () => {
+      const d = r.result;
+      if (!d.objectStoreNames.contains('meta')) d.createObjectStore('meta', { keyPath: 'id' });
+      if (!d.objectStoreNames.contains('blobs')) d.createObjectStore('blobs');
+    };
+    r.onsuccess = () => resolve(r.result);
+    r.onerror = () => reject(r.error);
+    r.onblocked = () => reject(new Error('blocked'));
+  });
+}
+function idbDo(store, mode, fn) {
+  return new Promise((resolve, reject) => {
+    const tx = MEDIA.db.transaction(store, mode); const req = fn(tx.objectStore(store));
+    tx.oncomplete = () => resolve(req ? req.result : undefined);
+    tx.onerror = () => reject(tx.error); tx.onabort = () => reject(tx.error || new Error('abort'));
+  });
+}
+const idbGetBlob = (id) => idbDo('blobs', 'readonly', (st) => st.get(id));
+const idbPutMeta = (it) => idbDo('meta', 'readwrite', (st) => st.put({ ...it }));
+const idbPutBlob = (id, blob) => idbDo('blobs', 'readwrite', (st) => st.put(blob, id));
+const idbDelete = (id) => Promise.all([idbDo('meta', 'readwrite', (st) => st.delete(id)), idbDo('blobs', 'readwrite', (st) => st.delete(id))]);
+
+async function initMedia() {
+  try {
+    MEDIA.db = await idbOpen();
+    const all = await idbDo('meta', 'readonly', (st) => st.getAll());
+    (all || []).forEach((it) => { if (it && it.id) MEDIA.items.set(it.id, it); });
+    MEDIA.ready = true;
+  } catch (e) { MEDIA.failed = true; }
+  if (S.ui.tab === 'plan' || S.ui.tab === 'home') refreshView();
+  kickUpload(1000);
+}
+
+/* ---- helpers ---- */
+const fmtMB = (b) => (b < 1048576 ? `${Math.max(1, Math.round(b / 1024))} KB` : `${(b / 1048576).toFixed(b < 10485760 ? 1 : 0)} MB`);
+const fmtClip = (sec) => { sec = Math.max(0, Math.round(sec || 0)); return Math.floor(sec / 60) + ':' + pad(sec % 60); };
+const safeName = (x) => String(x || '').replace(/[\\/:*?"<>|\u0000-\u001f]+/g, '-').trim().slice(0, 60) || 'team';
+function venueParts(ms) { const d = new Date(+ms + S.event.venueTz * 3600000); return { y: d.getUTCFullYear(), mo: d.getUTCMonth() + 1, d: d.getUTCDate(), h: d.getUTCHours(), mi: d.getUTCMinutes(), s: d.getUTCSeconds() }; }
+function fmtStampFull(ms) { const v = venueParts(ms); return `${v.d}/${v.mo}/${v.y} ${pad(v.h)}:${pad(v.mi)} น. (${S.event.venueTzLabel})`; }
+function mediaFileName(it) { const v = venueParts(it.createdAt); return `${it.team}_${v.y}${pad(v.mo)}${pad(v.d)}-${pad(v.h)}${pad(v.mi)}${pad(v.s)}_${it.id.slice(-4)}.${it.ext || (it.kind === 'video' ? 'mp4' : 'jpg')}`; }
+const folderName = (code) => safeName(`${code} ${tname(code)}`);
+function mediaVisible(it) { return !it.room || !CFG || it.room === CFG.room; }
+function teamMedia(code) { return [...MEDIA.items.values()].filter((it) => it.team === code && mediaVisible(it)).sort((a, b) => a.createdAt - b.createdAt); }
+function dataUrlToBlob(d) {
+  const i = d.indexOf(','); const head = d.slice(0, i); const bin = atob(d.slice(i + 1));
+  const u = new Uint8Array(bin.length); for (let k = 0; k < bin.length; k++) u[k] = bin.charCodeAt(k);
+  return new Blob([u], { type: (head.match(/data:([^;]+)/) || [])[1] || 'image/jpeg' });
+}
+function thumbURL(it) {
+  if (!it.thumb) return '';
+  let u = THUMBS.get(it.id);
+  if (!u || u.src !== it.thumb) { if (u) URL.revokeObjectURL(u.url); try { u = { src: it.thumb, url: URL.createObjectURL(dataUrlToBlob(it.thumb)) }; } catch (e) { return ''; } THUMBS.set(it.id, u); }
+  return u.url;
+}
+function blobToB64(b) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1] || ''); r.onerror = () => rej(r.error); r.readAsDataURL(b); }); }
+function drawScaled(src, w, h, max) {
+  const k = Math.min(1, max / Math.max(w || 1, h || 1)); const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(src, 0, 0, c.width, c.height);
+  return c;
+}
+const canvasBlob = (c, type, q) => new Promise((res) => c.toBlob(res, type, q));
+function extOf(name, mime) {
+  const m = /\.([a-z0-9]{2,5})$/i.exec(name || ''); if (m) return m[1].toLowerCase();
+  if (/webm/.test(mime)) return 'webm'; if (/quicktime/.test(mime)) return 'mov'; if (/video/.test(mime)) return 'mp4'; if (/png/.test(mime)) return 'png';
+  return 'jpg';
+}
+
+/* ---- ภาพ: ย่อเหลือด้านยาว 1600px (พอสำหรับดูรายละเอียดหุ่น) + ภาพย่อ 240px ---- */
+async function processPhoto(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image(); img.src = url; await img.decode();
+    const w = img.naturalWidth, h = img.naturalHeight;
+    let blob = await canvasBlob(drawScaled(img, w, h, 1600), 'image/jpeg', 0.82);
+    let mime = 'image/jpeg', ext = 'jpg';
+    if (!blob || (/jpe?g/.test(file.type) && Math.max(w, h) <= 1600 && file.size <= blob.size)) { blob = new Blob([file], { type: file.type || 'image/jpeg' }); mime = blob.type; ext = extOf(file.name, mime); }
+    const thumb = drawScaled(img, w, h, 240).toDataURL('image/jpeg', 0.62);
+    const k = Math.min(1, 1600 / Math.max(w, h));
+    return { blob, mime, ext, w: Math.round(w * k), h: Math.round(h * k), thumb, dur: 0 };
+  } catch (e) {
+    return { blob: new Blob([file], { type: file.type || 'application/octet-stream' }), mime: file.type || 'application/octet-stream', ext: extOf(file.name, file.type), w: 0, h: 0, thumb: '', dur: 0 };
+  } finally { URL.revokeObjectURL(url); }
+}
+/* ---- วิดีโอ: เก็บไฟล์จริง + ภาพปกจากเฟรมที่ 25% ---- */
+function processVideo(file) {
+  return new Promise((resolve) => {
+    const mime = file.type || 'video/mp4';
+    const base = { blob: new Blob([file], { type: mime }), mime, ext: extOf(file.name, mime) };
+    const url = URL.createObjectURL(file); const v = document.createElement('video');
+    let done = false;
+    const finish = (extra) => { if (done) return; done = true; clearTimeout(to); URL.revokeObjectURL(url); v.removeAttribute('src'); try { v.load(); } catch (e) { /* ignore */ } resolve({ ...base, w: 0, h: 0, dur: 0, thumb: '', ...extra }); };
+    const to = setTimeout(() => finish({ w: v.videoWidth || 0, h: v.videoHeight || 0, dur: isFinite(v.duration) ? v.duration : 0 }), 8000);
+    v.muted = true; v.playsInline = true; v.preload = 'auto';
+    v.onloadeddata = () => { const d = isFinite(v.duration) && v.duration > 0 ? v.duration : 0; try { v.currentTime = d ? Math.min(d * 0.25, 3) : 0.1; } catch (e) { finish({}); } };
+    v.onseeked = () => {
+      const dur = isFinite(v.duration) ? v.duration : 0;
+      try { finish({ w: v.videoWidth, h: v.videoHeight, dur, thumb: v.videoWidth ? drawScaled(v, v.videoWidth, v.videoHeight, 240).toDataURL('image/jpeg', 0.62) : '' }); }
+      catch (e) { finish({ w: v.videoWidth, h: v.videoHeight, dur }); }
+    };
+    v.onerror = () => finish({});
+    v.src = url;
+  });
+}
+function requestPersist() {
+  if (MEDIA.persistAsked) return; MEDIA.persistAsked = true;
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { /* ignore */ }
+}
+async function addMedia(team, files) {
+  if (!files.length || !team) return;
+  if (!MEDIA.ready) { toast(MEDIA.failed ? 'เบราว์เซอร์นี้เก็บภาพ/วิดีโอในเครื่องไม่ได้ (เช่น โหมดส่วนตัว)' : 'กำลังเตรียมคลังภาพ ลองอีกครั้ง'); return; }
+  let n = 0, big = 0;
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    const isVideo = /^video\//.test(f.type) || /\.(mp4|mov|m4v|webm|3gp)$/i.test(f.name || '');
+    const isImage = /^image\//.test(f.type) || /\.(jpe?g|png|heic|heif|webp|gif)$/i.test(f.name || '');
+    if (!isVideo && !isImage) continue;
+    toast(`กำลังบันทึก ${i + 1}/${files.length}…`);
+    const pr = isVideo ? await processVideo(f) : await processPhoto(f);
+    const it = {
+      id: 'md' + Date.now().toString(36) + uid(), team, kind: isVideo ? 'video' : 'photo', mime: pr.mime, ext: pr.ext,
+      size: pr.blob.size, w: pr.w || 0, h: pr.h || 0, dur: isFinite(pr.dur) ? Math.round(pr.dur * 10) / 10 : 0,
+      caption: '', createdAt: Date.now(), by: SD.name || '', thumb: pr.thumb || '', room: '', cloud: 'local', uploaded: 0, chunks: 0, hasBlob: true,
+    };
+    if (online() && SD.canEdit) { it.room = CFG.room; it.cloud = canCloud(it) ? 'queued' : 'toolarge'; if (it.cloud === 'toolarge') big++; }
+    try { await idbPutBlob(it.id, pr.blob); await idbPutMeta(it); } catch (e) { toast('พื้นที่ในเครื่องไม่พอ หรือบันทึกไม่ได้'); break; }
+    MEDIA.items.set(it.id, it); n++;
+  }
+  requestPersist();
+  rerender();
+  toast(n ? `บันทึกแล้ว ${n} ไฟล์${big ? ` • วิดีโอ ${big} ไฟล์ใหญ่เกิน ${fmtMB(maxCloud())} จะเก็บเฉพาะเครื่องนี้` : ''}` : 'ไม่พบไฟล์ภาพหรือวิดีโอ');
+  kickUpload(300);
+}
+async function getBlob(it) {
+  const b = await idbGetBlob(it.id).catch(() => null);
+  if (b) return b;
+  if (!online() || !it.room || it.cloud !== 'synced') throw new Error('unavailable');
+  const tok = await ensureToken();
+  const r = await fetch(dbUrl(`media/${it.room}/blobs/${it.id}`, { auth: tok }));
+  if (!r.ok) throw new Error('http ' + r.status);
+  const obj = await r.json();
+  if (!obj) throw new Error('missing');
+  const n = it.chunks || Object.keys(obj).length; const parts = [];
+  for (let i = 0; i < n; i++) {
+    const c = obj[i] !== undefined ? obj[i] : obj[String(i)];
+    if (typeof c !== 'string') throw new Error('missing chunk');
+    parts.push(await (await fetch('data:application/octet-stream;base64,' + c)).blob());
+  }
+  const blob = new Blob(parts, { type: it.mime || 'application/octet-stream' });
+  try { await idbPutBlob(it.id, blob); it.hasBlob = true; await idbPutMeta(it); } catch (e) { /* cache full: still show */ }
+  return blob;
+}
+
+/* ---- แสดงผล ---- */
+function mediaThumb(it) {
+  const u = thumbURL(it);
+  let st = '';
+  if (it.cloud === 'queued') st = `<span class="mst" data-mprog="${esc(it.id)}">⬆ ${it.chunks ? Math.round(((it.uploaded || 0) / it.chunks) * 100) : 0}%</span>`;
+  else if (online() && it.cloud !== 'synced') st = '<span class="mst">เฉพาะเครื่องนี้</span>';
+  return `<button class="mthumb" data-action="media-open" data-id="${esc(it.id)}" aria-label="${it.kind === 'video' ? 'วิดีโอ' : 'ภาพ'} ${esc(tname(it.team))} ${esc(it.caption || '')}">${u ? `<img src="${u}" alt="" loading="lazy">` : `<span class="mph" aria-hidden="true">${it.kind === 'video' ? '🎥' : '🖼'}</span>`}${it.kind === 'video' ? `<span class="mplay">▶${it.dur ? ' ' + fmtClip(it.dur) : ''}</span>` : ''}${st}${it.caption ? `<span class="mcap">${esc(it.caption)}</span>` : ''}</button>`;
+}
+function mediaSection(code) {
+  if (MEDIA.failed) return '<p class="muted small" style="margin-top:12px">เบราว์เซอร์นี้เก็บภาพ/วิดีโอในเครื่องไม่ได้ (เช่น โหมดไม่ระบุตัวตน)</p>';
+  const list = teamMedia(code).slice().reverse();
+  const add = (accept, capture, multiple, label) => `<label class="btn sm madd"><input class="vh" type="file" accept="${accept}"${capture ? ' capture="environment"' : ''}${multiple ? ' multiple' : ''} data-change="media-add" data-team="${esc(code)}">${label}</label>`;
+  return `<div class="mhead"><b>ภาพ / วิดีโอ</b><span class="badge">${list.length}</span>${list.length ? `<span class="spacer"></span><button class="link" data-action="media-zip" data-team="${esc(code)}">⬇ .zip</button>` : ''}</div>
+    <div class="madds">${add('image/*', true, false, '📷 ถ่ายภาพ')}${add('video/*', true, false, '🎥 ถ่ายวิดีโอ')}${add('image/*,video/*', false, true, '🖼 เลือกไฟล์')}</div>
+    ${list.length ? `<div class="mgrid">${list.map(mediaThumb).join('')}</div>` : ''}`;
+}
+function mediaSummary() {
+  const all = [...MEDIA.items.values()].filter(mediaVisible);
+  const photos = all.filter((x) => x.kind === 'photo').length, vids = all.length - photos;
+  const local = all.filter((x) => x.hasBlob).reduce((a, x) => a + (x.size || 0), 0);
+  const cloud = all.filter((x) => x.cloud === 'synced').reduce((a, x) => a + (x.size || 0), 0) * 1.37;
+  const q = all.filter((x) => x.cloud === 'queued').length;
+  return `<section class="card"><div class="row-between"><h3 style="margin:0">คลังภาพ / วิดีโอสเกาท์</h3>${all.length ? '<button class="btn sm" data-action="media-zip">⬇ ดาวน์โหลดทั้งหมด (.zip)</button>' : ''}</div>
+    <p class="small" style="margin-top:6px">ภาพ ${photos} • วิดีโอ ${vids} • เก็บในเครื่อง ${fmtMB(local)}${online() ? ` • ออนไลน์ใช้ไปประมาณ ${fmtMB(cloud)} จาก 1 GB ฟรี` : ''}${q ? ` • รออัปโหลด ${q} ไฟล์` : ''}</p>
+    ${MEDIA.err ? `<p class="alert bad">${esc(MEDIA.err)}</p>` : ''}
+    <p class="muted small">${online() ? `ภาพ (ย่อด้านยาว 1600px) และวิดีโอไม่เกิน ${fmtMB(maxCloud())} แชร์ให้ทุกเครื่องอัตโนมัติ ส่วนวิดีโอที่ใหญ่กว่านั้นเก็บเฉพาะเครื่องที่ถ่าย (กดแชร์ส่งเข้า LINE / Google Drive ได้) • ` : 'ไฟล์เก็บในเครื่องนี้ • '}หลังจบรายการแนะนำให้กด “ดาวน์โหลดทั้งหมด (.zip)” เก็บไว้ใช้พัฒนาทีม (ไฟล์สำรอง .json ไม่รวมภาพ/วิดีโอ)</p></section>`;
+}
+function mediaStatusText(it) {
+  const base = it.cloud === 'synced' ? 'แชร์ออนไลน์แล้ว — ทุกเครื่องเห็น'
+    : it.cloud === 'queued' ? 'รออัปโหลด / กำลังอัปโหลดขึ้นออนไลน์'
+      : it.cloud === 'toolarge' ? `ไฟล์ใหญ่เกิน ${fmtMB(maxCloud())} — เก็บเฉพาะเครื่องนี้ (กดแชร์เพื่อส่งเข้า LINE / Google Drive)`
+        : online() ? 'เก็บเฉพาะเครื่องนี้' : 'เก็บในเครื่องนี้';
+  return base + (it.hasBlob ? '' : ' • ยังไม่ได้โหลดไฟล์เต็มลงเครื่อง');
+}
+function revokeView() { if (MEDIA.viewUrl) { URL.revokeObjectURL(MEDIA.viewUrl); MEDIA.viewUrl = ''; } }
+function openMediaViewer(id) {
+  const it = MEDIA.items.get(id); if (!it) return;
+  const list = teamMedia(it.team).slice().reverse(); const i = list.findIndex((x) => x.id === id);
+  const prev = list[i - 1], next = list[i + 1]; const ro = readOnly();
+  revokeView(); MEDIA.viewing = id;
+  const tu = thumbURL(it);
+  openModal(`${modalHead(`${tname(it.team)} • ${i + 1}/${list.length}`)}
+    <div class="lb-media" id="lb-media" data-id="${esc(id)}">${tu ? `<img class="lb-ph" src="${tu}" alt="">` : ''}<div class="lb-msg">กำลังโหลด…</div></div>
+    <div class="lb-nav"><button class="btn" data-action="media-open" data-dir="prev" data-id="${prev ? esc(prev.id) : ''}" ${prev ? '' : 'disabled'} aria-label="ก่อนหน้า">◀</button>
+      <span class="muted small">${esc(fmtStampFull(it.createdAt))}${it.by ? ' • ' + esc(it.by) : ''} • ${fmtMB(it.size || 0)}${it.kind === 'video' && it.dur ? ' • ' + fmtClip(it.dur) : ''}</span>
+      <button class="btn" data-action="media-open" data-dir="next" data-id="${next ? esc(next.id) : ''}" ${next ? '' : 'disabled'} aria-label="ถัดไป">▶</button></div>
+    <label class="field">คำอธิบาย / สิ่งที่สังเกต<input data-change="media-caption" data-id="${esc(id)}" value="${esc(it.caption || '')}" placeholder="เช่น กลไกเตะด้านหน้า, ปากรับบอลกว้าง" maxlength="120" ${ro ? 'readonly' : ''}></label>
+    <p class="muted small" style="margin-top:8px">${esc(mediaStatusText(it))}</p>
+    <div class="btn-row"><button class="btn primary" data-action="media-share" data-id="${esc(id)}">${navigator.share ? 'แชร์ / บันทึกลงเครื่อง' : 'ดาวน์โหลดไฟล์'}</button>${ro ? '' : `<button class="btn danger-outline" data-action="media-del" data-id="${esc(id)}">ลบไฟล์นี้</button>`}</div>`, 'wide');
+  loadView(it);
+}
+async function loadView(it) {
+  const box = () => { const b = $('#lb-media'); return b && b.dataset.id === it.id ? b : null; };
+  try {
+    const blob = await getBlob(it);
+    const b = box(); if (!b) return;
+    revokeView(); MEDIA.viewUrl = URL.createObjectURL(blob);
+    b.innerHTML = it.kind === 'video'
+      ? `<video src="${MEDIA.viewUrl}" controls playsinline preload="metadata"></video>`
+      : `<img src="${MEDIA.viewUrl}" alt="${esc(it.caption || 'ภาพสเกาท์ ' + tname(it.team))}">`;
+  } catch (e) {
+    const b = box(); if (!b) return;
+    const m = b.querySelector('.lb-msg');
+    if (m) m.textContent = online() && it.cloud === 'synced' ? 'โหลดไฟล์ไม่สำเร็จ — ตรวจสัญญาณแล้วลองใหม่' : 'ยังไม่มีไฟล์เต็มในเครื่องนี้ — ต่ออินเทอร์เน็ตเพื่อโหลดครั้งแรก';
+  }
+}
+function softMedia() {
+  if ((S.ui.tab === 'plan' && S.ui.planTab === 'teams') || S.ui.tab === 'home') refreshView();
+}
+async function setCaption(id, cap) {
+  const it = MEDIA.items.get(id); if (!it || it.caption === cap) return;
+  it.caption = cap; if (it.cloud === 'synced') it.dirty = true;
+  await idbPutMeta(it).catch(() => {});
+  SY.dirty = true; kickUpload(200);
+}
+async function removeLocal(id) {
+  MEDIA.items.delete(id);
+  const u = THUMBS.get(id); if (u) { URL.revokeObjectURL(u.url); THUMBS.delete(id); }
+  try { await idbDelete(id); } catch (e) { /* ignore */ }
+}
+async function deleteMedia(id) {
+  const it = MEDIA.items.get(id); if (!it) return false;
+  if (it.cloud === 'synced' || (it.cloud === 'queued' && it.uploaded)) {
+    if (!online() || !SD.canEdit) { if (it.cloud === 'synced') { toast('ต้องอยู่ในโหมดโค้ชและออนไลน์ เพื่อลบไฟล์ที่แชร์แล้ว'); return false; } }
+    else {
+      try {
+        const tok = await ensureToken();
+        const r = await fetch(dbUrl('media/' + it.room, { auth: tok }), { method: 'PATCH', body: JSON.stringify({ ['index/' + id]: null, ['blobs/' + id]: null }) });
+        if (!r.ok) throw new Error('http ' + r.status);
+      } catch (e) { toast('ลบจากออนไลน์ไม่สำเร็จ — ลองใหม่เมื่อมีสัญญาณ'); return false; }
+    }
+  }
+  await removeLocal(id);
+  return true;
+}
+async function shareMedia(id) {
+  const it = MEDIA.items.get(id); if (!it) return;
+  let blob;
+  try { blob = await getBlob(it); } catch (e) { toast('โหลดไฟล์ไม่สำเร็จ'); return; }
+  const name = mediaFileName(it);
+  try {
+    const file = new File([blob], name, { type: it.mime || blob.type });
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: tname(it.team), text: it.caption || '' }); return; }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  download(name, blob);
+}
+
+/* ---- ส่งขึ้นออนไลน์ (โค้ชเท่านั้น) ---- */
+let upRunning = false, upTimer = null;
+function kickUpload(ms) { clearTimeout(upTimer); upTimer = setTimeout(runUpload, ms || 50); }
+async function mediaReq(path, method, body) {
+  const tok = await ensureToken();
+  const r = await fetch(dbUrl(path, { auth: tok }), { method, body: JSON.stringify(body) });
+  if (r.status === 401 || r.status === 403) { const e = new Error('denied'); e.denied = true; throw e; }
+  if (!r.ok) throw new Error('http ' + r.status);
+}
+function indexEntry(it) {
+  return { team: it.team, kind: it.kind, mime: it.mime, ext: it.ext, size: it.size, w: it.w, h: it.h, dur: it.dur || 0, caption: it.caption || '', createdAt: it.createdAt, by: it.by || '', thumb: it.thumb || '', chunks: it.chunks };
+}
+async function uploadOne(it) {
+  const blob = await idbGetBlob(it.id).catch(() => null);
+  if (!blob) { it.cloud = 'local'; await idbPutMeta(it); return; }
+  const chunks = Math.max(1, Math.ceil(blob.size / CHUNK)); it.chunks = chunks;
+  for (let n = it.uploaded || 0; n < chunks; n++) {
+    if (!MEDIA.items.has(it.id)) return;
+    await mediaReq(`media/${it.room}/blobs/${it.id}/${n}`, 'PUT', await blobToB64(blob.slice(n * CHUNK, (n + 1) * CHUNK)));
+    it.uploaded = n + 1; await idbPutMeta(it);
+    $$(`[data-mprog="${it.id}"]`).forEach((el) => { el.textContent = `⬆ ${Math.round((it.uploaded / chunks) * 100)}%`; });
+  }
+  if (!MEDIA.items.has(it.id)) return;
+  await mediaReq(`media/${it.room}/index/${it.id}`, 'PUT', indexEntry(it));
+  it.cloud = 'synced'; delete it.dirty; await idbPutMeta(it);
+}
+async function runUpload() {
+  if (upRunning || !MEDIA.ready || !online() || !SD.canEdit || SY.status !== 'live' || MEDIA.err) return;
+  upRunning = true; let changed = false;
+  try {
+    for (const it of MEDIA.items.values()) {
+      if (!it.room && it.hasBlob && it.cloud === 'local') { it.room = CFG.room; it.cloud = canCloud(it) ? 'queued' : 'toolarge'; await idbPutMeta(it); changed = true; }
+    }
+    for (;;) {
+      const it = [...MEDIA.items.values()].filter((x) => x.room === CFG.room && (x.cloud === 'queued' || x.dirty)).sort((a, b) => a.createdAt - b.createdAt)[0];
+      if (!it) break;
+      if (it.cloud === 'queued') await uploadOne(it);
+      else { await mediaReq(`media/${it.room}/index/${it.id}`, 'PATCH', { caption: it.caption || '' }); delete it.dirty; await idbPutMeta(it); }
+      changed = true;
+    }
+  } catch (e) {
+    if (e && e.denied) MEDIA.err = 'แชร์ภาพขึ้นออนไลน์ไม่ได้ — ตรวจว่าวาง Rules ล่าสุดใน Firebase แล้ว (ONLINE.md ข้อ 4) และยังอยู่ในโหมดโค้ช';
+    else kickUpload(15000);
+    changed = true;
+  }
+  upRunning = false;
+  if (changed) softMedia();
+}
+
+/* ---- รับรายการภาพจากออนไลน์ (เปิดเมื่อเข้าหน้า "คู่แข่ง") ---- */
+async function connectMedia() {
+  if (!online() || MEDIA.es) return;
+  let tok;
+  try { tok = await ensureToken(); } catch (e) { setTimeout(connectMedia, 10000); return; }
+  if (MEDIA.es || !online()) return;
+  const es = new EventSource(dbUrl(`media/${CFG.room}/index`, { auth: tok }));
+  MEDIA.es = es;
+  const on = (ev, isPatch) => {
+    let msg = null; try { msg = JSON.parse(ev.data); } catch (e) { msg = null; }
+    if (!msg) return;
+    let tree = MEDIA.remote || {};
+    if (isPatch) Object.entries(msg.data || {}).forEach(([k, v]) => { tree = setPath(tree, String(msg.path || '').replace(/\/+$/, '') + '/' + k, v); });
+    else tree = setPath(tree, msg.path, msg.data);
+    MEDIA.remote = tree;
+    MEDIA.chain = MEDIA.chain.then(reconcileMedia).catch(() => {});
+  };
+  es.addEventListener('put', (ev) => on(ev, false));
+  es.addEventListener('patch', (ev) => on(ev, true));
+  es.addEventListener('cancel', () => { es.close(); MEDIA.es = null; MEDIA.err = 'อ่านคลังภาพออนไลน์ไม่ได้ — ตรวจว่าวาง Rules ล่าสุดใน Firebase แล้ว (ONLINE.md ข้อ 4)'; softMedia(); });
+  es.addEventListener('auth_revoked', () => { es.close(); MEDIA.es = null; SD.exp = 0; saveSync(); connectMedia(); });
+  es.onerror = () => { if (MEDIA.es === es && es.readyState === 2) { MEDIA.es = null; setTimeout(connectMedia, 10000); } };
+}
+async function reconcileMedia() {
+  if (!MEDIA.ready || !CFG) return;
+  const remote = MEDIA.remote || {}; const room = CFG.room; let changed = false;
+  for (const [id, m] of Object.entries(remote)) {
+    if (!m || typeof m !== 'object' || !m.team || !m.kind) continue;
+    const f = { team: m.team, kind: m.kind, mime: m.mime || '', ext: m.ext || '', size: +m.size || 0, w: +m.w || 0, h: +m.h || 0, dur: +m.dur || 0, caption: m.caption || '', createdAt: +m.createdAt || 0, by: m.by || '', thumb: m.thumb || '', chunks: +m.chunks || 1 };
+    const cur = MEDIA.items.get(id);
+    if (!cur) { const it = { id, ...f, room, cloud: 'synced', uploaded: f.chunks, hasBlob: false }; MEDIA.items.set(id, it); await idbPutMeta(it).catch(() => {}); changed = true; continue; }
+    const next = { ...cur, ...f, room, cloud: 'synced' };
+    if (cur.dirty) next.caption = cur.caption;
+    if (canon(next) !== canon(cur)) { MEDIA.items.set(id, next); await idbPutMeta(next).catch(() => {}); changed = true; }
+  }
+  for (const it of [...MEDIA.items.values()]) {
+    if (it.room === room && it.cloud === 'synced' && !remote[it.id]) { await removeLocal(it.id); changed = true; }
+  }
+  if (changed) softMedia();
+}
+
+/* ---- ดาวน์โหลดทั้งหมดเป็น .zip (ไม่บีบอัดซ้ำ เพราะภาพ/วิดีโอบีบอัดอยู่แล้ว) ---- */
+const CRC_TABLE = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function dosTime(ms) { const d = new Date(ms); return { time: (d.getHours() << 11) | (d.getMinutes() << 5) | Math.floor(d.getSeconds() / 2), date: (Math.max(0, d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate() }; }
+async function makeZip(files) {
+  const enc = new TextEncoder(); const parts = []; const central = []; let offset = 0;
+  for (const f of files) {
+    const data = new Uint8Array(await f.blob.arrayBuffer()); const crc = crc32(data); const nb = enc.encode(f.name); const t = dosTime(f.date || Date.now());
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+    lh.setUint16(10, t.time, true); lh.setUint16(12, t.date, true); lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+    lh.setUint16(26, nb.length, true); lh.setUint16(28, 0, true);
+    parts.push(lh.buffer, nb, f.blob);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+    ch.setUint16(12, t.time, true); ch.setUint16(14, t.date, true); ch.setUint32(16, crc, true); ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true);
+    ch.setUint16(28, nb.length, true); ch.setUint16(30, 0, true); ch.setUint16(32, 0, true); ch.setUint16(34, 0, true); ch.setUint16(36, 0, true); ch.setUint32(38, 0, true); ch.setUint32(42, offset, true);
+    central.push(ch.buffer, nb);
+    offset += 30 + nb.length + data.length;
+  }
+  const cdSize = central.reduce((a, x) => a + x.byteLength, 0);
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true); end.setUint32(12, cdSize, true); end.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, end.buffer], { type: 'application/zip' });
+}
+function scoutText(code, items) {
+  const t = team(code) || {}; const L = [];
+  L.push(`ทีม: ${t.name || code} (${code})${t.from ? ' • ' + t.from : ''}`);
+  L.push(`รายการ: ${S.event.name} • ${S.event.category}`);
+  const vs = S.matches.find((m) => (m.a === code && isMe(m.b)) || (m.b === code && isMe(m.a)));
+  if (vs && hasScore(vs)) L.push(`ผลที่เจอ ${myName()}: ${tname(vs.a)} ${vs.ga}–${vs.gb} ${tname(vs.b)}`);
+  L.push('', 'บันทึกสเกาท์:', t.notes || '-', '', 'รายการไฟล์:');
+  items.filter((x) => x.team === code).forEach((x) => L.push(`- ${mediaFileName(x)} • ${fmtStampFull(x.createdAt)}${x.by ? ' • ' + x.by : ''}${x.caption ? ' • ' + x.caption : ''}`));
+  return '﻿' + L.join('\r\n');
+}
+let zipBusy = false;
+async function exportZip(code) {
+  if (zipBusy) return;
+  const items = [...MEDIA.items.values()].filter(mediaVisible).filter((x) => !code || x.team === code).sort((a, b) => a.createdAt - b.createdAt);
+  if (!items.length) { toast('ยังไม่มีภาพ/วิดีโอ'); return; }
+  zipBusy = true;
+  try {
+    const files = []; let missing = 0;
+    for (let i = 0; i < items.length; i++) {
+      toast(`กำลังเตรียมไฟล์ ${i + 1}/${items.length}…`);
+      try { files.push({ name: `${folderName(items[i].team)}/${mediaFileName(items[i])}`, blob: await getBlob(items[i]), date: items[i].createdAt }); }
+      catch (e) { missing++; }
+    }
+    const teamsIn = [...new Set(items.map((x) => x.team))];
+    teamsIn.forEach((c) => files.push({ name: `${folderName(c)}/บันทึกสเกาท์.txt`, blob: new Blob([scoutText(c, items)], { type: 'text/plain' }), date: Date.now() }));
+    const zip = await makeZip(files);
+    download(`cwk-scouting-${code ? safeName(code) : 'all'}-${stamp()}.zip`, zip);
+    toast(missing ? `ดาวน์โหลดแล้ว (ข้าม ${missing} ไฟล์ที่ยังโหลดจากออนไลน์ไม่ได้)` : `ดาวน์โหลด .zip แล้ว (${items.length} ไฟล์ + บันทึกสเกาท์)`);
+  } catch (e) { toast('สร้างไฟล์ .zip ไม่สำเร็จ (พื้นที่หน่วยความจำไม่พอ?) — ลองดาวน์โหลดทีละทีม'); }
+  zipBusy = false;
+}
+
+/* ------------------------------------------------------------------
  * Clock tick
  * ------------------------------------------------------------------ */
 let lastSec = -1, lastAutoRender = 0, lastBeepSec = null, renderedIdx = null;
@@ -2171,7 +2649,8 @@ if (location.protocol.startsWith('http')) {
   if ('serviceWorker' in navigator) window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
 }
 if (online()) connect();
-window.CWK = { state: () => S, standings, scenario, summaryText, sync: () => ({ status: SY.status, canEdit: SD.canEdit, pending: pendingCount(), uid: SD.uid, synced: SD.synced, err: SY.err, room: CFG && CFG.room }) };
+initMedia();
+window.CWK = { media: () => [...MEDIA.items.values()].map((x) => ({ ...x, thumb: x.thumb ? 'yes' : '' })), mediaErr: () => MEDIA.err, state: () => S, standings, scenario, summaryText, sync: () => ({ status: SY.status, canEdit: SD.canEdit, pending: pendingCount(), uid: SD.uid, synced: SD.synced, err: SY.err, room: CFG && CFG.room }) };
 })();
 </script>
 </body>

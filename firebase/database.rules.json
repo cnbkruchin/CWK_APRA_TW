@@ -20,6 +20,12 @@
           ".write": "auth != null && root.child('secret/editPin').exists() && root.child('editors/' + auth.uid).val() === root.child('secret/editPin').val()"
         }
       }
+    },
+    "media": {
+      "$room": {
+        ".read": "auth != null",
+        ".write": "auth != null && root.child('secret/editPin').exists() && root.child('editors/' + auth.uid).val() === root.child('secret/editPin').val()"
+      }
     }
   }
 }
