@@ -6,7 +6,7 @@
  * - ค่าเหล่านี้ไม่ใช่รหัสลับ ใส่ใน GitHub ได้ ความปลอดภัยมาจาก Rules และ "รหัสโค้ช" ใน Firebase
  */
 window.CWK_ONLINE = {
-  apiKey: '',        // เช่น 'AIzaSy...'
-  databaseURL: '',   // เช่น 'https://cwk-apra-default-rtdb.asia-southeast1.firebasedatabase.app'
+  apiKey: 'AIzaSyB8Qe1QVLe75v9r40Ca1AzS78XS8sMe90I',        // เช่น 'AIzaSy...'
+  databaseURL: 'https://cwk-apra-default-rtdb.asia-southeast1.firebasedatabase.app',   // เช่น 'https://cwk-apra-default-rtdb.asia-southeast1.firebasedatabase.app'
   room: 'apra2026',  // ชื่อห้องข้อมูล เปลี่ยนเมื่อต้องการเริ่มรายการแข่งใหม่
 };
