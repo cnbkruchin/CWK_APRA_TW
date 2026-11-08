@@ -364,6 +364,24 @@ dialog::backdrop{background:rgba(8,12,22,.55)}
 @media (min-width:760px){#tpill{bottom:96px}}
 [hidden]{display:none !important}
 
+/* online */
+.net{position:relative}
+.net .dot{position:absolute;right:6px;bottom:7px;width:10px;height:10px;border-radius:50%;background:#9aa4b7;box-shadow:0 0 0 2px var(--brand)}
+.net.live .dot{background:#4fc483} .net.busy .dot{background:#f0b64a} .net.bad .dot{background:#ff5d70}
+.net .cnt{position:absolute;top:3px;right:0;min-width:16px;background:#f0b64a;color:#1b2333;border-radius:99px;font-size:10.5px;line-height:16px;padding:0 4px;text-align:center}
+.robar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--info-soft);color:var(--info);border-radius:12px;padding:6px 12px;margin-bottom:12px;font-size:13.5px;font-weight:700}
+.robar .link{white-space:nowrap}
+.netbox{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;display:grid;gap:2px}
+.net-st{font-weight:800;display:flex;align-items:center;gap:8px}
+.net-st::before{content:"";width:10px;height:10px;border-radius:50%;background:#9aa4b7;flex:none}
+.net-st.live::before{background:var(--ok)} .net-st.busy::before{background:var(--warn)} .net-st.bad::before{background:var(--accent)}
+.ro .stepper button,.ro .bbtns,.ro [data-action="score-clear"],.ro [data-action="toggle-edit"],.ro [data-action="shift-open"],.ro [data-action="ko-suggest"],
+.ro .et button:not(.on),.ro [data-action="check-reset"],.ro [data-action="toggle-lists"],.ro [data-action="team-edit"],.ro .rstat button:not(.on){display:none}
+.ro .crow,.ro .tl-check,.ro .rstat button,.ro .et button{pointer-events:none}
+.ro .stepper input{background:var(--surface-2) !important}
+.ro .edit-hint{display:none}
+@media (max-width:359px){.brand-text{display:none}}
+
 @media (max-width:380px){
   main{padding:12px}
   .clocks{gap:6px} .clocks b{font-size:14.5px}
@@ -389,6 +407,9 @@ dialog::backdrop{background:rgba(8,12,22,.55)}
     <div><small id="clk-v-l">ไต้หวัน</small><b id="clk-v">--:--</b></div>
     <div><small id="clk-h-l">ไทย</small><b id="clk-h">--:--</b></div>
   </div>
+  <button class="icon-btn net" id="net" data-action="online" aria-label="สถานะออนไลน์" hidden>
+    <svg class="ico" viewBox="0 0 24 24"><path d="M7 18.5h10.5a3.75 3.75 0 0 0 .45-7.47A5.75 5.75 0 0 0 6.9 9.4 4.55 4.55 0 0 0 7 18.5z"/></svg><i class="dot"></i><b class="cnt" hidden></b>
+  </button>
   <button class="icon-btn" data-action="settings" aria-label="ตั้งค่าและสำรองข้อมูล">
     <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
   </button>
@@ -409,11 +430,12 @@ dialog::backdrop{background:rgba(8,12,22,.55)}
   <a href="#plan" data-tab="plan"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h4"/></svg><span>แผน/กติกา</span></a>
 </nav>
 
+<script src="config.js"></script>
 <script>
 (() => {
 'use strict';
 
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.1.0';
 const KEY = 'cwk-apra-2026';
 const TKEY = 'cwk-apra-2026-timer';
 const DATA_VERSION = 1;
@@ -604,11 +626,13 @@ function load() {
   T = merge({ preset: 'group', idx: 0, remaining: 120, running: false, endAt: 0, ref: '', sound: true, custom: 15 }, t || {});
 }
 let saveWarned = false;
-function save() {
+function saveLocal() {
   memo.clear();
   try { localStorage.setItem(KEY, JSON.stringify(S)); }
   catch (e) { if (!saveWarned) { saveWarned = true; toast('บันทึกลงเครื่องไม่ได้ (อาจเป็นโหมดส่วนตัว) — ใช้เมนู ⋮ > สำรองข้อมูล'); } }
 }
+/* บันทึกลงเครื่อง + ส่งขึ้นออนไลน์ (ถ้าเป็นโค้ชในโหมดออนไลน์) */
+function save() { saveLocal(); if (online() && SD.canEdit) schedulePush(); }
 function saveT() { try { localStorage.setItem(TKEY, JSON.stringify(T)); } catch (e) { /* ignore */ } }
 function snapshot() { undoSnap = JSON.stringify(S); }
 
@@ -1048,7 +1072,7 @@ function subGroup() {
   const f = S.ui.groupFilter || myGroup(); const gs = groups();
   const list = S.matches.filter((m) => f === 'all' || m.group === f).sort((x, y) => byStart(x, y) || x.group.localeCompare(y.group));
   return `<div class="chips">${[...gs.map((g) => [g, 'กลุ่ม ' + g]), ['all', 'ทั้งหมด']].map(([v, l]) => `<button class="chip-btn ${v === f ? 'on' : ''}" data-action="ui" data-key="groupFilter" data-val="${esc(v)}">${esc(l)}</button>`).join('')}</div>
-  <p class="muted small">กด + / − หรือพิมพ์ตัวเลข • ช่องว่าง = ยังไม่แข่ง • ระบบคำนวณแต้มและอันดับให้อัตโนมัติ • เวลา${esc(S.event.venueTzLabel)}</p>
+  <p class="muted small edit-hint">กด + / − หรือพิมพ์ตัวเลข • ช่องว่าง = ยังไม่แข่ง • ระบบคำนวณแต้มและอันดับให้อัตโนมัติ • เวลา${esc(S.event.venueTzLabel)}</p>
   ${list.map((m) => matchCard('g:' + m.id)).join('')}
   <div id="live-table">${liveTables(f)}</div>`;
 }
@@ -1283,7 +1307,14 @@ const VIEWS = { home: viewHome, schedule: viewSchedule, scores: viewScores, time
  * ------------------------------------------------------------------ */
 function render() {
   const tab = VIEWS[S.ui.tab] ? S.ui.tab : 'home';
-  $('#view').innerHTML = VIEWS[tab]();
+  const ro = readOnly();
+  document.body.classList.toggle('ro', ro);
+  $('#view').innerHTML = (ro ? roBar() : '') + VIEWS[tab]();
+  if (ro) {
+    $$('#view [data-input]').forEach((el) => { el.readOnly = true; });
+    $$('#view select[data-change="ko-team"]').forEach((el) => { el.disabled = true; });
+  }
+  renderNet();
   $$('.tabbar a').forEach((a) => { const on = a.dataset.tab === tab; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   $('#brand-name').textContent = myName();
   $('#brand-sub').textContent = S.event.title;
@@ -1373,28 +1404,30 @@ function installHtml() {
   return '<p class="small">Android / Chrome: เมนู ⋮ → <b>ติดตั้งแอป</b> หรือ <b>เพิ่มลงในหน้าจอหลัก</b> • คอมพิวเตอร์: กดไอคอนติดตั้งท้ายช่องที่อยู่เว็บ</p>';
 }
 function openSettings() {
-  const e = S.event;
+  const e = S.event; const ro = readOnly(); const dis = ro ? 'disabled' : '';
+  const ni = netInfo();
   openModal(`${modalHead('ตั้งค่า & ข้อมูล')}
+  ${CFG ? `<div class="netbox" style="margin-bottom:14px"><div class="net-st ${ni.cls}">${esc(ni.t)}</div><div class="muted small">${SD.disabled ? '' : SD.canEdit ? 'โหมดโค้ช — แก้ไขได้' : 'โหมดผู้ชม — ดูอย่างเดียว'}</div><button class="btn sm" style="justify-self:start;margin-top:6px" data-action="online">จัดการออนไลน์ / รหัสโค้ช</button></div>` : ''}
   <div class="form">
-    <label>ทีมของเรา<select data-change="set" data-path="event.myTeam">${S.teams.map((t) => `<option value="${esc(t.code)}" ${t.code === e.myTeam ? 'selected' : ''}>${esc(t.code)} • ${esc(t.name)}</option>`).join('')}</select></label>
-    <div class="grid2"><label>วันแข่งขัน<input type="date" data-change="set" data-path="event.date" value="${esc(e.date)}"></label>
+    <label>ทีมของเรา<select data-change="set" data-path="event.myTeam" ${dis}>${S.teams.map((t) => `<option value="${esc(t.code)}" ${t.code === e.myTeam ? 'selected' : ''}>${esc(t.code)} • ${esc(t.name)}</option>`).join('')}</select></label>
+    <div class="grid2"><label>วันแข่งขัน<input type="date" data-change="set" data-path="event.date" value="${esc(e.date)}" ${dis}></label>
     <label>ธีมสี<select data-change="theme">${[['auto', 'ตามเครื่อง'], ['light', 'สว่าง'], ['dark', 'มืด']].map(([v, l]) => `<option value="${v}" ${S.ui.theme === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>
-    <label>ชื่อรายการ<input data-change="set" data-path="event.name" value="${esc(e.name)}"></label>
-    <label>รุ่น / ประเภท<input data-change="set" data-path="event.category" value="${esc(e.category)}"></label>
-    <label>คำขวัญ / ชื่อแคมเปญ<input data-change="set" data-path="event.title" value="${esc(e.title)}"></label>
+    <label>ชื่อรายการ<input data-change="set" data-path="event.name" value="${esc(e.name)}" ${dis}></label>
+    <label>รุ่น / ประเภท<input data-change="set" data-path="event.category" value="${esc(e.category)}" ${dis}></label>
+    <label>คำขวัญ / ชื่อแคมเปญ<input data-change="set" data-path="event.title" value="${esc(e.title)}" ${dis}></label>
   </div>
   <h3>แชร์ & สำรองข้อมูล</h3>
   <div class="btn-grid">
     <button class="btn primary" data-action="copy-summary">คัดลอกสรุปผล (ส่ง LINE)</button>
     ${navigator.share ? '<button class="btn" data-action="share-summary">แชร์สรุปผล…</button>' : ''}
     <button class="btn" data-action="export">สำรองข้อมูล (.json)</button>
-    <button class="btn" data-action="import">นำเข้าข้อมูลสำรอง</button>
+    ${ro ? '' : '<button class="btn" data-action="import">นำเข้าข้อมูลสำรอง</button>'}
     <button class="btn" data-action="print">พิมพ์ / บันทึก PDF หน้านี้</button>
   </div>
   <h3>ติดตั้งเป็นแอพ</h3>${installHtml()}
-  <h3>รีเซ็ต</h3>
-  <div class="btn-grid"><button class="btn danger-outline" data-action="reset-results">ล้างผลการแข่งขันทั้งหมด</button><button class="btn danger-outline" data-action="reset-checks">ล้างเช็กลิสต์ / สถานะกติกา</button><button class="btn danger" data-action="reset-all">คืนค่าเริ่มต้นทั้งหมด</button></div>
-  <p class="muted small" style="margin-top:14px">ข้อมูลทั้งหมดเก็บไว้ในอุปกรณ์เครื่องนี้เท่านั้น (ไม่ส่งขึ้นอินเทอร์เน็ต) และใช้งานออฟไลน์ได้ • ย้ายเครื่องหรือแชร์ให้โค้ชคนอื่น: “สำรองข้อมูล” แล้ว “นำเข้า” ที่อีกเครื่อง • เวอร์ชัน ${APP_VERSION}</p>`);
+  ${ro ? '' : `<h3>รีเซ็ต</h3>
+  <div class="btn-grid"><button class="btn danger-outline" data-action="reset-results">ล้างผลการแข่งขันทั้งหมด</button><button class="btn danger-outline" data-action="reset-checks">ล้างเช็กลิสต์ / สถานะกติกา</button><button class="btn danger" data-action="reset-all">คืนค่าเริ่มต้นทั้งหมด</button></div>`}
+  <p class="muted small" style="margin-top:14px">${online() ? 'โหมดออนไลน์: ข้อมูลการแข่งใช้ร่วมกันทุกเครื่องที่เปิดลิงก์นี้ และเก็บสำเนาไว้ในเครื่องเพื่อดูได้แม้ไม่มีสัญญาณ • นาฬิกาจับเวลา ธีม และหน้าที่เปิดอยู่เป็นของแต่ละเครื่อง' : 'ข้อมูลทั้งหมดเก็บไว้ในอุปกรณ์เครื่องนี้เท่านั้น และใช้งานออฟไลน์ได้ • ย้ายเครื่องหรือแชร์ให้โค้ชคนอื่น: “สำรองข้อมูล” แล้ว “นำเข้า” ที่อีกเครื่อง'} • เวอร์ชัน ${APP_VERSION}</p>`);
 }
 
 /* ------------------------------------------------------------------
@@ -1552,24 +1585,32 @@ const ACTIONS = {
   import() { $('#file-import').value = ''; $('#file-import').click(); },
   print() { closeModal(); setTimeout(() => window.print(), 150); },
   'reset-results'() {
-    if (!confirm('ล้างสกอร์ ใบเหลือง และคู่น็อกเอาต์ทั้งหมด?')) return;
+    if (!confirm('ล้างสกอร์ ใบเหลือง และคู่น็อกเอาต์ทั้งหมด?' + onlineNote())) return;
     snapshot();
     S.matches.forEach((m) => { m.ga = null; m.gb = null; m.ya = 0; m.yb = 0; });
     KO_KEYS.forEach((k) => Object.assign(S.ko[k], { a: '', b: '', ga: null, gb: null, et: '', etRounds: 1, ya: 0, yb: 0 }));
     save(); closeModal(); rerender(); toast('ล้างผลการแข่งขันแล้ว', true);
   },
   'reset-checks'() {
-    if (!confirm('ล้างเครื่องหมายในเช็กลิสต์ ตารางเวลา และสถานะกติกาทั้งหมด?')) return;
+    if (!confirm('ล้างเครื่องหมายในเช็กลิสต์ ตารางเวลา และสถานะกติกาทั้งหมด?' + onlineNote())) return;
     snapshot();
     Object.values(S.checklists).forEach((l) => l.forEach((x) => { x.done = false; }));
     S.schedule.forEach((i) => { i.done = false; }); S.rules.forEach((r) => { r.status = ''; });
     save(); closeModal(); rerender(); toast('ล้างเช็กลิสต์แล้ว', true);
   },
   'reset-all'() {
-    if (!confirm('คืนค่าเริ่มต้นทั้งหมด? (ผล บันทึก และการแก้ไขทั้งหมดจะหายไป)')) return;
+    if (!confirm('คืนค่าเริ่มต้นทั้งหมด? (ผล บันทึก และการแก้ไขทั้งหมดจะหายไป)' + onlineNote())) return;
     snapshot(); const theme = S.ui.theme; S = DEFAULTS(); S.ui.theme = theme; S.ui.tab = 'home';
     save(); closeModal(); applyTheme(); navigate('home'); toast('คืนค่าเริ่มต้นแล้ว', true);
   },
+  online() { openOnline(); },
+  'net-push'() { pushNow(); },
+  'net-lock'() {
+    if (pendingCount() && !confirm('ยังมีการแก้ไขที่ยังไม่ได้ส่งขึ้นออนไลน์ ออกจากโหมดโค้ชจะทิ้งการแก้ไขนั้น ต้องการออกใช่ไหม?')) return;
+    lockEditor(); openOnline();
+  },
+  'net-toggle'() { toggleOnline(); openOnline(); },
+  'net-reconnect'() { connect(); toast('กำลังเชื่อมต่อใหม่…'); },
   async install() { if (!deferredPrompt) return; deferredPrompt.prompt(); try { await deferredPrompt.userChoice; } catch (e) { /* ignore */ } deferredPrompt = null; closeModal(); },
 
   /* timer */
@@ -1627,6 +1668,7 @@ const INPUTS = {
   'team-notes'(el) { const t = team(el.dataset.code); if (t) { t.notes = el.value; save(); } },
 };
 const CHANGES = {
+  'net-name'(el) { SD.name = el.value.trim().slice(0, 30); saveSync(); },
   'ko-team'(el) {
     const k = el.dataset.k, side = el.dataset.side, v = el.value;
     const used = ['sf1', 'sf2'].flatMap((x) => ['a', 'b'].map((s) => (x === k && s === side) ? '' : S.ko[x][s])).filter(Boolean);
@@ -1644,6 +1686,7 @@ const CHANGES = {
   theme(el) { S.ui.theme = el.value; save(); applyTheme(); },
 };
 const SUBMITS = {
+  'net-unlock'(f) { unlock(f.elements.pin.value); },
   'check-add'(f) {
     const inp = f.elements.t; const t = inp.value.trim(); if (!t) return;
     S.checklists[f.dataset.list].push({ id: uid(), text: t, done: false }); save(); rerender();
@@ -1667,16 +1710,35 @@ const SUBMITS = {
   },
 };
 
+/* ในโหมดผู้ชม ห้ามแก้ข้อมูลที่ใช้ร่วมกัน */
+const SHARED_ACTIONS = new Set(['score', 'score-clear', 'yellow', 'ko-et', 'ko-etr', 'ko-suggest', 'item-done', 'item-edit', 'item-add', 'item-delete',
+  'shift-open', 'shift-apply', 'rule', 'check', 'check-del', 'check-reset', 'toggle-lists', 'toggle-edit', 'team-edit', 'import',
+  'reset-results', 'reset-checks', 'reset-all', 'undo']);
+const SHARED_FIELDS = new Set(['score', 'team-notes', 'ko-team', 'set', 'check-add', 'item-save', 'team-save']);
+function roBlock() { toast('โหมดผู้ชม — แตะไอคอนเมฆด้านบนแล้วใส่รหัสโค้ชเพื่อแก้ไข'); }
 document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-action]');
   if (!el) return;
   if (el.tagName === 'A') e.preventDefault();
+  if (readOnly() && SHARED_ACTIONS.has(el.dataset.action)) { roBlock(); return; }
   const fn = ACTIONS[el.dataset.action];
   if (fn) fn(el, e);
 });
-document.addEventListener('input', (e) => { const el = e.target.closest('[data-input]'); if (el && INPUTS[el.dataset.input]) INPUTS[el.dataset.input](el, e); });
-document.addEventListener('change', (e) => { const el = e.target.closest('[data-change]'); if (el && CHANGES[el.dataset.change]) CHANGES[el.dataset.change](el, e); });
-document.addEventListener('submit', (e) => { const f = e.target; const k = f.dataset && f.dataset.submit; if (!k) return; e.preventDefault(); if (SUBMITS[k]) SUBMITS[k](f); });
+document.addEventListener('input', (e) => {
+  const el = e.target.closest('[data-input]'); if (!el || !INPUTS[el.dataset.input]) return;
+  if (readOnly() && SHARED_FIELDS.has(el.dataset.input)) { roBlock(); rerender(); return; }
+  INPUTS[el.dataset.input](el, e);
+});
+document.addEventListener('change', (e) => {
+  const el = e.target.closest('[data-change]'); if (!el || !CHANGES[el.dataset.change]) return;
+  if (readOnly() && SHARED_FIELDS.has(el.dataset.change)) { roBlock(); rerender(); return; }
+  CHANGES[el.dataset.change](el, e);
+});
+document.addEventListener('submit', (e) => {
+  const f = e.target; const k = f.dataset && f.dataset.submit; if (!k) return; e.preventDefault();
+  if (readOnly() && SHARED_FIELDS.has(k)) { roBlock(); return; }
+  if (SUBMITS[k]) SUBMITS[k](f);
+});
 document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.matches && e.target.matches('input[data-input="score"]')) e.target.blur(); });
 $('#modal').addEventListener('click', (e) => { if (e.target.id === 'modal') closeModal(); });
 $('#file-import').addEventListener('change', (e) => {
@@ -1686,7 +1748,7 @@ $('#file-import').addEventListener('change', (e) => {
     try {
       const parsed = JSON.parse(String(r.result)); const d = parsed && parsed.data ? parsed.data : parsed;
       if (!validData(d)) throw new Error('bad');
-      if (!confirm('นำเข้าข้อมูลจากไฟล์นี้? ข้อมูลปัจจุบันในเครื่องจะถูกแทนที่')) return;
+      if (!confirm('นำเข้าข้อมูลจากไฟล์นี้? ข้อมูลปัจจุบันจะถูกแทนที่' + onlineNote())) return;
       snapshot(); const theme = S.ui.theme; S = merge(DEFAULTS(), d); S.ui.theme = theme; S.version = DATA_VERSION;
       save(); closeModal(); applyTheme(); rerender(); toast('นำเข้าข้อมูลแล้ว', true);
     } catch (err) { toast('ไฟล์ไม่ถูกต้อง — ใช้ไฟล์ .json ที่ได้จาก “สำรองข้อมูล”'); }
@@ -1696,11 +1758,354 @@ $('#file-import').addEventListener('change', (e) => {
 window.addEventListener('hashchange', route);
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
 window.addEventListener('storage', (e) => { if (e.key === KEY || e.key === TKEY) { load(); memo.clear(); applyTheme(); if (!modalOpen()) rerender(); } });
+window.addEventListener('online', () => { if (!online()) return; if (SY.status !== 'live') connect(); else schedulePush(0); });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (T.running) keepAwake(true); tick(true); } });
 
 function applyTheme() {
   const t = S.ui.theme;
   if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
+}
+
+/* ------------------------------------------------------------------
+ * โหมดออนไลน์: ทุกเครื่องเห็นข้อมูลชุดเดียวกันแบบสด
+ * ใช้ Firebase Realtime Database ผ่าน REST + Server-Sent Events โดยตรง
+ * (ไม่ต้องโหลดไลบรารีเพิ่ม) • ตั้งค่าใน config.js • ดูคู่มือ ONLINE.md
+ * ------------------------------------------------------------------ */
+const SKEY = 'cwk-apra-2026-sync';
+const CFG = (() => {
+  const c = window.CWK_ONLINE || {};
+  if (!c.apiKey || !c.databaseURL) return null;
+  return {
+    apiKey: String(c.apiKey).trim(),
+    db: String(c.databaseURL).trim(),
+    room: String(c.room || 'apra2026').trim().replace(/[.#$[\]/\s]/g, '_') || 'apra2026',
+    authURL: String(c.authURL || 'https://identitytoolkit.googleapis.com').replace(/\/+$/, ''),
+    tokenURL: String(c.tokenURL || 'https://securetoken.googleapis.com').replace(/\/+$/, ''),
+  };
+})();
+const SY = { status: 'off', es: null, tree: null, meta: null, pushing: false, pushTimer: null, retryTimer: null, dirty: false, err: '' };
+const SD_DEFAULT = { key: '', uid: '', idToken: '', refreshToken: '', exp: 0, canEdit: false, name: '', flat: null, synced: false, disabled: false };
+let SD = { ...SD_DEFAULT };
+const clone = (x) => (x === undefined ? undefined : JSON.parse(JSON.stringify(x)));
+
+function loadSync() {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch (e) { d = null; }
+  SD = { ...SD_DEFAULT, ...(d && typeof d === 'object' ? d : {}) };
+  const key = CFG ? CFG.db + '|' + CFG.room : '';
+  if (SD.key !== key) { SD = { ...SD_DEFAULT, name: SD.name, disabled: SD.disabled, key }; saveSync(); }
+}
+function saveSync() { try { localStorage.setItem(SKEY, JSON.stringify(SD)); } catch (e) { /* ignore */ } }
+function online() { return !!CFG && !SD.disabled; }
+function readOnly() { return online() && !SD.canEdit; }
+function onlineNote() { return online() && SD.canEdit ? '\n\n(โหมดออนไลน์: จะมีผลกับทุกเครื่อง)' : ''; }
+
+function dbUrl(path, params) {
+  const u = new URL(CFG.db);
+  u.pathname = u.pathname.replace(/\/+$/, '') + '/' + String(path).replace(/^\/+/, '') + '.json';
+  Object.entries(params || {}).forEach(([k, v]) => u.searchParams.set(k, v));
+  return u.toString();
+}
+
+/* ---- แปลงข้อมูลเป็นรายการย่อย เพื่อส่งเฉพาะส่วนที่เปลี่ยน ---- */
+const SYNC_LISTS = [['teams', 'code'], ['matches', 'id'], ['schedule', 'id'], ['rules', 'id']];
+const ITEM_TMPL = {
+  teams: { code: '', name: '', group: '', from: '', notes: '' },
+  matches: { id: '', start: '', end: '', group: '', field: '', a: '', b: '', ga: null, gb: null, ya: 0, yb: 0 },
+  schedule: { id: '', start: '', end: '', phase: '', place: '', title: '', plan: '', goal: '', type: 'admin', link: '', done: false },
+  rules: { id: '', ref: '', cat: '', text: '', status: '' },
+};
+function toFlat(st) {
+  const f = { event: st.event };
+  SYNC_LISTS.forEach(([k, key]) => (st[k] || []).forEach((x, i) => { if (x && x[key]) f[`${k}/${x[key]}`] = { ...x, _o: i }; }));
+  KO_KEYS.forEach((k) => { f['ko/' + k] = st.ko[k]; });
+  Object.entries(st.checklists || {}).forEach(([ck, l]) => (l || []).forEach((x, i) => { if (x && x.id) f[`checklists/${ck}/${x.id}`] = { ...x, _o: i }; }));
+  return f;
+}
+function treeToFlat(d) {
+  const f = {};
+  if (!d || typeof d !== 'object') return f;
+  const isObj = (v) => v && typeof v === 'object';
+  if (isObj(d.event)) f.event = d.event;
+  SYNC_LISTS.forEach(([k]) => Object.entries(isObj(d[k]) ? d[k] : {}).forEach(([id, v]) => { if (isObj(v)) f[`${k}/${id}`] = v; }));
+  KO_KEYS.forEach((k) => { if (isObj(d.ko) && isObj(d.ko[k])) f['ko/' + k] = d.ko[k]; });
+  Object.entries(isObj(d.checklists) ? d.checklists : {}).forEach(([ck, l]) => Object.entries(isObj(l) ? l : {}).forEach(([id, v]) => { if (isObj(v)) f[`checklists/${ck}/${id}`] = v; }));
+  return f;
+}
+function fromFlat(f, ui) {
+  const base = DEFAULTS();
+  const out = { ...base, ui: ui || base.ui };
+  const pick = (prefix) => Object.keys(f).filter((k) => k.startsWith(prefix)).map((k) => f[k]);
+  const order = (arr) => arr.slice().sort((a, b) => (a._o || 0) - (b._o || 0)).map((x) => { const y = { ...x }; delete y._o; return y; });
+  if (f.event) out.event = merge(base.event, f.event);
+  SYNC_LISTS.forEach(([k]) => { const items = pick(k + '/'); if (items.length) out[k] = order(items).map((x) => ({ ...ITEM_TMPL[k], ...x })); });
+  KO_KEYS.forEach((k) => { if (f['ko/' + k]) out.ko[k] = merge(base.ko[k], f['ko/' + k]); });
+  const cks = new Set([...Object.keys(base.checklists), ...Object.keys(f).filter((k) => k.startsWith('checklists/')).map((k) => k.split('/')[1])]);
+  out.checklists = {};
+  cks.forEach((ck) => { const items = pick(`checklists/${ck}/`); out.checklists[ck] = items.length ? order(items).map((x) => ({ done: false, ...x })) : (base.checklists[ck] || []); });
+  return out;
+}
+function cleanVal(v) {
+  if (v === null || v === undefined) return undefined;
+  if (Array.isArray(v)) return v.map((x) => { const c = cleanVal(x); return c === undefined ? null : c; });
+  if (typeof v === 'object') {
+    const o = {};
+    Object.keys(v).sort().forEach((k) => { const c = cleanVal(v[k]); if (c !== undefined && !(c && typeof c === 'object' && !Array.isArray(c) && !Object.keys(c).length)) o[k] = c; });
+    return o;
+  }
+  return v;
+}
+function canon(v) { const c = cleanVal(v); if (c === undefined || (c && typeof c === 'object' && !Array.isArray(c) && !Object.keys(c).length)) return ''; return JSON.stringify(c); }
+function diffFlat(a, b) {
+  const out = {}; b = b || {};
+  Object.keys(a).forEach((k) => { if (canon(a[k]) !== canon(b[k])) out[k] = a[k]; });
+  Object.keys(b).forEach((k) => { if (!(k in a)) out[k] = null; });
+  return out;
+}
+function pendingCount() { return (online() && SD.canEdit && SD.synced) ? Object.keys(diffFlat(toFlat(S), SD.flat || {})).length : 0; }
+
+/* ---- เข้าสู่ระบบแบบไม่ระบุตัวตน (Anonymous) ---- */
+async function authPost(url, body, form) {
+  const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': form ? 'application/x-www-form-urlencoded' : 'application/json' }, body });
+  let j = null; try { j = await r.json(); } catch (e) { j = null; }
+  return { ok: r.ok, status: r.status, j };
+}
+async function ensureToken() {
+  const now = Date.now();
+  if (SD.idToken && SD.exp - now > 120000) return SD.idToken;
+  if (SD.refreshToken) {
+    const r = await authPost(`${CFG.tokenURL}/v1/token?key=${encodeURIComponent(CFG.apiKey)}`, `grant_type=refresh_token&refresh_token=${encodeURIComponent(SD.refreshToken)}`, true);
+    if (r.ok && r.j && r.j.id_token) {
+      SD.idToken = r.j.id_token; SD.refreshToken = r.j.refresh_token || SD.refreshToken; SD.exp = now + (+r.j.expires_in || 3600) * 1000;
+      if (r.j.user_id && r.j.user_id !== SD.uid) { SD.uid = r.j.user_id; SD.canEdit = false; }
+      saveSync(); return SD.idToken;
+    }
+    if (r.status < 400 || r.status >= 500) throw new Error('token ' + r.status);
+    SD.refreshToken = '';
+  }
+  const r = await authPost(`${CFG.authURL}/v1/accounts:signUp?key=${encodeURIComponent(CFG.apiKey)}`, JSON.stringify({ returnSecureToken: true }));
+  if (!r.ok || !r.j || !r.j.idToken) throw new Error((r.j && r.j.error && r.j.error.message) || ('auth ' + r.status));
+  if (SD.uid !== r.j.localId) SD.canEdit = false;
+  SD.uid = r.j.localId; SD.idToken = r.j.idToken; SD.refreshToken = r.j.refreshToken; SD.exp = now + (+r.j.expiresIn || 3600) * 1000;
+  saveSync(); return SD.idToken;
+}
+
+/* ---- รับข้อมูลสด ---- */
+let connectSeq = 0;
+function setStatus(k) { SY.status = k; renderNet(); }
+function disconnect() { clearTimeout(SY.retryTimer); if (SY.es) { SY.es.close(); SY.es = null; } }
+function scheduleReconnect(ms) { clearTimeout(SY.retryTimer); SY.retryTimer = setTimeout(() => { if (online()) connect(); }, ms || 8000); }
+async function connect() {
+  disconnect();
+  if (!online()) { setStatus('off'); return; }
+  const seq = ++connectSeq;
+  setStatus('connecting');
+  let tok;
+  try { tok = await ensureToken(); } catch (e) {
+    if (seq !== connectSeq) return;
+    const msg = String((e && e.message) || e);
+    if (/OPERATION_NOT_ALLOWED|ADMIN_ONLY/i.test(msg)) { SY.err = 'ยังไม่ได้เปิด Anonymous sign-in ใน Firebase Authentication'; setStatus('error'); return; }
+    if (/API_KEY|API key/i.test(msg)) { SY.err = 'apiKey ใน config.js ไม่ถูกต้อง'; setStatus('error'); return; }
+    SY.err = ''; setStatus('offline'); scheduleReconnect(); return;
+  }
+  if (seq !== connectSeq) return;
+  let es;
+  try { es = new EventSource(dbUrl('rooms/' + CFG.room, { auth: tok })); } catch (e) { SY.err = 'databaseURL ใน config.js ไม่ถูกต้อง'; setStatus('error'); return; }
+  SY.es = es;
+  es.addEventListener('put', (ev) => onStream(ev, false));
+  es.addEventListener('patch', (ev) => onStream(ev, true));
+  es.addEventListener('cancel', () => { es.close(); if (SY.es === es) SY.es = null; SY.err = 'ไม่มีสิทธิ์อ่านข้อมูล — ตรวจ Rules ใน Firebase'; setStatus('error'); });
+  es.addEventListener('auth_revoked', () => { es.close(); SD.exp = 0; saveSync(); connect(); });
+  es.onerror = () => {
+    if (SY.es !== es) return;
+    if (es.readyState === 2) { SY.es = null; setStatus('offline'); scheduleReconnect(); }
+    else if (SY.status === 'live') setStatus('offline');
+  };
+}
+function setPath(tree, path, val) {
+  const parts = String(path || '/').split('/').filter(Boolean);
+  if (!parts.length) return (val && typeof val === 'object') ? val : {};
+  const root = (tree && typeof tree === 'object') ? tree : {};
+  let o = root;
+  for (let i = 0; i < parts.length - 1; i++) { if (!o[parts[i]] || typeof o[parts[i]] !== 'object') o[parts[i]] = {}; o = o[parts[i]]; }
+  const last = parts[parts.length - 1];
+  if (val === null || val === undefined) delete o[last]; else o[last] = val;
+  return root;
+}
+function onStream(ev, isPatch) {
+  let msg = null;
+  try { msg = JSON.parse(ev.data); } catch (e) { msg = null; }
+  if (!msg || typeof msg !== 'object') return;
+  let tree = SY.tree || {};
+  if (isPatch) Object.entries(msg.data || {}).forEach(([k, v]) => { tree = setPath(tree, String(msg.path || '').replace(/\/+$/, '') + '/' + k, v); });
+  else tree = setPath(tree, msg.path, msg.data);
+  SY.tree = tree; SY.err = '';
+  const first = SY.status !== 'live';
+  SY.status = 'live';
+  applyRemote(first);
+}
+function applyRemote(first) {
+  const tree = SY.tree || {};
+  SY.meta = tree.meta || null;
+  const remote = treeToFlat(tree.data);
+  if (!Object.keys(remote).length) {
+    SD.flat = {}; SD.synced = true; saveSync();
+    if (SD.canEdit && first) { pushNow(); toast('ห้องออนไลน์ยังว่าง — กำลังอัปโหลดข้อมูลจากเครื่องนี้เป็นข้อมูลตั้งต้น'); }
+    renderNet(); refreshView(); return;
+  }
+  // การแก้ไขในเครื่องที่ยังไม่ได้ส่ง (เฉพาะโค้ช) จะถูกเก็บไว้และส่งต่อ
+  const pending = (SD.canEdit && SD.synced && SD.flat) ? diffFlat(toFlat(S), SD.flat) : {};
+  const merged = { ...remote };
+  Object.entries(pending).forEach(([k, v]) => { if (v === null) delete merged[k]; else merged[k] = v; });
+  const wasSynced = SD.synced;
+  SD.flat = clone(remote); SD.synced = true; saveSync();
+  const prev = S;
+  const next = clone(fromFlat(merged, S.ui));
+  if (canon(toFlat(prev)) !== canon(toFlat(next))) {
+    S = next; memo.clear(); saveLocal();
+    if (wasSynced) announce(prev); else if (SD.canEdit) toast('โหลดข้อมูลออนไลน์ล่าสุดมาแทนข้อมูลในเครื่องแล้ว');
+    refreshView();
+  }
+  renderNet();
+  if (Object.keys(pending).length) schedulePush();
+}
+function announce(prev) {
+  for (const m of S.matches) {
+    const o = prev.matches.find((x) => x.id === m.id);
+    if (o && hasScore(m) && (o.ga !== m.ga || o.gb !== m.gb)) { toast(`⚽ อัปเดตสด: ${tname(m.a)} ${m.ga}–${m.gb} ${tname(m.b)}`); return; }
+  }
+  for (const k of KO_KEYS) {
+    const m = S.ko[k], o = prev.ko[k];
+    if (o && hasScore(m) && (o.ga !== m.ga || o.gb !== m.gb || o.et !== m.et)) { const t = koSides(k); toast(`🏁 อัปเดตสด ${m.label}: ${tname(t.a)} ${m.ga}–${m.gb} ${tname(t.b)}`); return; }
+  }
+}
+function refreshView() {
+  const busy = modalOpen() || (document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName));
+  if (busy) { softRefresh(); SY.dirty = true; } else { SY.dirty = false; rerender(); }
+}
+
+/* ---- ส่งการแก้ไข (เฉพาะรายการที่เปลี่ยน) ---- */
+function schedulePush(ms) {
+  if (!online() || !SD.canEdit) return;
+  clearTimeout(SY.pushTimer);
+  SY.pushTimer = setTimeout(pushNow, ms == null ? 350 : ms);
+  renderNet();
+}
+async function pushNow() {
+  clearTimeout(SY.pushTimer);
+  if (!online() || !SD.canEdit || !SD.synced) return;
+  if (SY.pushing) { schedulePush(300); return; }
+  const upd = diffFlat(toFlat(S), SD.flat || {});
+  const keys = Object.keys(upd);
+  if (!keys.length) { renderNet(); return; }
+  SY.pushing = true; renderNet();
+  let retry = false;
+  try {
+    const tok = await ensureToken();
+    const body = {};
+    keys.forEach((k) => { body['data/' + k] = upd[k]; });
+    body['meta/updatedAt'] = { '.sv': 'timestamp' };
+    body['meta/by'] = SD.name || 'โค้ช';
+    const r = await fetch(dbUrl('rooms/' + CFG.room, { auth: tok }), { method: 'PATCH', body: JSON.stringify(body) });
+    if (r.status === 401 || r.status === 403) {
+      SD.canEdit = false; saveSync();
+      S = clone(fromFlat(SD.flat || {}, S.ui)); memo.clear(); saveLocal();
+      toast('รหัสโค้ชถูกเปลี่ยนหรือหมดสิทธิ์ — ใส่รหัสโค้ชใหม่เพื่อแก้ไข');
+      refreshView();
+    } else if (!r.ok) { retry = true; SY.err = 'ส่งข้อมูลไม่สำเร็จ (' + r.status + ')'; }
+    else {
+      SD.flat = SD.flat || {};
+      keys.forEach((k) => { if (upd[k] === null) delete SD.flat[k]; else SD.flat[k] = clone(upd[k]); });
+      saveSync(); SY.err = '';
+    }
+  } catch (e) { retry = true; }
+  SY.pushing = false;
+  if (retry) schedulePush(8000);
+  else if (SD.canEdit && Object.keys(diffFlat(toFlat(S), SD.flat || {})).length) schedulePush(200);
+  renderNet();
+}
+
+/* ---- สิทธิ์โค้ช ---- */
+async function unlock(pin) {
+  pin = String(pin || '').trim();
+  if (!pin) return;
+  try {
+    const tok = await ensureToken();
+    const put = (body) => fetch(dbUrl('editors/' + SD.uid, { auth: tok }), { method: 'PUT', body });
+    let r = await put(JSON.stringify(pin));
+    if (!r.ok && /^\d+$/.test(pin) && pin.length < 16) r = await put(pin); // เผื่อกรอกรหัสเป็นตัวเลขล้วนใน Firebase
+    if (r.ok) {
+      SD.canEdit = true; saveSync(); closeModal();
+      toast('ปลดล็อกโหมดโค้ชแล้ว — การแก้ไขจะขึ้นทุกเครื่องทันที');
+      if (SY.status === 'live' && SD.synced && !Object.keys(SD.flat || {}).length) pushNow();
+      rerender();
+    } else if (r.status === 401 || r.status === 403) toast('รหัสโค้ชไม่ถูกต้อง');
+    else toast('ปลดล็อกไม่สำเร็จ (' + r.status + ')');
+  } catch (e) { toast('ไม่มีสัญญาณอินเทอร์เน็ต — ลองใหม่อีกครั้ง'); }
+}
+function lockEditor() {
+  SD.canEdit = false; saveSync();
+  if (SD.flat && Object.keys(SD.flat).length) { S = clone(fromFlat(SD.flat, S.ui)); memo.clear(); saveLocal(); }
+  rerender();
+}
+function toggleOnline() {
+  SD.disabled = !SD.disabled;
+  if (!SD.disabled) SD.synced = false;
+  saveSync();
+  if (SD.disabled) { disconnect(); setStatus('off'); } else connect();
+  rerender();
+}
+
+/* ---- แสดงสถานะ ---- */
+function fmtStamp(ms) {
+  const d = new Date(+ms + S.event.venueTz * 3600000), n = new Date(Date.now() + S.event.venueTz * 3600000);
+  const hm = pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes());
+  return d.toISOString().slice(0, 10) === n.toISOString().slice(0, 10) ? hm + ' น.' : `${d.getUTCDate()}/${d.getUTCMonth() + 1} ${hm} น.`;
+}
+function metaText() { const m = SY.meta; return m && m.updatedAt ? `อัปเดตล่าสุด ${fmtStamp(m.updatedAt)} (เวลา${S.event.venueTzLabel})${m.by ? ' โดย ' + m.by : ''}` : ''; }
+function netInfo() {
+  if (!CFG) return { cls: '', t: 'ยังไม่ได้ตั้งค่าออนไลน์' };
+  if (SD.disabled) return { cls: '', t: 'ปิดการเชื่อมต่อในเครื่องนี้ (ใช้ข้อมูลในเครื่อง)' };
+  const n = pendingCount();
+  if (SY.status === 'error') return { cls: 'bad', t: SY.err || 'เชื่อมต่อไม่ได้' };
+  if (SY.status === 'live') return n ? { cls: 'busy', t: `ออนไลน์ • กำลังส่ง ${n} รายการ` } : { cls: 'live', t: 'ออนไลน์ • ข้อมูลตรงกันทุกเครื่อง' };
+  if (SY.status === 'connecting') return { cls: 'busy', t: 'กำลังเชื่อมต่อ…' };
+  return { cls: 'bad', t: n ? `ไม่มีสัญญาณ • รอส่ง ${n} รายการ (ส่งเองเมื่อกลับมาออนไลน์)` : 'ไม่มีสัญญาณ • แสดงข้อมูลล่าสุดที่บันทึกไว้' };
+}
+function renderNet() {
+  const b = $('#net'); if (!b) return;
+  b.hidden = !CFG;
+  if (!CFG) return;
+  const i = netInfo(); const n = pendingCount();
+  b.className = 'icon-btn net ' + i.cls;
+  b.title = i.t; b.setAttribute('aria-label', 'สถานะออนไลน์: ' + i.t);
+  const c = b.querySelector('.cnt'); c.hidden = !n; c.textContent = n > 99 ? '99+' : String(n);
+  const st = $('#net-status'); if (st) { st.textContent = i.t; st.className = 'net-st ' + i.cls; }
+  const mt = $('#net-meta'); if (mt) mt.textContent = metaText();
+}
+function roBar() {
+  const empty = SD.synced && !Object.keys(SD.flat || {}).length;
+  return `<div class="robar no-print"><span>👀 ${empty ? 'ยังไม่มีข้อมูลออนไลน์ — รอโค้ชเริ่มต้น' : 'โหมดผู้ชม • อัปเดตสดจากทีมโค้ช'}</span><button class="link" data-action="online">ใส่รหัสโค้ช</button></div>`;
+}
+function openOnline() {
+  if (!CFG) {
+    openModal(`${modalHead('โหมดออนไลน์')}<p>ยังไม่ได้ตั้งค่า — ตอนนี้แอพทำงานแบบออฟไลน์ ข้อมูลอยู่ในเครื่องนี้เท่านั้น</p><p class="muted small">ผู้ดูแลตั้งค่าได้ตามคู่มือ ONLINE.md (ใช้ Firebase ฟรี) แล้วทุกเครื่องที่เปิดลิงก์เดิมจะเห็นข้อมูลชุดเดียวกันแบบสด</p>`);
+    return;
+  }
+  const i = netInfo();
+  openModal(`${modalHead('ออนไลน์ • ซิงก์ข้อมูล')}
+  <div class="netbox"><div class="net-st ${i.cls}" id="net-status">${esc(i.t)}</div><div class="muted small" id="net-meta">${esc(metaText())}</div><div class="muted small">ห้องข้อมูล: ${esc(CFG.room)}</div></div>
+  ${SD.disabled ? '' : SD.canEdit ? `
+  <h3>✓ โหมดโค้ช (แก้ไขได้)</h3>
+  <p class="small">ทุกการแก้ไขจะส่งขึ้นออนไลน์อัตโนมัติและทุกเครื่องเห็นทันที ถ้าไม่มีสัญญาณจะเก็บไว้แล้วส่งเองเมื่อกลับมาออนไลน์</p>
+  <label class="field">ชื่อผู้บันทึก (แสดงให้เครื่องอื่นเห็น)<input data-change="net-name" value="${esc(SD.name)}" placeholder="เช่น ครูเอ" maxlength="30"></label>
+  <div class="btn-row" style="margin-top:10px"><button class="btn" data-action="net-push">ส่งข้อมูลตอนนี้</button><button class="btn danger-outline" data-action="net-lock">ออกจากโหมดโค้ช</button></div>` : `
+  <h3>👀 โหมดผู้ชม</h3>
+  <p class="small">ดูตารางเวลา ผลการแข่ง และตารางคะแนนแบบสดได้ แต่แก้ไขไม่ได้ • โค้ชใส่รหัสเพื่อแก้ไข</p>
+  <form class="add-row" data-submit="net-unlock"><input name="pin" type="password" autocomplete="current-password" placeholder="รหัสโค้ช" aria-label="รหัสโค้ช"><button class="btn primary" type="submit">ปลดล็อก</button></form>`}
+  <h3>เครื่องนี้</h3>
+  <div class="btn-row"><button class="btn" data-action="net-toggle">${SD.disabled ? 'กลับมาเชื่อมต่อออนไลน์' : 'ใช้แบบออฟไลน์เฉพาะเครื่องนี้'}</button>${SD.disabled ? '' : '<button class="btn" data-action="net-reconnect">เชื่อมต่อใหม่</button>'}</div>
+  <p class="muted small" style="margin-top:10px">${SD.disabled ? 'เมื่อกลับมาเชื่อมต่อ ข้อมูลในเครื่องจะถูกแทนด้วยข้อมูลออนไลน์ล่าสุด' : 'มีสำเนาข้อมูลล่าสุดในเครื่อง จึงเปิดดูได้แม้ไม่มีสัญญาณ'} • นาฬิกาจับเวลา ธีม และหน้าที่เปิดอยู่เป็นของแต่ละเครื่อง</p>`);
 }
 
 /* ------------------------------------------------------------------
@@ -1747,6 +2152,7 @@ function tick(force) {
   $$('[data-from]').forEach((el) => { const f = +el.dataset.from, t = +el.dataset.to; el.style.width = Math.max(0, Math.min(100, ((now - f) / (t - f)) * 100)) + '%'; });
   $$('[data-clock]').forEach((el) => { el.textContent = clockStr(S.event.venueTz); });
   const idle = !modalOpen() && !(document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName));
+  if (!force && idle && SY.dirty) { SY.dirty = false; rerender(); return; }
   if (!force && idle && (S.ui.tab === 'home' || S.ui.tab === 'schedule') && (expired || now - lastAutoRender > 30000)) rerender();
 }
 
@@ -1754,6 +2160,7 @@ function tick(force) {
  * Boot
  * ------------------------------------------------------------------ */
 load();
+loadSync();
 applyTheme();
 if (!VIEWS[(location.hash || '').slice(1)]) history.replaceState(null, '', '#' + (VIEWS[S.ui.tab] ? S.ui.tab : 'home'));
 route();
@@ -1763,7 +2170,8 @@ if (location.protocol.startsWith('http')) {
   const l = document.createElement('link'); l.rel = 'manifest'; l.href = 'manifest.webmanifest'; document.head.appendChild(l);
   if ('serviceWorker' in navigator) window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
 }
-window.CWK = { state: () => S, standings, scenario, summaryText };
+if (online()) connect();
+window.CWK = { state: () => S, standings, scenario, summaryText, sync: () => ({ status: SY.status, canEdit: SD.canEdit, pending: pendingCount(), uid: SD.uid, synced: SD.synced, err: SY.err, room: CFG && CFG.room }) };
 })();
 </script>
 </body>

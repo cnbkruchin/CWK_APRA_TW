@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "secret": {
+      ".read": false,
+      ".write": false
+    },
+    "editors": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid && root.child('secret/editPin').exists() && newData.val() === root.child('secret/editPin').val()"
+      }
+    },
+    "rooms": {
+      "$room": {
+        ".read": "auth != null",
+        "data": {
+          ".write": "auth != null && root.child('secret/editPin').exists() && root.child('editors/' + auth.uid).val() === root.child('secret/editPin').val()"
+        },
+        "meta": {
+          ".write": "auth != null && root.child('secret/editPin').exists() && root.child('editors/' + auth.uid).val() === root.child('secret/editPin').val()"
+        }
+      }
+    }
+  }
+}
