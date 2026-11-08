@@ -1,0 +1,1770 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CWK Championship Planner</title>
+<meta name="description" content="ระบบวางแผนการแข่งขัน CWK JAEGER ROBOT • APRA International Final 2026 • SPIKE Remote Soccer – Junior">
+<meta name="theme-color" content="#1f2a44">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CWK APRA">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Cdefs%3E%3CclipPath id=%22b%22%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%22170%22/%3E%3C/clipPath%3E%3C/defs%3E%3Crect width=%22512%22 height=%22512%22 rx=%22112%22 fill=%22%23b51f32%22/%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%22170%22 fill=%22%23fff%22/%3E%3Cg clip-path=%22url%28%23b%29%22 fill=%22%231f2a44%22%3E%3Cpath d=%22M256 196L313 237.5 291.3 304.5H220.7L198.9 237.5Z%22/%3E%3Cpath d=%22M256 128 208.4 93.5 226.6 37.5 285.4 37.5 303.6 93.5ZM377.7 216.4 395.9 160.5 454.7 160.5 472.8 216.4 425.3 251ZM331.2 359.6 390 359.6 408.2 415.5 360.6 450 313.1 415.5ZM180.8 359.6 198.9 415.5 151.4 450 103.8 415.5 122 359.6ZM134.3 216.4 86.7 251 39.2 216.4 57.3 160.5 116.1 160.5Z%22/%3E%3C/g%3E%3Cpath d=%22M256 196V128M313 237.5L377.7 216.4M291.3 304.5L331.2 359.6M220.7 304.5L180.8 359.6M198.9 237.5L134.3 216.4%22 stroke=%22%231f2a44%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%22170%22 fill=%22none%22 stroke=%22%231f2a44%22 stroke-width=%2210%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root{
+  --bg:#f2f4f8; --surface:#ffffff; --surface-2:#f5f7fa; --text:#1b2333; --muted:#5b6578; --border:#dce1ea;
+  --brand:#1f2a44; --brand-2:#33456f; --on-brand:#ffffff;
+  --accent:#b51f32; --accent-ink:#ffffff; --accent-soft:#fbe8ea;
+  --ok:#1b7a45; --ok-soft:#e3f3e9; --warn:#935d00; --warn-soft:#fff2d9;
+  --info:#2c5bb0; --info-soft:#e7eefb; --gold:#a87400; --gold-soft:#fff4d6; --purple:#6f45b0;
+  --mine:#fff6e7; --sel:#1f2a44; --sel-ink:#ffffff;
+  --shadow:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.07);
+  --radius:14px; --nav-h:62px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d121d; --surface:#151c2b; --surface-2:#1c2436; --text:#e6eaf2; --muted:#9aa4b7; --border:#2a3447;
+    --brand:#0a1020; --brand-2:#1d2a48; --on-brand:#ffffff;
+    --accent:#ff5d70; --accent-ink:#1a0005; --accent-soft:#3b1820;
+    --ok:#4fc483; --ok-soft:#14301f; --warn:#f0b64a; --warn-soft:#33270e;
+    --info:#7ea6ff; --info-soft:#18243f; --gold:#f2c14e; --gold-soft:#33290f; --purple:#b393f0;
+    --mine:#2a2516; --sel:#e6eaf2; --sel-ink:#0d121d;
+    --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d121d; --surface:#151c2b; --surface-2:#1c2436; --text:#e6eaf2; --muted:#9aa4b7; --border:#2a3447;
+  --brand:#0a1020; --brand-2:#1d2a48; --on-brand:#ffffff;
+  --accent:#ff5d70; --accent-ink:#1a0005; --accent-soft:#3b1820;
+  --ok:#4fc483; --ok-soft:#14301f; --warn:#f0b64a; --warn-soft:#33270e;
+  --info:#7ea6ff; --info-soft:#18243f; --gold:#f2c14e; --gold-soft:#33290f; --purple:#b393f0;
+  --mine:#2a2516; --sel:#e6eaf2; --sel-ink:#0d121d;
+  --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.55 "Noto Sans Thai","Sukhumvit Set","Leelawadee UI","Thonburi","Sarabun",Tahoma,system-ui,-apple-system,"Segoe UI",sans-serif;
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 20px);-webkit-tap-highlight-color:transparent}
+a{color:var(--info)}
+button{font:inherit;color:inherit}
+.tnum,.t-big,.bscore,.clocks b,.st td{font-variant-numeric:tabular-nums}
+h1{font-size:22px;line-height:1.3;margin:0 0 4px}
+h2{font-size:18px;line-height:1.35;margin:0 0 8px}
+h3{font-size:16px;line-height:1.4;margin:0 0 8px}
+p{margin:0 0 8px}
+.muted{color:var(--muted)} .small{font-size:13px} .danger-text{color:var(--accent);font-weight:700}
+.kicker{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px}
+.spacer{flex:1}
+.row-between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+ul.plain{margin:0;padding-left:18px} ul.plain li{margin-bottom:6px;font-size:14px}
+.sec{margin:18px 2px 10px;font-size:15px;color:var(--muted)}
+
+/* app bar */
+.appbar{position:sticky;top:0;z-index:30;background:var(--brand);color:var(--on-brand);
+  padding:calc(env(safe-area-inset-top) + 8px) 12px 8px 14px;display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1;color:inherit;text-decoration:none}
+.brand svg{width:34px;height:34px;flex:none;border-radius:9px}
+.brand-text{min-width:0}
+.brand b{display:block;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{display:block;font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clocks{display:flex;gap:10px;flex:none}
+.clocks div{text-align:center;line-height:1.1}
+.clocks small{display:block;font-size:10.5px;opacity:.72}
+.clocks b{font-size:16px}
+.icon-btn{background:transparent;border:0;color:inherit;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;cursor:pointer;flex:none}
+.icon-btn:hover{background:rgba(127,127,127,.15)}
+.icon-btn svg{width:22px;height:22px}
+
+main{max-width:940px;margin:0 auto;padding:16px}
+
+/* bottom nav */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--border);
+  display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11.5px;color:var(--muted);text-decoration:none;padding:4px 2px;border-radius:10px;min-width:0;white-space:nowrap}
+.tabbar a svg{width:24px;height:24px}
+.tabbar a.on{color:var(--accent);font-weight:700}
+@media (min-width:760px){
+  .tabbar{left:50%;right:auto;transform:translateX(-50%);bottom:12px;width:560px;border:1px solid var(--border);border-radius:18px;box-shadow:0 8px 30px rgba(0,0,0,.12);padding:6px}
+  body{padding-bottom:110px}
+}
+svg.ico{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* generic */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:0 0 14px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:8px 14px;border-radius:11px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);font-size:14.5px;font-weight:700;cursor:pointer;text-decoration:none;line-height:1.2;text-align:center}
+.btn:hover{border-color:var(--muted)}
+.btn.sm{min-height:34px;padding:5px 11px;font-size:13.5px;border-radius:9px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.on{background:var(--sel);border-color:var(--sel);color:var(--sel-ink)}
+.btn.danger{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.danger-outline{color:var(--accent);border-color:var(--accent);background:transparent}
+.link{background:none;border:0;color:var(--info);font-weight:700;font-size:13.5px;cursor:pointer;padding:6px 0}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted);vertical-align:middle;white-space:nowrap;border:1px solid var(--border)}
+.badge.ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.bad{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.badge.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.badge.gold{background:var(--gold-soft);color:var(--gold);border-color:transparent}
+.badge.info{background:var(--info-soft);color:var(--info);border-color:transparent}
+.seg{display:flex;gap:4px;background:var(--surface-2);border:1px solid var(--border);border-radius:13px;padding:4px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button{flex:1 0 auto;white-space:nowrap;border:0;background:transparent;color:var(--muted);font-size:14px;font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;min-height:40px}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+:root[data-theme="dark"] .seg button.on{background:var(--brand-2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button.on{background:var(--brand-2)}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600;cursor:pointer;min-height:38px}
+.chip-btn.on{background:var(--sel);color:var(--sel-ink);border-color:var(--sel)}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--surface-2);color:var(--muted);border:1px solid var(--border)}
+.chip.live{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.pbar{height:7px;background:rgba(127,127,127,.2);border-radius:99px;overflow:hidden;margin:10px 0 6px}
+.pbar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s}
+
+input:not([type=checkbox]):not([type=radio]),select,textarea{font:inherit;font-size:16px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 11px;min-height:42px;width:100%;max-width:100%}
+textarea{resize:vertical;line-height:1.5}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid color-mix(in srgb, var(--info) 55%, transparent);outline-offset:1px}
+.form{display:grid;gap:12px}
+.form label,label.field{display:grid;gap:4px;font-size:13.5px;font-weight:700;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:6px}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);color:#fff;border-radius:18px;padding:18px 18px 16px;margin-bottom:14px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-46px;top:-46px;width:170px;height:170px;border-radius:50%;border:20px solid #b51f32;opacity:.45;pointer-events:none}
+.hero > *{position:relative;z-index:1}
+.hero .kicker{color:rgba(255,255,255,.78)}
+.hero h1{font-size:24px;margin-bottom:2px}
+.hero .sub{opacity:.85;font-size:14.5px}
+.hero .cd{margin-top:14px}
+.hero .cd span{font-size:13.5px;opacity:.85}
+.hero .cd b{display:block;font-size:30px;line-height:1.2;margin-top:2px;font-variant-numeric:tabular-nums}
+.hero .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.hero .tags span{background:rgba(255,255,255,.14);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:600}
+.hero .pbar{background:rgba(255,255,255,.22)} .hero .pbar i{background:#ff6b7d}
+.hero .next{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.2);font-size:14.5px}
+.hero .plan{margin-top:8px;font-size:14.5px;opacity:.92}
+.hero .row{display:flex;justify-content:space-between;gap:8px;font-size:14px;flex-wrap:wrap}
+
+/* next match */
+.nextm .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center;margin:10px 0 12px}
+.nextm .side{font-weight:800;font-size:16px;line-height:1.3;overflow-wrap:anywhere}
+.nextm .side small{display:block;font-weight:500;color:var(--muted);font-size:12.5px}
+.nextm .side.me{color:var(--accent)}
+.nextm .mid{font-size:13px;color:var(--muted);line-height:1.25}
+.nextm .mid b{display:block;font-size:22px;color:var(--text)}
+.nextm .info{display:grid;gap:6px;font-size:14.5px;margin-bottom:10px}
+.alert{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:9px 12px;font-size:13.5px;font-weight:600;margin-bottom:12px}
+.alert.bad{background:var(--accent-soft);color:var(--accent)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn-row .btn{flex:1 1 140px}
+
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+@media (min-width:760px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;color:var(--text);text-decoration:none;box-shadow:var(--shadow);min-width:0}
+.tile .tk{font-size:12.5px;color:var(--muted);font-weight:700}
+.tile b{font-size:28px;line-height:1.15;font-variant-numeric:tabular-nums}
+.tile b small{font-size:15px;color:var(--muted);font-weight:600}
+.tile .ts{font-size:12px;color:var(--muted)}
+.tile.warn{border-color:var(--warn)} .tile.warn b{color:var(--warn)}
+.tile.bad{border-color:var(--accent);background:var(--accent-soft)} .tile.bad b{color:var(--accent)}
+
+/* matches */
+.match{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.match.mine{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.match header{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:4px;flex-wrap:wrap}
+.match header .t{font-size:15px}
+.res{margin-left:auto;font-weight:700;font-size:12.5px;padding:2px 9px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.res.ok{background:var(--ok-soft);color:var(--ok)} .res.bad{background:var(--accent-soft);color:var(--accent)} .res.warn{background:var(--warn-soft);color:var(--warn)}
+.tline{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px dashed var(--border)}
+.match header + .tline{border-top:0}
+.tname{flex:1;min-width:0;font-weight:500;overflow-wrap:anywhere;line-height:1.3}
+.tname small{display:block;color:var(--muted);font-size:12px;font-weight:500}
+.tname select{font-weight:700}
+.tname.sel{display:flex;align-items:center;gap:4px}
+.tname.sel select{flex:1;min-width:0}
+.seg.grid{display:grid;grid-template-columns:1fr 1fr;overflow:visible}
+@media (min-width:560px){.seg.grid{grid-template-columns:repeat(4,1fr)}}
+.tline.win .tname{font-weight:800}
+.tline.win .tname::before{content:"✓ ";color:var(--ok)}
+.tline.me .tname{color:var(--accent)}
+.stepper{display:flex;align-items:center;gap:4px;flex:none}
+.stepper button{width:42px;height:42px;border-radius:11px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:21px;font-weight:800;cursor:pointer;line-height:1;padding:0}
+.stepper button:active{transform:scale(.95)}
+.stepper input{width:50px !important;height:42px;text-align:center;border:1px solid var(--border);border-radius:11px;background:var(--mine) !important;font-size:21px !important;font-weight:800;padding:0 !important}
+.stepper.sm button{width:32px;height:32px;font-size:17px;border-radius:9px}
+.stepper.sm b{min-width:22px;text-align:center;font-variant-numeric:tabular-nums}
+.yline{display:flex;align-items:center;gap:8px;padding-top:8px;margin-top:4px;border-top:1px dashed var(--border);font-size:13.5px;flex-wrap:wrap}
+.ycard{display:inline-block;width:13px;height:18px;border-radius:2px;background:#f4c430;box-shadow:0 0 0 1px rgba(0,0,0,.15);vertical-align:middle;flex:none}
+.mfoot{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.ko-note{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+.et{background:var(--warn-soft);border-radius:10px;padding:9px 11px;margin-top:8px;font-size:13.5px;display:grid;gap:7px}
+.et-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* tables */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.st{width:100%;border-collapse:collapse;font-size:14px}
+.st th,.st td{padding:8px 5px;text-align:center;border-bottom:1px solid var(--border);white-space:nowrap}
+.st th{font-size:12px;color:var(--muted);font-weight:700}
+.st .team{text-align:left;white-space:normal;min-width:130px;line-height:1.3}
+.st .team small{color:var(--muted);font-size:11.5px}
+.st tbody tr.q td:first-child{box-shadow:inset 4px 0 0 var(--ok)}
+.st tbody tr.me{background:var(--mine)}
+.st tbody tr.me .team{color:var(--accent);font-weight:700}
+.st .pts{font-weight:800;font-size:15px}
+@media (max-width:519px){.st .xs-hide{display:none}.st .team{min-width:96px}.st th,.st td{padding:8px 4px}}
+.legend{font-size:12.5px;color:var(--muted);margin-top:8px}
+.tie-notes{margin:10px 0 0;padding:10px 12px;background:var(--info-soft);border-radius:10px;font-size:13.5px}
+.tie-notes li{margin:2px 0}
+.outcomes{list-style:none;margin:8px 0;padding:0;display:grid;gap:6px}
+.outcomes li{display:flex;gap:10px;align-items:baseline;padding:8px 11px;border-radius:10px;background:var(--surface-2);font-size:14.5px}
+.outcomes li b{min-width:44px}
+.outcomes li.ok{background:var(--ok-soft)} .outcomes li.ok b{color:var(--ok)}
+.outcomes li.warn{background:var(--warn-soft)} .outcomes li.warn b{color:var(--warn)}
+.outcomes li.bad{background:var(--accent-soft)} .outcomes li.bad b{color:var(--accent)}
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px}
+.qgrid .q{background:var(--surface-2);border-radius:10px;padding:8px 10px;font-size:14px;font-weight:600;overflow-wrap:anywhere}
+.qgrid .q.me{background:var(--mine);color:var(--accent)}
+.bracket{display:grid;gap:0 14px}
+@media (min-width:760px){.bracket{grid-template-columns:1fr 1fr}}
+.champ{background:linear-gradient(135deg,#6b4a00,#a87400);color:#fff;border-radius:18px;padding:16px 18px;margin-bottom:14px}
+.champ .kicker{color:rgba(255,255,255,.8)}
+.champ h2{font-size:22px;margin:0}
+
+/* timeline */
+.timeline{list-style:none;margin:0;padding:0}
+.tl{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:10px;background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--c,var(--border));border-radius:13px;padding:12px 10px 12px 11px;margin-bottom:8px;box-shadow:var(--shadow)}
+.tl.type-match{--c:var(--accent)} .tl.type-ko{--c:var(--gold)} .tl.type-rest{--c:var(--ok)} .tl.type-admin{--c:var(--info)} .tl.type-practice{--c:var(--purple)}
+.tl.type-match,.tl.type-ko{background:linear-gradient(90deg,var(--mine),var(--surface) 70%)}
+.tl.past{opacity:.62}
+.tl.now{box-shadow:0 0 0 2px var(--accent);opacity:1}
+.tl-time{line-height:1.2}
+.tl-time b{font-size:16.5px;display:block}
+.tl-time span{display:block;font-size:12.5px;color:var(--muted)}
+.tl-time small{display:block;font-size:11.5px;color:var(--muted);margin-top:4px}
+.tl-top{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:3px}
+.tl h3{margin:0 0 2px;font-size:15.5px}
+.tl-place{font-size:13px;color:var(--muted)}
+.tl-plan{font-size:14px;margin:6px 0 2px}
+.tl-goal{font-size:13.5px;color:var(--ok);margin:0;font-weight:600}
+.tl.done h3{text-decoration:line-through;text-decoration-color:var(--muted)}
+.tl-side{display:flex;flex-direction:column;gap:6px;align-items:center}
+.tl-check{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);background:transparent;color:transparent;cursor:pointer;font-size:18px;font-weight:800;padding:0}
+.tl-check[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.fx{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;font-weight:700;font-size:14px}
+.fx b{background:var(--surface-2);border-radius:8px;padding:1px 8px;border:1px solid var(--border)}
+.fx .me{color:var(--accent)}
+.fx-act{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+
+/* timer */
+.timer{text-align:center}
+.phases{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:6px}
+.ph{font-size:12.5px;padding:3px 10px;border-radius:99px;background:var(--surface-2);color:var(--muted);font-weight:600}
+.ph.cur{background:var(--sel);color:var(--sel-ink)}
+.ph.done{text-decoration:line-through;opacity:.7}
+.t-label{font-size:18px;font-weight:800;margin-top:8px}
+.t-big{font-size:clamp(68px,24vw,150px);font-weight:800;line-height:1;margin:6px 0 10px;letter-spacing:-.02em}
+.timer.play .t-big,.timer.play .t-label{color:var(--accent)}
+.timer.break .t-big,.timer.break .t-label{color:var(--ok)}
+.timer.prep .t-big,.timer.prep .t-label{color:var(--info)}
+.timer .t-bar{height:9px;background:var(--surface-2);border-radius:99px;overflow:hidden;color:var(--muted)}
+.timer.play .t-bar{color:var(--accent)} .timer.break .t-bar{color:var(--ok)} .timer.prep .t-bar{color:var(--info)}
+.timer .t-bar i{display:block;height:100%;width:0;background:currentColor}
+.timer.low .t-big{animation:pulse 1s steps(2,start) infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion: reduce){.timer.low .t-big{animation:none}.pbar i{transition:none}}
+.t-ctrl{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:16px}
+.t-ctrl .btn{white-space:nowrap}
+.t-ctrl .main{min-width:150px;min-height:58px;font-size:20px;border-radius:16px}
+@media (max-width:380px){.t-ctrl{gap:6px}.t-ctrl .main{min-width:118px}.t-ctrl .btn:not(.main){padding:8px 10px}}
+.t-ctrl2{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 10px}
+.inline{display:flex;align-items:center;gap:8px;justify-content:center;font-weight:700;font-size:14px}
+.inline input{width:90px !important}
+.board{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:start;margin:12px 0}
+.bside{background:var(--surface-2);border-radius:14px;padding:10px;text-align:center;min-width:0;border:1px solid var(--border)}
+.bside.me{border:2px solid var(--accent)}
+.bname{font-weight:800;font-size:14px;overflow-wrap:anywhere;min-height:2.6em;line-height:1.3;display:grid;place-items:center}
+.bside.me .bname{color:var(--accent)}
+.bscore{font-size:60px;font-weight:800;line-height:1.1}
+.bbtns{display:flex;gap:6px}
+.bbtns .btn{flex:1;min-height:52px;font-size:20px;padding:4px}
+.bsep{font-size:40px;font-weight:800;padding-top:48px;color:var(--muted)}
+.ymini{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;font-size:13px}
+
+/* play */
+.play h2{font-size:22px}
+.play .goal{font-size:16px;font-weight:700;margin-bottom:12px}
+.robots{display:grid;gap:10px;margin-bottom:10px}
+@media (min-width:560px){.robots{grid-template-columns:1fr 1fr}}
+.robot{border-radius:12px;padding:11px 13px;background:var(--surface-2);border:1px solid var(--border)}
+.robot.r1{border-top:4px solid var(--accent)} .robot.r2{border-top:4px solid var(--info)}
+.robot .rl{font-size:12.5px;font-weight:800;color:var(--muted);margin-bottom:2px}
+.robot p{font-size:16px;font-weight:600;margin:0}
+.caution{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:9px 12px;font-size:14.5px;margin-bottom:8px}
+.kpi{background:var(--ok-soft);color:var(--ok);border-radius:10px;padding:9px 12px;font-size:14.5px}
+.caution b,.kpi b{margin-right:6px}
+details.all summary{cursor:pointer;font-weight:700;padding:4px 0}
+.pb-row{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.pb-row b{display:block;font-size:15px}
+
+/* rules + checks */
+.statbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.stack{display:flex;height:9px;border-radius:99px;overflow:hidden;background:var(--surface-2);margin-bottom:8px}
+.stack i{display:block;height:100%}
+.stack .s-ok{background:var(--ok)} .stack .s-warn{background:var(--warn)} .stack .s-bad{background:var(--accent)}
+.rule{display:grid;grid-template-columns:70px minmax(0,1fr);gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.rule:last-child{border-bottom:0}
+.rule .ref{font-weight:800;font-size:13px;color:var(--info)}
+.rule .cat{font-weight:800;font-size:14.5px}
+.rule p{margin:2px 0 8px;font-size:14.5px}
+.rstat{display:flex;gap:6px;flex-wrap:wrap}
+.rstat button{font-size:13px;font-weight:700;padding:5px 12px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;min-height:34px}
+.rstat button.on.pass{background:var(--ok);border-color:var(--ok);color:#fff}
+.rstat button.on.check{background:var(--warn);border-color:var(--warn);color:#fff}
+.rstat button.on.fail{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+:root[data-theme="dark"] .rstat button.on.pass,:root[data-theme="dark"] .rstat button.on.check{color:#0d121d}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rstat button.on.pass,:root:not([data-theme="light"]) .rstat button.on.check{color:#0d121d}}
+.checks{list-style:none;padding:0;margin:0}
+.checks li{display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border)}
+.checks li:last-child{border-bottom:0}
+.crow{flex:1;display:flex;align-items:center;gap:11px;background:none;border:0;text-align:left;padding:10px 0;cursor:pointer;min-height:48px;min-width:0}
+.cbox{width:28px;height:28px;border-radius:8px;border:2px solid var(--border);display:grid;place-items:center;color:transparent;font-weight:800;flex:none;font-size:15px}
+.crow[aria-pressed="true"] .cbox{background:var(--ok);border-color:var(--ok);color:#fff}
+.crow[aria-pressed="true"] .ctext{text-decoration:line-through;color:var(--muted)}
+.ctext{font-size:15px;overflow-wrap:anywhere}
+.icon-del{background:none;border:0;color:var(--accent);font-size:16px;width:36px;height:36px;cursor:pointer;border-radius:8px}
+.add-row{display:flex;gap:8px;margin-top:10px}
+.add-row input{flex:1;min-width:0}
+.team-card .meta{font-size:13px;color:var(--muted)}
+.team-card.mine{border-color:var(--accent)}
+.team-card textarea{margin-top:4px}
+.vsline{font-size:13.5px;margin:6px 0;font-weight:600}
+
+/* dialog */
+dialog{border:0;border-radius:18px;padding:0;max-width:580px;width:calc(100% - 24px);background:var(--surface);color:var(--text);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(8,12,22,.55)}
+.modal-body{padding:18px;max-height:calc(100dvh - 48px);overflow:auto}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.modal-head h2{margin:0}
+.modal-actions{display:flex;gap:8px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.shift-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.modal-body h3{margin-top:18px}
+
+/* toast + pill */
+#toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px);transform:translate(-50%,16px);opacity:0;pointer-events:none;
+  background:#1b2333;color:#fff;padding:11px 14px;border-radius:12px;font-size:14px;display:flex;gap:14px;align-items:center;width:max-content;max-width:calc(100% - 32px);transition:opacity .2s,transform .2s;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#toast button{background:transparent;border:0;color:#ffb1bb;font-weight:800;cursor:pointer;padding:4px;white-space:nowrap}
+@media (min-width:760px){#toast{bottom:100px}}
+#tpill{position:fixed;right:12px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px);z-index:35;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:9px 15px;font-weight:800;box-shadow:0 8px 22px rgba(0,0,0,.25);cursor:pointer;font-variant-numeric:tabular-nums}
+@media (min-width:760px){#tpill{bottom:96px}}
+[hidden]{display:none !important}
+
+@media (max-width:380px){
+  main{padding:12px}
+  .clocks{gap:6px} .clocks b{font-size:14.5px}
+  .brand small{display:none}
+  .stepper button{width:38px} .stepper input{width:44px !important}
+}
+@media print{
+  .icon-btn,.tabbar,#tpill,#toast,.no-print,.toolbar,.seg,.chips{display:none !important}
+  body{background:#fff;padding:0;color:#000}
+  .appbar{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card,.tl,.match{box-shadow:none;break-inside:avoid}
+  .tl.past{opacity:1}
+}
+</style>
+</head>
+<body>
+<header class="appbar">
+  <a class="brand" href="#home" aria-label="หน้าหลัก">
+    <svg viewBox="0 0 512 512" aria-hidden="true"><defs><clipPath id="logoclip"><circle cx="256" cy="256" r="170"/></clipPath></defs><rect width="512" height="512" rx="112" fill="#b51f32"/><circle cx="256" cy="256" r="170" fill="#fff"/><g clip-path="url(#logoclip)" fill="#1f2a44"><path d="M256 196L313 237.5 291.3 304.5H220.7L198.9 237.5Z"/><path d="M256 128 208.4 93.5 226.6 37.5 285.4 37.5 303.6 93.5ZM377.7 216.4 395.9 160.5 454.7 160.5 472.8 216.4 425.3 251ZM331.2 359.6 390 359.6 408.2 415.5 360.6 450 313.1 415.5ZM180.8 359.6 198.9 415.5 151.4 450 103.8 415.5 122 359.6ZM134.3 216.4 86.7 251 39.2 216.4 57.3 160.5 116.1 160.5Z"/></g><path d="M256 196V128M313 237.5L377.7 216.4M291.3 304.5L331.2 359.6M220.7 304.5L180.8 359.6M198.9 237.5L134.3 216.4" stroke="#1f2a44" stroke-width="14" stroke-linecap="round"/><circle cx="256" cy="256" r="170" fill="none" stroke="#1f2a44" stroke-width="10"/></svg>
+    <span class="brand-text"><b id="brand-name">CWK JAEGER ROBOT</b><small id="brand-sub">Road to Champion 2026</small></span>
+  </a>
+  <div class="clocks" aria-label="นาฬิกา">
+    <div><small id="clk-v-l">ไต้หวัน</small><b id="clk-v">--:--</b></div>
+    <div><small id="clk-h-l">ไทย</small><b id="clk-h">--:--</b></div>
+  </div>
+  <button class="icon-btn" data-action="settings" aria-label="ตั้งค่าและสำรองข้อมูล">
+    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+  </button>
+</header>
+
+<main id="view" tabindex="-1"></main>
+
+<button id="tpill" data-action="go" data-tab="timer" hidden></button>
+<div id="toast" role="status" aria-live="polite"><span id="toast-msg"></span><button id="toast-undo" data-action="undo" hidden>เลิกทำ</button></div>
+<dialog id="modal" aria-label="หน้าต่าง"><div class="modal-body" id="modal-body"></div></dialog>
+<input type="file" id="file-import" accept="application/json,.json" hidden>
+
+<nav class="tabbar" aria-label="เมนูหลัก">
+  <a href="#home" data-tab="home"><svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>หน้าหลัก</span></a>
+  <a href="#schedule" data-tab="schedule"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>ตารางเวลา</span></a>
+  <a href="#scores" data-tab="scores"><svg class="ico" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/></svg><span>ผลแข่ง</span></a>
+  <a href="#timer" data-tab="timer"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span>จับเวลา</span></a>
+  <a href="#plan" data-tab="plan"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h4"/></svg><span>แผน/กติกา</span></a>
+</nav>
+
+<script>
+(() => {
+'use strict';
+
+const APP_VERSION = '1.0.0';
+const KEY = 'cwk-apra-2026';
+const TKEY = 'cwk-apra-2026-timer';
+const DATA_VERSION = 1;
+const KO_KEYS = ['sf1', 'sf2', 'third', 'final'];
+
+/* ------------------------------------------------------------------
+ * ข้อมูลเริ่มต้น (มาจากไฟล์ CWK_APRA_2026_Championship_Plan.xlsx)
+ * ------------------------------------------------------------------ */
+const M = (id, start, end, group, field, a, b) => ({ id, start, end, group, field, a, b, ga: null, gb: null, ya: 0, yb: 0 });
+const K = (label, start, end, action) => ({ label, start, end, a: '', b: '', ga: null, gb: null, et: '', etRounds: 1, ya: 0, yb: 0, action });
+const L = (arr) => arr.map((text, i) => ({ id: 'c' + i, text, done: false }));
+
+const DEFAULTS = () => ({
+  version: DATA_VERSION,
+  event: {
+    title: 'ROAD TO CHAMPION 2026',
+    name: 'APRA International Final 2026',
+    category: 'SPIKE Remote Soccer – Junior',
+    date: '2026-11-14',
+    myTeam: 'E02',
+    field: 'Field 4',
+    qualify: 2,
+    venueTz: 8, venueTzLabel: 'ไต้หวัน',
+    homeTz: 7, homeTzLabel: 'ไทย',
+    rulesUrl: 'https://www.apra-friends.org/2026season',
+    rulesRef: 'อ้างอิง SPIKE Remote Soccer – Junior Category Rules & Competition System • Updated 22/04/2026',
+  },
+  teams: [
+    { code: 'E01', name: 'HWC-IDK', group: 'E', from: 'ฮ่องกง', notes: '' },
+    { code: 'E02', name: 'CWK JAEGER ROBOT', group: 'E', from: 'ไทย', notes: '' },
+    { code: 'E03', name: 'Tui Nui Warrior', group: 'E', from: 'ไทย', notes: '' },
+    { code: 'E04', name: 'Mecha Mortis', group: 'E', from: '', notes: '' },
+    { code: 'F01', name: 'HWC-Crazy Horns', group: 'F', from: '', notes: '' },
+    { code: 'F02', name: 'Sai score ror wai loei', group: 'F', from: '', notes: '' },
+    { code: 'F03', name: 'Raimon Inazuma', group: 'F', from: '', notes: '' },
+    { code: 'F04', name: 'Two Idiots', group: 'F', from: '', notes: '' },
+  ],
+  matches: [
+    M('m1', '13:00', '13:15', 'E', '4', 'E01', 'E02'),
+    M('m2', '13:00', '13:15', 'F', '5', 'F01', 'F02'),
+    M('m3', '13:15', '13:30', 'E', '4', 'E03', 'E04'),
+    M('m4', '13:15', '13:30', 'F', '5', 'F03', 'F04'),
+    M('m5', '13:30', '13:45', 'E', '4', 'E01', 'E03'),
+    M('m6', '13:30', '13:45', 'F', '5', 'F01', 'F03'),
+    M('m7', '13:45', '14:00', 'E', '4', 'E02', 'E04'),
+    M('m8', '13:45', '14:00', 'F', '5', 'F02', 'F04'),
+    M('m9', '14:00', '14:15', 'E', '4', 'E01', 'E04'),
+    M('m10', '14:00', '14:15', 'F', '5', 'F01', 'F04'),
+    M('m11', '14:15', '14:30', 'E', '4', 'E02', 'E03'),
+    M('m12', '14:15', '14:30', 'F', '5', 'F02', 'F03'),
+  ],
+  ko: {
+    sf1: K('Semifinal 1', '14:45', '15:00', 'เตรียมพร้อมหาก CWK ถูกจัดลงแมตช์นี้'),
+    sf2: K('Semifinal 2', '15:00', '15:15', 'เตรียมพร้อมหาก CWK ถูกจัดลงแมตช์นี้'),
+    third: K('ชิงอันดับ 3', '15:30', '15:45', 'แข่งเฉพาะกรณีแพ้รอบรองชนะเลิศ'),
+    final: K('ชิงชนะเลิศ (GRAND FINAL)', '15:45', '16:00', 'เป้าหมายสูงสุด: คว้าแชมป์นานาชาติ'),
+  },
+  schedule: [
+    { id: 's1', start: '09:00', end: '09:30', phase: 'Registration', place: 'จุดลงทะเบียน', title: 'ลงทะเบียน', plan: 'ตรวจรายชื่อ รหัส E02 และอุปกรณ์สำรอง', goal: 'ครบก่อนเวลาปิดรับรายงานตัว', type: 'admin', link: '' },
+    { id: 's2', start: '09:30', end: '09:45', phase: 'Opening Ceremony', place: '–', title: 'พิธีเปิด', plan: 'นักเรียนประจำตำแหน่ง ระวังอุปกรณ์', goal: 'อุปกรณ์ครบ', type: 'admin', link: '' },
+    { id: 's3', start: '09:45', end: '10:00', phase: 'Judges Meeting', place: '–', title: 'ประชุมกรรมการ', plan: 'นักเรียนติดตามข้อชี้แจงกติกาล่าสุด', goal: 'สอบถามเฉพาะผู้มีสิทธิ์ตามกติกา', type: 'admin', link: '' },
+    { id: 's4', start: '10:00', end: '12:00', phase: 'Official Practice / Check', place: 'Field 4', title: 'ซ้อมและตรวจหุ่น', plan: 'ประกอบตามกฎ / ทดสอบ Omni, เตะ, รีสตาร์ท, การเชื่อมต่อ', goal: 'ผ่านตรวจขนาด 220 มม. น้ำหนัก ≤1,500 กรัม', type: 'practice', link: '' },
+    { id: 's5', start: '12:00', end: '13:00', phase: 'Lunch / Recovery', place: '–', title: 'อาหารกลางวัน', plan: 'พักสมาธิ ชาร์จตามที่ผู้จัดอนุญาต ตรวจโปรแกรม', goal: 'ร่างกายพร้อม อุปกรณ์พร้อม', type: 'rest', link: '' },
+    { id: 's6', start: '13:00', end: '13:15', phase: 'GROUP 1', place: 'FIELD 4 / E02–E01', title: 'HWC-IDK (ฮ่องกง)', plan: 'เปิดเกมเป็นระบบ / รับสัญญาณคู่แข่ง / เน้นไม่เสียบอลฟรี', goal: 'เป้าหมายชนะและไม่โดนใบเหลือง', type: 'match', link: 'm1' },
+    { id: 's7', start: '13:15', end: '13:45', phase: 'Recovery / Scout', place: 'นอกสนาม', title: 'พัก 30 นาที', plan: 'เช็กสภาพหุ่นและคู่แข่ง E04 / นักเรียนแก้เฉพาะที่กฎอนุญาต', goal: 'หุ่นยนต์พร้อมทั้ง 2 ตัว', type: 'rest', link: '' },
+    { id: 's8', start: '13:45', end: '14:00', phase: 'GROUP 2', place: 'FIELD 4 / E02–E04', title: 'Mecha Mortis', plan: 'ปรับตามรูปแบบเล่นของนัดแรก / ระวังผลต่างประตู', goal: 'เป้าหมาย 3 คะแนน', type: 'match', link: 'm7' },
+    { id: 's9', start: '14:00', end: '14:15', phase: 'Recovery / Reset', place: 'นอกสนาม', title: 'พัก 15 นาที', plan: 'รีเซ็ตอุปกรณ์ วางแผนเจอ E03 เท่านั้น', goal: 'พร้อมทันเวลา ห้ามรายงานตัวช้า', type: 'rest', link: '' },
+    { id: 's10', start: '14:15', end: '14:30', phase: 'GROUP 3', place: 'FIELD 4 / E02–E03', title: 'Tui Nui Warrior (ไทย)', plan: 'เกมตัดสินอันดับกลุ่ม / ประเมินคะแนนกับ H2H', goal: 'เป้าหมายแชมป์กลุ่ม E', type: 'match', link: 'm11' },
+    { id: 's11', start: '14:30', end: '14:45', phase: 'Judges Meeting', place: '–', title: 'ประกาศอันดับกลุ่ม', plan: 'คำนวณคะแนน พบกันเอง ผลต่างประตู และประตูได้', goal: 'ยืนยันอันดับ 1 หรือ 2', type: 'admin', link: '' },
+    { id: 's12', start: '14:45', end: '15:00', phase: 'SEMIFINAL 1', place: 'ตามประกาศ', title: 'Top 4 นัดที่ 1', plan: 'ถ้าถูกจัดแข่งนัดนี้เตรียมพร้อมทันที', goal: 'ชนะเพื่อเข้าชิง', type: 'ko', link: 'sf1' },
+    { id: 's13', start: '15:00', end: '15:15', phase: 'SEMIFINAL 2', place: 'ตามประกาศ', title: 'Top 4 นัดที่ 2', plan: 'ถ้าถูกจัดแข่งนัดนี้ให้พร้อมก่อนเวลา', goal: 'ชนะเพื่อเข้าชิง', type: 'ko', link: 'sf2' },
+    { id: 's14', start: '15:15', end: '15:30', phase: 'Judges Meeting', place: '–', title: 'พัก/กรรมการ', plan: 'เช็กความพร้อมต่อเวลาพิเศษและคัดผู้เล่นเดี่ยว', goal: 'หุ่นไม่เสียหาย', type: 'admin', link: '' },
+    { id: 's15', start: '15:30', end: '15:45', phase: 'THIRD PLACE', place: 'ตามประกาศ', title: 'ชิงอันดับ 3', plan: 'แข่งขันเฉพาะกรณีแพ้รอบรองฯ', goal: 'ผลงานสูงสุดเท่าที่เป็นไปได้', type: 'ko', link: 'third' },
+    { id: 's16', start: '15:45', end: '16:00', phase: 'GRAND FINAL', place: 'ตามประกาศ', title: 'ชิงแชมป์', plan: 'ใช้แผนรับมือคู่แข่ง + แผนต่อเวลา 1 หุ่น', goal: 'แชมป์ APRA International Final', type: 'ko', link: 'final' },
+    { id: 's17', start: '16:00', end: '16:15', phase: 'Judges Meeting', place: '–', title: 'กรรมการสรุปผล', plan: 'ตรวจความถูกต้องผลก่อนลงนาม', goal: 'ผลการแข่งขันถูกต้อง', type: 'admin', link: '' },
+  ],
+  scheduleNotes: [
+    'กติกาฉบับ 22 เม.ย. 2569: รอบกลุ่ม 3 นาที × 2 ครึ่ง, ชิงอันดับ 3/ชิงแชมป์ 5 นาที × 2 ครึ่ง, เตรียมก่อนแข่ง 2 นาทีและพักครึ่ง 2 นาที',
+    'รอบรองฯ ใช้คู่ประกบตามประกาศกรรมการ ภาพตารางไม่ได้ระบุว่าคู่ Top 4 จับสายใด ห้ามสมมติว่าพบ F01 หรือ F02 โดยอัตโนมัติ',
+  ],
+  groupNotes: [
+    'กติกาการจัดอันดับ (F3–F4): ชนะ 3 • เสมอ 1 • แพ้ 0; คะแนนเท่ากันดูผลพบกันเองก่อน → ผลต่างประตู → ประตูได้',
+    'กรณีหลายทีมแต้มเท่ากัน: ใช้ผลพบกันเองเป็นเกณฑ์แรก ตาม F4; หากยังเท่ากันใช้ผลต่างประตูและประตูได้ • ปรึกษากรรมการเมื่อเสมอหลายทีม',
+    'รอบน็อกเอาต์คัดอันดับ 1 และ 2 ของกลุ่ม E/F • การกำหนดคู่รอบรองยึดประกาศของผู้จัด',
+    'เป้าหมายสำหรับ CWK (E02): 9 คะแนน = แชมป์กลุ่มแน่นอน • 7 คะแนน = เข้ารอบ Top 4 แน่นอน (อันดับ 1/2 ขึ้นกับเกณฑ์ตัดสิน) • 6 คะแนนยังไม่แน่นอน',
+  ],
+  koNotes: [
+    'ภาพตารางยังไม่ระบุคู่ประกบรอบรองฯ • เลือกทีมเมื่อกรรมการประกาศ • เสมอในรอบน็อกเอาต์ต่อเวลา 2 นาทีแบบยิงก่อนชนะ',
+    'F5: แชมป์กลุ่มพบรองแชมป์กลุ่ม แต่รายละเอียดการจับคู่ Top 4 ต้องยืนยันจากผู้จัด เพราะในภาพไม่ได้ระบุสายประกบ',
+    'F7: หากเสมอ ให้เวลาเตรียม 2 นาที ต่อเวลา 2 นาที ทีมใดทำประตูแรกชนะ; หากยังเสมอ เตรียม 2 นาทีและเหลือฝ่ายละหุ่นเดียวเพื่อต่อเวลาอีก 2 นาที วนจนชนะ',
+    'เกมชิงชนะเลิศ/ชิงอันดับสาม แข่งขันครึ่งละ 5 นาที (C4) • เกมอื่นครึ่งละ 3 นาที (C2) • เวลาในตาราง 15 นาทีเป็นช่องการจัดรายการ ไม่ใช่เวลาเล่นจริง',
+  ],
+  playbookNote: 'กลยุทธ์เป็นข้อเสนอเชิงแท็กติก ไม่ใช่กติกาของผู้จัด • ฝึกให้ผู้เข้าแข่งขันตัดสินใจเองระหว่างแข่งขัน',
+  playbook: [
+    { situation: 'เริ่มเกม 0–30 วินาที', goal: 'แย่งบอลแรกแต่ไม่เสียทรง', r1: 'เร่งเข้าหาบอลแบบควบคุมแรงเฉื่อย', r2: 'คุมแกนกลาง ป้องกันลูกสวน', caution: 'สองตัวต้องอยู่ฝั่งตนเองตามตำแหน่งที่กำหนดก่อน GO', kpi: 'ได้ครองบอลหรือป้องกันการยิงแรก' },
+    { situation: 'สกอร์เสมอ', goal: 'ควบคุมแดนกลาง', r1: 'หลอกทิศ / เปิดมุมเตะและชิ่งบอล', r2: 'ถอยคุมหน้าเขตประตู อย่ารุมบอล', caution: 'หลีกเลี่ยงการชนคู่แข่งโดยเจตนา', kpi: 'สร้างโอกาสยิงแบบโล่ง' },
+    { situation: 'นำ 1 ประตู', goal: 'ลดความเสี่ยงรักษาความได้เปรียบ', r1: 'เข้ากดดันเป็นจังหวะ ไม่บุกสุดตัว', r2: 'ปิดช่องยิง บังคับคู่แข่งออกด้านข้าง', caution: 'อย่ายืนอุดลูกในเขตจนเกิดบอลตายหรือทำเข้าประตูตัวเอง', kpi: 'ไม่เสียประตูจากการสวนกลับ' },
+    { situation: 'นำ 2 ประตูขึ้นไป', goal: 'รักษาประตู + ประหยัดความเสี่ยง', r1: 'ชะลอเกมโดยเล่นกับบอลตามกติกา', r2: 'คุมช่องยิงและซ้อนตำแหน่ง', caution: 'ห้ามเจตนาทำบอลตาย/เหนี่ยวรั้งลูกบอล', kpi: 'รักษาผลต่างประตูและไม่โดนใบเหลือง' },
+    { situation: 'ตาม 1 ประตู', goal: 'เพิ่มโอกาสคืนสกอร์', r1: 'เล่นออกด้านข้างและยิงเร็วกว่าปกติ', r2: 'ขยับสู่กลางสนามเพื่อเก็บบอลสอง', caution: 'ไม่ปล่อยหน้าประตูโล่งโดยไม่จำเป็น', kpi: 'สร้างจังหวะยิงได้ต่อเนื่อง' },
+    { situation: 'ใกล้หมดเวลาและเสมอ', goal: 'ประเมินผลแต้ม/อันดับ', r1: 'ถ้า 1 แต้มเพียงพอให้เลือกโอกาสยิงคุ้มความเสี่ยง', r2: 'รักษาช่องประตูและพร้อมสวน', caution: 'อย่ารีบเกินจนเสียผลต่างประตู', kpi: 'เก็บแต้มอย่างปลอดภัย' },
+    { situation: 'น็อกเอาต์เสมอ', goal: 'เตรียม Golden Goal', r1: 'พร้อมยิงลูกแรกที่ได้เปรียบ', r2: 'รับลึกแต่ไม่อุด กดดันมุมยิงคู่แข่ง', caution: 'ต่อเวลา 2 นาที หลังเตรียม 2 นาที', kpi: 'ยิงประตูแรกของช่วงต่อเวลา' },
+    { situation: 'เสมอต่อเนื่อง / 1v1', goal: 'เพิ่มโอกาสชนะเดี่ยว', r1: 'เลือกหุ่นที่เลี้ยงและยิงแม่นที่สุด', r2: 'หุ่นอีกตัวตามกติกาต้องนำออกก่อนเริ่มต่อเวลาถัดไป', caution: 'ฝึกแบบ 1 ต่อ 1 ทั้งรุก รับ และกลับทิศ', kpi: 'เวลาจากรับเป็นยิงสั้นที่สุด' },
+    { situation: 'การฟื้นตัวหลังนัด', goal: 'พร้อมลงแข่งรอบถัดไป', r1: 'เช็กหัวเตะ การกดปุ่ม เชื่อมต่อ', r2: 'เช็กล้อ Omni เฟือง จุดศูนย์ถ่วง', caution: 'ผู้เข้าแข่งขันเป็นผู้แก้หุ่นและโปรแกรมเอง', kpi: 'ผ่าน quick check ภายในเวลาพัก' },
+  ],
+  rules: [
+    ['A1', 'ทีมแข่ง', 'นักเรียน 2–3 คน ใช้หุ่นยนต์ 2 ตัวต่อแมตช์'],
+    ['B1–B6', 'สนาม / บอล', 'สนามราว 236×114 ซม. ประตู 40 ซม. ลูกบอลดำพิมพ์ 3D เส้นผ่านศูนย์กลาง 55 มม. น้ำหนัก 9–11 กรัม'],
+    ['C2–C4', 'เวลาเกม', 'รอบกลุ่ม/รองฯ ครึ่งละ 3 นาที; ชิงแชมป์/ชิงที่ 3 ครึ่งละ 5 นาที; พักครึ่งและเตรียม 2 นาที'],
+    ['C5', 'รายงานตัว', 'ไม่รายงานตัวภายใน 2 นาทีหลังเริ่ม = แพ้ 0–2'],
+    ['C6–C13', 'เริ่มเล่น', 'หุ่นทั้งสองอยู่ฝั่งตนเอง นอกเขตเริ่มเตะ; อย่างน้อยหนึ่งตัวทับบริเวณเขตโทษตาม C8; เริ่มเมื่อกรรมการสั่ง GO'],
+    ['C14–C17', 'การได้ประตู', 'บอลแตะผนังหลังประตู = ได้ประตู; ยิงเข้าประตูตัวเองนับด้วย; ระวังรูปแบบป้องกันหลายตัวตามภาพกฎ'],
+    ['C18–C25', 'หุ่นเสีย / บอลตาย', 'หุ่นไม่เคลื่อน >5 วินาทีเสี่ยงถูกนำออกจนมีการเริ่มเตะใหม่; บอลมุมหรือในเขตหวงห้ามนานอาจถูกย้ายกลับกลางสนาม'],
+    ['C26–C29', 'ใบเหลือง', 'ห้ามพุ่งชนหุ่นคู่แข่งโดยไม่มุ่งบอล ห้ามจับหุ่นโดยไม่ได้รับอนุญาต; ครบ 4 ใบเหลืองโดนตัดสิทธิ์ตลอดรายการ'],
+    ['C30', 'ห้ามเปลี่ยนหุ่นในแมตช์', 'ใช้หุ่น 2 ตัวที่เลือกแล้วจนจบเกม เปลี่ยนหุ่นกลางแมตช์ = ถูกตัดสิทธิ์'],
+    ['D1–D7', 'สเปกตัวหุ่น', 'ขนาดไม่เกินเส้นผ่านศูนย์กลาง 220 มม. และสูง 220 มม. น้ำหนัก ≤1,500 กรัม; จำกัดมอเตอร์ไม่เกิน 2 Medium+2 Large และ Hub 1 ตัว; โครงใช้ชิ้น LEGO'],
+    ['D8–D9', 'Omni Drive', 'ต้องใช้ล้อ Omni ขับเคลื่อน 3 ล้อ และเคลื่อนทางแนวราบได้ทั้ง 2 แกน'],
+    ['D10–D15', 'การครองบอล', 'ปากรับบอลกว้างอย่างน้อย 72 มม., ลึกไม่เกิน 30 มม., ลูกต้องแตะพื้นและไหลออกเมื่อถอย; ผิดกฎอาจโดนใบเหลือง'],
+    ['D16', 'การนำชิ้นส่วนเข้า', 'ตามข้อเขียนต้องนำชิ้นส่วนแยกมา ไม่มีส่วนประกอบสำเร็จ/ภาพคู่มือช่วยประกอบ • ขอคำยืนยันจากผู้จัดในวันงาน'],
+    ['D17–D20', 'รีโมต / ซอฟต์แวร์', 'นำคอมพิวเตอร์และรีโมตมาเอง สามารถใช้ PS5/Tablet/ฮับที่รองรับได้ ไม่จำกัดซอฟต์แวร์'],
+    ['E3–E4', 'ผลการแข่งขัน', 'ก่อนเซ็นใบคะแนนตรวจสกอร์และผลให้ถูกต้อง ลงนามแล้วคัดค้านผลไม่ได้'],
+    ['E11–E15', 'Fair Play', 'ครูและผู้ไม่ใช่นักเรียนผู้แข่งขันห้ามแก้หุ่น/โปรแกรมหรือช่วยชี้นำระหว่างแข่งขัน อาจถูกตัดสิทธิ์'],
+    ['F3–F4', 'ระบบคะแนนกลุ่ม', 'ชนะ 3 เสมอ 1 แพ้ 0; แต้มเท่ากัน: พบกันเอง → ผลต่างประตู → ประตูได้'],
+    ['F5–F7', 'รอบ Knockout', 'อันดับ 1–2 ของแต่ละกลุ่มเข้า Top 4; ชนะเข้าชิง เสมอต่อเวลา 2 นาทีแล้วยิงก่อนชนะ; หากยังเสมอลดเหลือ 1 หุ่นต่อฝ่าย'],
+    ['E17', 'ลำดับกฎ', 'คำตัดสินผู้จัด > กติกาอัปเดต > กติการุ่น Junior ที่เผยแพร่'],
+  ].map(([ref, cat, text], i) => ({ id: 'r' + i, ref, cat, text, status: '' })),
+  checklists: {
+    quick: L(['หัวเตะ (Kicker) ทำงานปกติ', 'การกดปุ่ม / รีโมตตอบสนอง', 'การเชื่อมต่อ Hub ↔ รีโมต', 'ล้อ Omni ทั้ง 3 ล้อ', 'เฟืองไม่หลวม/ไม่ลื่น', 'จุดศูนย์ถ่วงสมดุล']),
+    gear: L([
+      'รายชื่อนักเรียน 2–3 คน และรหัสทีม E02 (A1)',
+      'หุ่นยนต์ 2 ตัว พร้อมอุปกรณ์สำรอง',
+      'คอมพิวเตอร์ + รีโมต/คอนโทรลเลอร์ นำมาเอง (D17–D20)',
+      'ชิ้นส่วน LEGO แบบแยกชิ้น ไม่มีส่วนประกอบสำเร็จ/ภาพคู่มือ (D16)',
+      'อุปกรณ์ชาร์จ Hub (ชาร์จตามที่ผู้จัดอนุญาต)',
+      'วัดขนาด Ø ≤220 มม. สูง ≤220 มม. ครบ 2 ตัว (D1–D7)',
+      'ชั่งน้ำหนัก ≤1,500 กรัม ครบ 2 ตัว',
+      'มอเตอร์ ≤2 Medium + 2 Large และ Hub 1 ตัว',
+      'ล้อ Omni 3 ล้อ เคลื่อนที่ได้ทั้ง 2 แกน (D8–D9)',
+      'ปากรับบอล กว้าง ≥72 มม. ลึก ≤30 มม. (D10–D15)',
+    ]),
+    drills: L(['6-min scrimmage', '0–1 comeback', 'defend 1–0', '2-min golden goal', '1-on-1 robot', '5-min half endurance']),
+  },
+  ui: { tab: 'home', scoresTab: 'group', planTab: 'play', groupFilter: '', play: '0', theme: 'auto' },
+});
+
+const FIELD_REMINDERS = [
+  ['C5', 'รายงานตัวให้ทัน — ไม่มาภายใน 2 นาทีหลังเริ่ม = แพ้ 0–2'],
+  ['C6–C13', 'ก่อน GO: หุ่นทั้งสองอยู่ฝั่งตนเอง นอกเขตเริ่มเตะ อย่างน้อยหนึ่งตัวทับเขตโทษ'],
+  ['C18–C25', 'หุ่นไม่เคลื่อน >5 วินาที เสี่ยงถูกนำออกจนมีการเริ่มเตะใหม่'],
+  ['C26–C29', 'ห้ามพุ่งชนหุ่นคู่แข่งโดยไม่มุ่งบอล ห้ามจับหุ่นโดยไม่ได้รับอนุญาต • 4 ใบเหลือง = ตัดสิทธิ์ทั้งรายการ'],
+  ['C30', 'ห้ามเปลี่ยนหุ่นกลางแมตช์'],
+  ['E3–E4', 'ตรวจสกอร์ก่อนเซ็นใบคะแนน ลงนามแล้วคัดค้านไม่ได้'],
+];
+
+const TYPES = [['admin', 'ทั่วไป / กรรมการ'], ['practice', 'ซ้อม / ตรวจหุ่น'], ['rest', 'พัก / ฟื้นตัว'], ['match', 'แมตช์รอบกลุ่ม'], ['ko', 'น็อกเอาต์']];
+
+const PRESETS = {
+  group: { name: 'รอบกลุ่ม / รองฯ', note: 'ครึ่งละ 3 นาที (C2) • เตรียม 2 นาที • พักครึ่ง 2 นาที', phases: [['เตรียมก่อนแข่ง', 120, 'prep'], ['ครึ่งแรก', 180, 'play'], ['พักครึ่ง', 120, 'break'], ['ครึ่งหลัง', 180, 'play']] },
+  final: { name: 'ชิงที่ 3 / ชิงแชมป์', note: 'ครึ่งละ 5 นาที (C4) • เตรียม 2 นาที • พักครึ่ง 2 นาที', phases: [['เตรียมก่อนแข่ง', 120, 'prep'], ['ครึ่งแรก', 300, 'play'], ['พักครึ่ง', 120, 'break'], ['ครึ่งหลัง', 300, 'play']] },
+  et: { name: 'ต่อเวลา', note: 'F7: เตรียม 2 นาที → ต่อเวลา 2 นาที ยิงก่อนชนะ • ยังเสมอ → เหลือฝ่ายละ 1 หุ่น แล้ววนต่อ', phases: [['เตรียมต่อเวลา', 120, 'prep'], ['ต่อเวลา (ยิงก่อนชนะ)', 120, 'play']] },
+  rest: { name: 'พัก / ซ่อม', note: 'จับเวลาพักระหว่างนัด • นักเรียนแก้หุ่นเฉพาะที่กฎอนุญาต', phases: null },
+};
+
+/* ------------------------------------------------------------------
+ * State + storage
+ * ------------------------------------------------------------------ */
+let S, T;
+const UI = { editSchedule: false, editLists: false };
+let undoSnap = null;
+
+function merge(def, val) {
+  if (Array.isArray(def)) return Array.isArray(val) ? val : def;
+  if (def && typeof def === 'object') {
+    const out = { ...def };
+    if (val && typeof val === 'object' && !Array.isArray(val)) {
+      for (const k of Object.keys(val)) out[k] = (k in def) ? merge(def[k], val[k]) : val[k];
+    }
+    return out;
+  }
+  return val === undefined ? def : val;
+}
+function load() {
+  let raw = null;
+  try { raw = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { raw = null; }
+  S = (raw && typeof raw === 'object') ? merge(DEFAULTS(), raw) : DEFAULTS();
+  S.version = DATA_VERSION;
+  let t = null;
+  try { t = JSON.parse(localStorage.getItem(TKEY) || 'null'); } catch (e) { t = null; }
+  T = merge({ preset: 'group', idx: 0, remaining: 120, running: false, endAt: 0, ref: '', sound: true, custom: 15 }, t || {});
+}
+let saveWarned = false;
+function save() {
+  memo.clear();
+  try { localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch (e) { if (!saveWarned) { saveWarned = true; toast('บันทึกลงเครื่องไม่ได้ (อาจเป็นโหมดส่วนตัว) — ใช้เมนู ⋮ > สำรองข้อมูล'); } }
+}
+function saveT() { try { localStorage.setItem(TKEY, JSON.stringify(T)); } catch (e) { /* ignore */ } }
+function snapshot() { undoSnap = JSON.stringify(S); }
+
+/* ------------------------------------------------------------------
+ * Helpers
+ * ------------------------------------------------------------------ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const num = (v) => typeof v === 'number' && isFinite(v);
+const hasScore = (m) => !!m && num(m.ga) && num(m.gb);
+const pad = (n) => String(n).padStart(2, '0');
+const toMin = (hhmm) => { const [h, m] = String(hhmm || '0:0').split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+const fromMin = (x) => { x = ((Math.round(x) % 1440) + 1440) % 1440; return pad(Math.floor(x / 60)) + ':' + pad(x % 60); };
+const homeT = (hhmm) => fromMin(toMin(hhmm) + (S.event.homeTz - S.event.venueTz) * 60);
+const sign = (n) => (n > 0 ? '+' + n : String(n));
+const byStart = (x, y) => toMin(x.start) - toMin(y.start);
+const memo = new Map();
+
+const team = (c) => S.teams.find((t) => t.code === c);
+const tname = (c) => (team(c) && team(c).name) || c || '—';
+const isMe = (c) => !!c && c === S.event.myTeam;
+const myName = () => tname(S.event.myTeam);
+const shortMe = () => (myName().split(/\s+/)[0] || S.event.myTeam);
+const groups = () => [...new Set(S.teams.map((t) => t.group))].sort();
+const myGroup = () => (team(S.event.myTeam) && team(S.event.myTeam).group) || groups()[0];
+const gMatches = (g) => S.matches.filter((m) => m.group === g);
+const sortedSchedule = () => S.schedule.slice().sort((a, b) => byStart(a, b) || toMin(a.end) - toMin(b.end));
+
+function evMs(hhmm, date) {
+  const [y, mo, d] = String(date || S.event.date).split('-').map(Number);
+  return Date.UTC(y, (mo || 1) - 1, d || 1) + toMin(hhmm) * 60000 - S.event.venueTz * 3600000;
+}
+function clockStr(offset) { const d = new Date(Date.now() + offset * 3600000); return pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()); }
+function fmtDateTh(iso) {
+  try {
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Intl.DateTimeFormat('th-TH', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d)));
+  } catch (e) { return iso; }
+}
+function fmtDur(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  if (d) return `${d} วัน ${h} ชม. ${m} นาที`;
+  if (h) return `${h} ชม. ${m} นาที`;
+  if (m >= 10) return `${m} นาที`;
+  return `${m}:${pad(s)} นาที`;
+}
+const fmtMS = (sec) => { const s = Math.max(0, Math.ceil(sec)); return pad(Math.floor(s / 60)) + ':' + pad(s % 60); };
+
+/* ------------------------------------------------------------------
+ * Match model
+ * ------------------------------------------------------------------ */
+function getMatch(ref) {
+  const [k, id] = String(ref || '').split(':');
+  if (k === 'g') return S.matches.find((m) => m.id === id) || null;
+  if (k === 'k') return S.ko[id] || null;
+  return null;
+}
+function sidesOf(ref) {
+  const [k, id] = String(ref || '').split(':');
+  const m = getMatch(ref);
+  if (!m) return { a: '', b: '' };
+  return k === 'g' ? { a: m.a, b: m.b } : koSides(id);
+}
+function linkRef(link) {
+  if (!link) return null;
+  if (S.matches.some((m) => m.id === link)) return 'g:' + link;
+  if (KO_KEYS.includes(link)) return 'k:' + link;
+  return null;
+}
+function koSide(k) {
+  const m = S.ko[k];
+  if (!hasScore(m)) return null;
+  if (m.ga > m.gb) return 'a';
+  if (m.gb > m.ga) return 'b';
+  return (m.et === 'a' || m.et === 'b') ? m.et : null;
+}
+function koSides(k) {
+  if (k === 'final') return { a: koWin('sf1') || '', b: koWin('sf2') || '' };
+  if (k === 'third') return { a: koLose('sf1') || '', b: koLose('sf2') || '' };
+  return { a: S.ko[k].a || '', b: S.ko[k].b || '' };
+}
+function koWin(k) { const s = koSide(k); if (!s) return null; return koSides(k)[s] || null; }
+function koLose(k) { const s = koSide(k); if (!s) return null; return koSides(k)[s === 'a' ? 'b' : 'a'] || null; }
+function winnerCode(ref) {
+  const [k, id] = ref.split(':');
+  if (k === 'k') return koWin(id);
+  const m = getMatch(ref);
+  if (!hasScore(m)) return null;
+  return m.ga > m.gb ? m.a : m.gb > m.ga ? m.b : null;
+}
+function myYellow() {
+  const my = S.event.myTeam; let n = 0;
+  S.matches.forEach((m) => { if (m.a === my) n += m.ya || 0; if (m.b === my) n += m.yb || 0; });
+  KO_KEYS.forEach((k) => { const t = koSides(k), m = S.ko[k]; if (t.a === my) n += m.ya || 0; if (t.b === my) n += m.yb || 0; });
+  return n;
+}
+function presetFor(ref) { return (ref === 'k:third' || ref === 'k:final') ? 'final' : 'group'; }
+function myFixtures() {
+  const my = S.event.myTeam; const out = [];
+  S.matches.forEach((m) => { if (m.a === my || m.b === my) out.push({ ref: 'g:' + m.id, a: m.a, b: m.b, start: m.start, end: m.end, label: 'รอบกลุ่ม ' + m.group, field: 'สนาม ' + m.field, done: hasScore(m) }); });
+  KO_KEYS.forEach((k) => { const t = koSides(k); if (t.a === my || t.b === my) out.push({ ref: 'k:' + k, a: t.a, b: t.b, start: S.ko[k].start, end: S.ko[k].end, label: S.ko[k].label, field: 'สนามตามประกาศ', done: !!koWin(k) }); });
+  return out.sort(byStart);
+}
+function myPlacement() {
+  const my = S.event.myTeam;
+  if (koWin('final') === my) return '🏆 แชมป์';
+  if (koLose('final') === my) return '🥈 รองแชมป์';
+  if (koWin('third') === my) return '🥉 อันดับ 3';
+  if (koLose('third') === my) return 'อันดับ 4';
+  return null;
+}
+
+/* ------------------------------------------------------------------
+ * Standings + tie-break (F3–F4): แต้ม → พบกันเอง → ผลต่างประตู → ประตูได้
+ * ------------------------------------------------------------------ */
+function tableRows(g) {
+  const rows = {};
+  S.teams.filter((t) => t.group === g).forEach((t) => { rows[t.code] = { code: t.code, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 }; });
+  const results = [];
+  gMatches(g).forEach((m) => {
+    if (!hasScore(m) || !rows[m.a] || !rows[m.b]) return;
+    const A = rows[m.a], B = rows[m.b];
+    A.p++; B.p++; A.gf += m.ga; A.ga += m.gb; B.gf += m.gb; B.ga += m.ga;
+    const res = m.ga > m.gb ? 'a' : m.ga < m.gb ? 'b' : 'd';
+    if (res === 'a') { A.w++; B.l++; A.pts += 3; } else if (res === 'b') { B.w++; A.l++; B.pts += 3; } else { A.d++; B.d++; A.pts++; B.pts++; }
+    results.push({ a: m.a, b: m.b, res });
+  });
+  Object.values(rows).forEach((r) => { r.gd = r.gf - r.ga; });
+  return { rows, results };
+}
+function h2hPoints(codes, results) {
+  const set = new Set(codes), pts = {};
+  codes.forEach((c) => { pts[c] = 0; });
+  results.forEach((r) => {
+    if (!set.has(r.a) || !set.has(r.b)) return;
+    if (r.res === 'a') pts[r.a] += 3; else if (r.res === 'b') pts[r.b] += 3; else { pts[r.a]++; pts[r.b]++; }
+  });
+  return pts;
+}
+function rankRows(list, results, canUseGoals) {
+  const sorted = list.map((r) => ({ ...r })).sort((x, y) => y.pts - x.pts);
+  const blocks = []; const notes = [];
+  let i = 0;
+  while (i < sorted.length) {
+    let j = i;
+    while (j < sorted.length && sorted[j].pts === sorted[i].pts) j++;
+    const cl = sorted.slice(i, j);
+    if (cl.length === 1) { cl[0].h2h = 0; blocks.push(cl); }
+    else {
+      const hp = h2hPoints(cl.map((r) => r.code), results);
+      cl.forEach((r) => { r.h2h = hp[r.code]; });
+      const goals = canUseGoals(cl);
+      cl.sort((x, y) => (y.h2h - x.h2h) || (goals ? ((y.gd - x.gd) || (y.gf - x.gf)) : 0));
+      let a = 0;
+      while (a < cl.length) {
+        let b = a + 1;
+        while (b < cl.length && cl[b].h2h === cl[a].h2h && (!goals || (cl[b].gd === cl[a].gd && cl[b].gf === cl[a].gf))) b++;
+        blocks.push(cl.slice(a, b)); a = b;
+      }
+      for (let k = 0; k < cl.length - 1; k++) {
+        const x = cl[k], y = cl[k + 1];
+        notes.push({ hi: x.code, lo: y.code, x, y, by: x.h2h !== y.h2h ? 'h2h' : !goals ? 'pending' : x.gd !== y.gd ? 'gd' : x.gf !== y.gf ? 'gf' : 'tie' });
+      }
+    }
+    i = j;
+  }
+  let pos = 1; const ranked = [];
+  blocks.forEach((bl) => { bl.forEach((r) => ranked.push({ ...r, pos, posMax: pos + bl.length - 1 })); pos += bl.length; });
+  return { ranked, notes };
+}
+function standings(g) {
+  const key = 'st:' + g;
+  if (memo.has(key)) return memo.get(key);
+  const { rows, results } = tableRows(g);
+  const { ranked, notes } = rankRows(Object.values(rows), results, () => true);
+  const ms = gMatches(g);
+  const out = { ranked, notes, played: ms.filter(hasScore).length, total: ms.length };
+  out.complete = out.played === out.total;
+  memo.set(key, out);
+  return out;
+}
+/* ทุกความเป็นไปได้ของนัดที่เหลือ (ชนะ/เสมอ/แพ้) → อันดับดีสุด/แย่สุดของแต่ละทีม */
+function scenario(g) {
+  const key = 'sc:' + g + ':' + S.event.myTeam;
+  if (memo.has(key)) return memo.get(key);
+  const { rows, results } = tableRows(g);
+  const codes = Object.keys(rows);
+  const remaining = gMatches(g).filter((m) => !hasScore(m) && rows[m.a] && rows[m.b]);
+  const fixed = {};
+  codes.forEach((c) => { fixed[c] = !remaining.some((m) => m.a === c || m.b === c); });
+  const my = S.event.myTeam;
+  const myNext = remaining.filter((m) => m.a === my || m.b === my).sort(byStart)[0] || null;
+  const agg = {}; codes.forEach((c) => { agg[c] = { best: 99, worst: 0 }; });
+  const byNext = { W: { best: 99, worst: 0, n: 0 }, D: { best: 99, worst: 0, n: 0 }, L: { best: 99, worst: 0, n: 0 } };
+  const N = Math.min(remaining.length, 9);
+  const total = Math.pow(3, N);
+  const OUT = ['a', 'b', 'd'];
+  for (let idx = 0; idx < total; idx++) {
+    let x = idx; const pts = {};
+    codes.forEach((c) => { pts[c] = rows[c].pts; });
+    const res = results.slice(); let nx = null;
+    for (let k = 0; k < N; k++) {
+      const o = OUT[x % 3]; x = Math.floor(x / 3);
+      const m = remaining[k];
+      if (o === 'a') pts[m.a] += 3; else if (o === 'b') pts[m.b] += 3; else { pts[m.a]++; pts[m.b]++; }
+      res.push({ a: m.a, b: m.b, res: o });
+      if (m === myNext) { const ms = m.a === my ? 'a' : 'b'; nx = o === 'd' ? 'D' : o === ms ? 'W' : 'L'; }
+    }
+    const list = codes.map((c) => ({ code: c, pts: pts[c], gd: rows[c].gd, gf: rows[c].gf, fixed: fixed[c] }));
+    const { ranked } = rankRows(list, res, (cl) => cl.every((r) => r.fixed));
+    ranked.forEach((r) => {
+      const a = agg[r.code]; a.best = Math.min(a.best, r.pos); a.worst = Math.max(a.worst, r.posMax);
+      if (r.code === my && nx) { const b = byNext[nx]; b.best = Math.min(b.best, r.pos); b.worst = Math.max(b.worst, r.posMax); b.n++; }
+    });
+  }
+  const out = { agg, myNext, byNext, remaining: remaining.length };
+  memo.set(key, out);
+  return out;
+}
+function qStatus(a, remaining) {
+  const Q = S.event.qualify;
+  if (!a) return null;
+  if (a.worst <= 1) return { cls: 'gold', t: remaining ? 'แชมป์กลุ่มแน่นอน' : 'แชมป์กลุ่ม' };
+  if (a.worst <= Q) return { cls: 'ok', t: remaining ? 'เข้ารอบแน่นอน' : 'เข้ารอบ' };
+  if (a.best > Q) return { cls: 'bad', t: 'ตกรอบ' };
+  return remaining ? { cls: 'warn', t: 'ลุ้น' } : { cls: 'warn', t: 'รอกรรมการตัดสิน' };
+}
+function outcomeText(b) {
+  const Q = S.event.qualify;
+  if (!b || !b.n) return { cls: '', t: '—' };
+  if (b.worst <= 1) return { cls: 'ok', t: 'แชมป์กลุ่มแน่นอน' };
+  if (b.worst <= Q) return { cls: 'ok', t: b.best === 1 ? `เข้ารอบแน่นอน (อันดับ 1–${b.worst})` : 'เข้ารอบแน่นอน' };
+  if (b.best > Q) return { cls: 'bad', t: 'ตกรอบแน่นอน' };
+  return { cls: 'warn', t: `ยังไม่แน่นอน (อันดับ ${b.best}–${b.worst}) ขึ้นกับคู่อื่น/ผลต่างประตู` };
+}
+function tieText(n) {
+  if (n.by === 'h2h') return `ผลพบกันเอง (${n.x.h2h} ต่อ ${n.y.h2h} แต้ม)`;
+  if (n.by === 'gd') return `ผลต่างประตู (${sign(n.x.gd)} ต่อ ${sign(n.y.gd)})`;
+  if (n.by === 'gf') return `ประตูได้ (${n.x.gf} ต่อ ${n.y.gf})`;
+  return 'เท่ากันทุกเกณฑ์ — ปรึกษากรรมการ';
+}
+function resInfo(ref) {
+  const m = getMatch(ref); const [kind, id] = ref.split(':'); const s = sidesOf(ref);
+  if (!m) return { t: '', cls: '' };
+  if (!num(m.ga) && !num(m.gb)) return { t: 'ยังไม่แข่ง', cls: '' };
+  if (!hasScore(m)) return { t: 'กรอกไม่ครบ', cls: 'warn' };
+  const mySide = isMe(s.a) ? 'a' : isMe(s.b) ? 'b' : null;
+  const w = kind === 'g' ? (m.ga > m.gb ? 'a' : m.gb > m.ga ? 'b' : 'd') : (koSide(id) || 'd');
+  const et = kind === 'k' && m.ga === m.gb && (m.et === 'a' || m.et === 'b');
+  if (kind === 'k' && w === 'd') return { t: 'เสมอ → ต่อเวลา', cls: 'warn' };
+  if (mySide) {
+    if (w === 'd') return { t: 'เสมอ +1', cls: 'warn' };
+    if (w === mySide) return { t: kind === 'g' ? 'ชนะ +3' : (et ? 'ชนะ (ต่อเวลา)' : 'ชนะ'), cls: 'ok' };
+    return { t: et ? 'แพ้ (ต่อเวลา)' : 'แพ้', cls: 'bad' };
+  }
+  if (w === 'd') return { t: 'เสมอ', cls: '' };
+  return { t: `${s[w] || w.toUpperCase()} ชนะ${et ? ' (ต่อเวลา)' : ''}`, cls: '' };
+}
+
+/* ------------------------------------------------------------------
+ * Day status
+ * ------------------------------------------------------------------ */
+function dayStatus() {
+  const items = sortedSchedule(); const now = Date.now();
+  if (!items.length) return { mode: 'empty' };
+  const first = items[0], last = items.reduce((a, b) => (toMin(b.end) > toMin(a.end) ? b : a), items[0]);
+  const startMs = evMs(first.start), endMs = evMs(last.end);
+  if (now < startMs) return { mode: 'before', first, startMs };
+  if (now >= endMs) return { mode: 'after' };
+  const cur = items.find((i) => evMs(i.start) <= now && now < evMs(i.end)) || null;
+  const next = items.find((i) => evMs(i.start) > now) || null;
+  return { mode: 'during', cur, next };
+}
+
+/* ------------------------------------------------------------------
+ * Views
+ * ------------------------------------------------------------------ */
+function seg(key, opts, cur, action = 'ui', cls = '') {
+  return `<div class="seg ${cls}" role="tablist">${opts.map(([v, l]) => `<button role="tab" aria-selected="${v === cur}" class="${v === cur ? 'on' : ''}" data-action="${action}" data-key="${key}" data-val="${v}">${esc(l)}</button>`).join('')}</div>`;
+}
+
+function viewHome() {
+  const e = S.event; const st = dayStatus(); const g = myGroup();
+  let hero = '';
+  if (st.mode === 'before') {
+    hero = `<section class="hero">
+      <div class="kicker">${esc(e.name)}</div>
+      <h1>${esc(myName())}</h1>
+      <p class="sub">${esc(e.category)} • ${esc(fmtDateTh(e.date))}</p>
+      <div class="cd"><span>นับถอยหลังถึง ${esc(st.first.title)} ${st.first.start} น. (เวลา${esc(e.homeTzLabel)} ${homeT(st.first.start)})</span><b data-until="${st.startMs}">${fmtDur((st.startMs - Date.now()) / 1000)}</b></div>
+      <div class="tags"><span>${esc(e.myTeam)} • กลุ่ม ${esc(g)}</span><span>${esc(e.field)}</span><span>${esc(e.title)}</span></div>
+    </section>`;
+  } else if (st.mode === 'during') {
+    const c = st.cur, n = st.next;
+    hero = `<section class="hero">
+      <div class="kicker">ตอนนี้ • เวลา${esc(e.venueTzLabel)} <span data-clock></span></div>
+      ${c ? `<h1>${esc(c.phase)}</h1><p class="sub">${esc(c.title)}${c.place && c.place !== '–' ? ' • ' + esc(c.place) : ''}</p>
+      <div class="pbar"><i data-from="${evMs(c.start)}" data-to="${evMs(c.end)}"></i></div>
+      <div class="row"><span>${c.start}–${c.end} (${esc(e.homeTzLabel)} ${homeT(c.start)})</span><span>เหลือ <b data-until="${evMs(c.end)}">${fmtDur((evMs(c.end) - Date.now()) / 1000)}</b></span></div>
+      ${c.plan ? `<p class="plan">${esc(c.plan)}</p>` : ''}` : '<h1>ช่วงว่างระหว่างรายการ</h1>'}
+      ${n ? `<div class="next">ถัดไป <b>${n.start}</b> ${esc(n.phase)} — ${esc(n.title)} • อีก <b data-until="${evMs(n.start)}">${fmtDur((evMs(n.start) - Date.now()) / 1000)}</b></div>` : ''}
+    </section>`;
+  } else if (st.mode === 'after') {
+    const pl = myPlacement();
+    hero = `<section class="hero"><div class="kicker">${esc(e.name)}</div><h1>จบการแข่งขันแล้ว</h1><p class="sub">${pl ? 'ผลงาน ' + esc(myName()) + ': ' + esc(pl) : 'ขอบคุณทุกคนที่ทุ่มเท 💪'}</p></section>`;
+  }
+  const y = myYellow();
+  const rp = S.rules.filter((r) => r.status === 'pass').length;
+  const gear = S.checklists.gear, gd = gear.filter((x) => x.done).length;
+  const sd = S.schedule.filter((x) => x.done).length;
+  return `${hero}
+  ${nextMatchCard()}
+  <section class="card">
+    <div class="row-between"><h2>ตารางคะแนนกลุ่ม ${esc(g)}</h2><button class="link" data-action="go" data-tab="scores" data-key="scoresTab" data-val="table">ดูทั้งหมด →</button></div>
+    ${miniTable(g)}
+    ${scenarioMini(g)}
+  </section>
+  <div class="tiles">
+    <a class="tile ${y >= 3 ? 'bad' : y >= 2 ? 'warn' : ''}" href="#scores" data-action="go" data-tab="scores" data-key="scoresTab" data-val="group"><span class="tk">ใบเหลือง ${esc(shortMe())}</span><b>${y}<small>/4</small></b><span class="ts">${y >= 3 ? 'อันตราย! อีกใบเดียวตัดสิทธิ์' : 'ครบ 4 ใบ = ตัดสิทธิ์ทั้งรายการ'}</span></a>
+    <a class="tile" href="#plan" data-action="go" data-tab="plan" data-key="planTab" data-val="rules"><span class="tk">ตรวจตามกติกา</span><b>${rp}<small>/${S.rules.length}</small></b><span class="ts">ข้อที่ผ่านแล้ว</span></a>
+    <a class="tile" href="#plan" data-action="go" data-tab="plan" data-key="planTab" data-val="check"><span class="tk">อุปกรณ์ & สเปกหุ่น</span><b>${gd}<small>/${gear.length}</small></b><span class="ts">รายการที่พร้อม</span></a>
+    <a class="tile" href="#schedule" data-action="go" data-tab="schedule"><span class="tk">ตารางวันแข่ง</span><b>${sd}<small>/${S.schedule.length}</small></b><span class="ts">รายการที่เสร็จ</span></a>
+  </div>`;
+}
+
+function nextMatchCard() {
+  const fx = myFixtures(); const next = fx.find((f) => !f.done); const e = S.event; const my = e.myTeam;
+  if (!next) {
+    const pl = myPlacement();
+    if (pl) return `<section class="card"><div class="kicker">ผลงานของเรา</div><h2>${esc(pl)}</h2><p class="muted">${esc(e.name)} • ${esc(e.category)}</p></section>`;
+    const g = myGroup(); const sc = scenario(g); const q = qStatus(sc.agg[my], sc.remaining);
+    const playing = KO_KEYS.some((k) => { const t = koSides(k); return t.a === my || t.b === my; });
+    return `<section class="card"><div class="kicker">นัดถัดไปของเรา</div>
+      <h2>${playing ? 'รอผลรอบถัดไป' : 'รอประกาศคู่รอบรองชนะเลิศ'}</h2>
+      ${q ? `<p>สถานะกลุ่ม ${esc(g)}: <span class="badge ${q.cls}">${esc(q.t)}</span></p>` : ''}
+      <div class="btn-row"><button class="btn" data-action="go" data-tab="scores" data-key="scoresTab" data-val="ko">ไปหน้าน็อกเอาต์</button></div></section>`;
+  }
+  const id = next.ref.split(':')[1];
+  const item = S.schedule.find((i) => i.link === id);
+  const opp = next.a === my ? next.b : next.a;
+  const ot = team(opp);
+  const until = evMs(next.start);
+  const soon = until - Date.now();
+  return `<section class="card nextm mine">
+    <div class="kicker">นัดถัดไปของเรา • ${esc(item ? item.phase : next.label)}</div>
+    <div class="vs">
+      <div class="side me">${esc(myName())}<small>${esc(my)}</small></div>
+      <div class="mid">VS<b>${next.start}</b>${esc(e.homeTzLabel)} ${homeT(next.start)}</div>
+      <div class="side">${opp ? esc(tname(opp)) : 'รอประกาศ'}<small>${esc(opp || '')}${ot && ot.from ? ' • ' + esc(ot.from) : ''}</small></div>
+    </div>
+    <div class="info">
+      <div><b>${esc(next.label)}</b> • ${esc(next.field)} • ${soon > 0 ? `อีก <b data-until="${until}">${fmtDur(soon / 1000)}</b>` : '<b>ถึงเวลาแข่งแล้ว</b>'}</div>
+      ${item && item.plan ? `<div><b>แผน:</b> ${esc(item.plan)}</div>` : ''}
+      ${item && item.goal ? `<div><b>เป้าหมาย:</b> ${esc(item.goal)}</div>` : ''}
+      ${ot && ot.notes ? `<div><b>สเกาท์คู่แข่ง:</b> ${esc(ot.notes)}</div>` : ''}
+    </div>
+    <div class="alert ${soon > 0 && soon < 15 * 60000 ? 'bad' : ''}">รายงานตัวให้ทัน! ไม่รายงานตัวภายใน 2 นาทีหลังเริ่ม = แพ้ 0–2 (C5)</div>
+    <div class="btn-row">
+      <button class="btn primary" data-action="go" data-tab="timer" data-tref="${next.ref}">⏱ จับเวลา / สกอร์สด</button>
+      <button class="btn" data-action="go" data-tab="scores" data-key="scoresTab" data-val="${next.ref.startsWith('k:') ? 'ko' : 'group'}">บันทึกผล</button>
+    </div>
+  </section>`;
+}
+
+function rankLabel(r, st, i) { if (!st.played) return String(i + 1); return r.posMax > r.pos ? r.pos + '=' : String(r.pos); }
+function statusBadge(code, st, sc) {
+  if (!st.played) return '';
+  const q = qStatus(sc.agg[code], sc.remaining);
+  if (!q || (q.cls === 'warn' && sc.remaining)) return '';
+  return ` <span class="badge ${q.cls}">${esc(q.t)}</span>`;
+}
+function miniTable(g) {
+  const st = standings(g), sc = scenario(g), Q = S.event.qualify;
+  return `<div class="table-wrap"><table class="st mini"><thead><tr><th>#</th><th class="team">ทีม</th><th>แข่ง</th><th>ต่าง</th><th>แต้ม</th></tr></thead><tbody>
+  ${st.ranked.map((r, i) => `<tr class="${(st.played ? r.pos : i + 1) <= Q ? 'q' : ''} ${isMe(r.code) ? 'me' : ''}"><td>${rankLabel(r, st, i)}</td><td class="team">${esc(tname(r.code))}${statusBadge(r.code, st, sc)}</td><td>${r.p}</td><td>${sign(r.gd)}</td><td class="pts">${r.pts}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+function scenarioMini(g) {
+  const sc = scenario(g); const my = S.event.myTeam;
+  if (!team(my) || team(my).group !== g) return '';
+  if (!sc.myNext) {
+    const q = qStatus(sc.agg[my], sc.remaining);
+    return q ? `<p class="small" style="margin-top:10px">สถานะ ${esc(shortMe())}: <span class="badge ${q.cls}">${esc(q.t)}</span></p>` : '';
+  }
+  const opp = sc.myNext.a === my ? sc.myNext.b : sc.myNext.a;
+  const outs = ['W', 'D', 'L'].map((k) => outcomeText(sc.byNext[k]));
+  if (outs.every((o) => o.t === outs[0].t)) {
+    return `<p class="small" style="margin:12px 0 0"><b>นัดถัดไป vs ${esc(tname(opp))}:</b> ${outs[0].cls === 'warn' ? 'ผลนัดนี้นัดเดียวยังไม่ตัดสินการเข้ารอบ — เก็บแต้มให้มากที่สุดและรักษาผลต่างประตู' : esc(outs[0].t) + ' ไม่ว่าผลจะเป็นอย่างไร'}</p>`;
+  }
+  return `<p class="small muted" style="margin:12px 0 4px">ถ้านัดถัดไป (vs ${esc(tname(opp))})…</p>
+    <ul class="outcomes">${[['W', 'ชนะ'], ['D', 'เสมอ'], ['L', 'แพ้']].map(([k, l]) => { const o = outcomeText(sc.byNext[k]); return `<li class="${o.cls}"><b>${l}</b><span>${esc(o.t)}</span></li>`; }).join('')}</ul>`;
+}
+
+/* ---------- schedule ---------- */
+function viewSchedule() {
+  const items = sortedSchedule(); const now = Date.now(); const done = items.filter((i) => i.done).length; const e = S.event;
+  return `<div class="page-head"><h1>ตารางวันแข่ง</h1><p class="muted small">${esc(fmtDateTh(e.date))} • เวลาหลัก = ${esc(e.venueTzLabel)} (UTC+${e.venueTz}) • ตัวเล็ก = เวลา${esc(e.homeTzLabel)}</p></div>
+  <div class="toolbar"><button class="btn" data-action="shift-open">⏱ เลื่อนเวลา</button><button class="btn ${UI.editSchedule ? 'on' : ''}" data-action="toggle-edit">✎ ${UI.editSchedule ? 'เสร็จสิ้น' : 'แก้ไข'}</button>${UI.editSchedule ? '<button class="btn" data-action="item-add">+ เพิ่มรายการ</button>' : ''}<span class="spacer"></span><span class="badge ${done === items.length ? 'ok' : ''}">เสร็จ ${done}/${items.length}</span></div>
+  <ol class="timeline">${items.map((it) => tlItem(it, now)).join('')}</ol>
+  <section class="card"><h3>หมายเหตุ</h3><ul class="plain">${S.scheduleNotes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul></section>`;
+}
+function tlItem(it, now) {
+  const s = evMs(it.start), e = evMs(it.end);
+  const status = now >= e ? 'past' : now >= s ? 'now' : 'future';
+  let fx = '';
+  const ref = (it.type === 'match' || it.type === 'ko') ? linkRef(it.link) : null;
+  if (ref) {
+    const sd = sidesOf(ref), m = getMatch(ref);
+    fx = `<div class="fx"><span class="${isMe(sd.a) ? 'me' : ''}">${sd.a ? esc(tname(sd.a)) : 'รอประกาศ'}</span><b>${hasScore(m) ? `${m.ga} – ${m.gb}` : 'vs'}</b><span class="${isMe(sd.b) ? 'me' : ''}">${sd.b ? esc(tname(sd.b)) : 'รอประกาศ'}</span></div>
+    <div class="fx-act no-print"><button class="btn sm" data-action="go" data-tab="scores" data-key="scoresTab" data-val="${ref.startsWith('k:') ? 'ko' : 'group'}">บันทึกผล</button><button class="btn sm" data-action="go" data-tab="timer" data-tref="${ref}">จับเวลา</button></div>`;
+  }
+  return `<li class="tl type-${esc(it.type)} ${status} ${it.done ? 'done' : ''}" id="si-${esc(it.id)}">
+    <div class="tl-time"><b>${esc(it.start)}</b><span>–${esc(it.end)}</span><small>${esc(S.event.homeTzLabel)} ${homeT(it.start)}</small></div>
+    <div class="tl-body">
+      <div class="tl-top"><span class="chip">${esc(it.phase || '—')}</span>${status === 'now' ? '<span class="chip live">● ตอนนี้</span>' : ''}</div>
+      <h3>${esc(it.title)}</h3>
+      ${it.place && it.place !== '–' ? `<div class="tl-place">${esc(it.place)}</div>` : ''}
+      ${fx}
+      ${it.plan ? `<p class="tl-plan">${esc(it.plan)}</p>` : ''}
+      ${it.goal ? `<p class="tl-goal">✓ ${esc(it.goal)}</p>` : ''}
+      ${status === 'now' ? `<div class="pbar"><i data-from="${s}" data-to="${e}"></i></div>` : ''}
+    </div>
+    <div class="tl-side no-print"><button class="tl-check" data-action="item-done" data-id="${esc(it.id)}" aria-pressed="${!!it.done}" aria-label="ทำเครื่องหมายว่าเสร็จ: ${esc(it.title)}">✓</button>${UI.editSchedule ? `<button class="btn sm" data-action="item-edit" data-id="${esc(it.id)}">แก้ไข</button>` : ''}</div>
+  </li>`;
+}
+
+/* ---------- scores ---------- */
+function viewScores() {
+  const sub = S.ui.scoresTab || 'group';
+  return seg('scoresTab', [['group', 'ผลรอบกลุ่ม'], ['table', 'ตารางคะแนน'], ['ko', 'น็อกเอาต์']], sub)
+    + (sub === 'table' ? subTable() : sub === 'ko' ? subKO() : subGroup());
+}
+function subGroup() {
+  const f = S.ui.groupFilter || myGroup(); const gs = groups();
+  const list = S.matches.filter((m) => f === 'all' || m.group === f).sort((x, y) => byStart(x, y) || x.group.localeCompare(y.group));
+  return `<div class="chips">${[...gs.map((g) => [g, 'กลุ่ม ' + g]), ['all', 'ทั้งหมด']].map(([v, l]) => `<button class="chip-btn ${v === f ? 'on' : ''}" data-action="ui" data-key="groupFilter" data-val="${esc(v)}">${esc(l)}</button>`).join('')}</div>
+  <p class="muted small">กด + / − หรือพิมพ์ตัวเลข • ช่องว่าง = ยังไม่แข่ง • ระบบคำนวณแต้มและอันดับให้อัตโนมัติ • เวลา${esc(S.event.venueTzLabel)}</p>
+  ${list.map((m) => matchCard('g:' + m.id)).join('')}
+  <div id="live-table">${liveTables(f)}</div>`;
+}
+function liveTables(f) {
+  return (f === 'all' ? groups() : [f]).map((g) => `<section class="card"><div class="row-between"><h3>ตารางคะแนนกลุ่ม ${esc(g)} (สด)</h3><span class="badge">${standings(g).played}/${standings(g).total} นัด</span></div>${miniTable(g)}</section>`).join('');
+}
+function matchCard(ref) {
+  const m = getMatch(ref); if (!m) return '';
+  const [kind, id] = ref.split(':'); const sides = sidesOf(ref);
+  const mine = isMe(sides.a) || isMe(sides.b);
+  const ri = resInfo(ref);
+  const head = kind === 'k'
+    ? `<b class="t">${esc(m.start)}</b><span class="muted">${esc(m.label)}</span>`
+    : `<b class="t">${esc(m.start)}</b><span class="muted">กลุ่ม ${esc(m.group)} • สนาม ${esc(m.field)}</span>`;
+  return `<article class="match ${mine ? 'mine' : ''}" data-ref="${ref}">
+    <header>${head}<span class="res ${ri.cls}" data-res="${ref}">${esc(ri.t)}</span></header>
+    ${teamLine(ref, 'a')}${teamLine(ref, 'b')}
+    ${kind === 'k' ? `<div data-et>${etPanel(ref)}</div>` : ''}
+    ${mine ? yellowLine(ref) : ''}
+    ${kind === 'k' && m.action ? `<p class="ko-note">${esc(m.action)}</p>` : ''}
+    ${(num(m.ga) || num(m.gb)) ? `<div class="mfoot"><button class="link" data-action="score-clear" data-ref="${ref}">ล้างผลนัดนี้</button></div>` : ''}
+  </article>`;
+}
+function teamOptions(selected, k) {
+  const pos = {};
+  groups().forEach((g) => { const st = standings(g); if (st.played) st.ranked.slice(0, S.event.qualify).forEach((r, i) => { pos[r.code] = g + (i + 1); }); });
+  return `<option value="">— เลือกทีม —</option>` + groups().map((g) => `<optgroup label="กลุ่ม ${esc(g)}">${S.teams.filter((t) => t.group === g).map((t) => `<option value="${esc(t.code)}" ${t.code === selected ? 'selected' : ''}>${esc(t.name)}${pos[t.code] ? ' (' + pos[t.code] + ')' : ''}</option>`).join('')}</optgroup>`).join('');
+}
+function teamLine(ref, side) {
+  const m = getMatch(ref); const [kind, id] = ref.split(':'); const code = sidesOf(ref)[side];
+  const w = winnerCode(ref); const win = !!w && w === code;
+  let nameHtml;
+  if (kind === 'k' && (id === 'sf1' || id === 'sf2')) {
+    nameHtml = `<select data-change="ko-team" data-k="${id}" data-side="${side}" aria-label="เลือกทีม ${side.toUpperCase()} ${esc(m.label)}">${teamOptions(code, id)}</select>`;
+  } else if (code) {
+    const t = team(code);
+    nameHtml = `${esc(t ? t.name : code)}<small>${esc(code)}${t && t.from ? ' • ' + esc(t.from) : ''}</small>`;
+  } else {
+    const ph = { final: ['ผู้ชนะ SF1', 'ผู้ชนะ SF2'], third: ['ผู้แพ้ SF1', 'ผู้แพ้ SF2'] }[id] || ['ทีม A', 'ทีม B'];
+    nameHtml = `<span class="muted">${ph[side === 'a' ? 0 : 1]}</span>`;
+  }
+  const v = m['g' + side];
+  const nm = code ? tname(code) : side.toUpperCase();
+  const isSel = kind === 'k' && (id === 'sf1' || id === 'sf2');
+  return `<div class="tline ${win ? 'win' : ''} ${isMe(code) ? 'me' : ''}" data-side="${side}"><div class="tname ${isSel ? 'sel' : ''}">${nameHtml}</div>
+    <div class="stepper"><button type="button" data-action="score" data-ref="${ref}" data-side="${side}" data-d="-1" aria-label="ลดประตู ${esc(nm)}">−</button><input type="text" data-input="score" data-ref="${ref}" data-side="${side}" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${num(v) ? v : ''}" placeholder="–" aria-label="ประตู ${esc(nm)}"><button type="button" data-action="score" data-ref="${ref}" data-side="${side}" data-d="1" aria-label="เพิ่มประตู ${esc(nm)}">+</button></div></div>`;
+}
+function etPanel(ref) {
+  const m = getMatch(ref); const id = ref.split(':')[1];
+  if (!hasScore(m) || m.ga !== m.gb) return '';
+  const s = sidesOf(ref); const r = m.etRounds || 1;
+  return `<div class="et"><b>เสมอ → ต่อเวลา 2 นาที (ยิงก่อนชนะ) • F7</b>
+    <div class="et-row"><span class="small">ทีมที่ยิงประตูแรก:</span>${['a', 'b'].map((x) => `<button class="btn sm ${m.et === x ? 'on' : ''}" data-action="ko-et" data-k="${id}" data-side="${x}">${esc(s[x] ? tname(s[x]) : x.toUpperCase())}</button>`).join('')}</div>
+    <div class="et-row"><span class="small">ต่อเวลารอบที่</span><div class="stepper sm"><button data-action="ko-etr" data-k="${id}" data-d="-1" aria-label="ลดรอบ">−</button><b>${r}</b><button data-action="ko-etr" data-k="${id}" data-d="1" aria-label="เพิ่มรอบ">+</button></div><span class="small muted">${r >= 2 ? 'เหลือฝ่ายละ 1 หุ่น' : 'ใช้หุ่น 2 ตัว'}</span></div></div>`;
+}
+function yellowLine(ref) {
+  const m = getMatch(ref); const s = sidesOf(ref); const side = isMe(s.a) ? 'a' : 'b'; const n = m['y' + side] || 0; const tot = myYellow();
+  return `<div class="yline"><span class="ycard" aria-hidden="true"></span><span>ใบเหลือง ${esc(shortMe())} นัดนี้</span>
+    <div class="stepper sm"><button data-action="yellow" data-ref="${ref}" data-side="${side}" data-d="-1" aria-label="ลดใบเหลือง">−</button><b>${n}</b><button data-action="yellow" data-ref="${ref}" data-side="${side}" data-d="1" aria-label="เพิ่มใบเหลือง">+</button></div>
+    <span class="small ${tot >= 3 ? 'danger-text' : 'muted'}">รวมทั้งรายการ ${tot}/4</span></div>`;
+}
+function subTable() {
+  const my = myGroup();
+  return groups().slice().sort((a, b) => (a === my ? -1 : b === my ? 1 : a.localeCompare(b))).map((g) => fullTable(g) + (g === my ? scenarioCard(g) : '')).join('')
+    + `<section class="card"><h3>เกณฑ์การจัดอันดับ</h3><ul class="plain">${S.groupNotes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul></section>`;
+}
+function fullTable(g) {
+  const st = standings(g), sc = scenario(g), Q = S.event.qualify;
+  const notes = st.played ? st.notes.filter((n) => n.by !== 'pending' && (n.x.p || n.y.p)) : [];
+  return `<section class="card"><div class="row-between"><h2>กลุ่ม ${esc(g)}</h2><span class="badge ${st.complete ? 'ok' : ''}">${st.complete ? 'จบรอบกลุ่ม' : `แข่งแล้ว ${st.played}/${st.total} นัด`}</span></div>
+  <div class="table-wrap"><table class="st"><thead><tr><th>#</th><th class="team">ทีม</th><th>แข่ง</th><th>ชนะ</th><th>เสมอ</th><th>แพ้</th><th class="xs-hide">ได้</th><th class="xs-hide">เสีย</th><th>ต่าง</th><th>แต้ม</th></tr></thead><tbody>
+  ${st.ranked.map((r, i) => `<tr class="${(st.played ? r.pos : i + 1) <= Q ? 'q' : ''} ${isMe(r.code) ? 'me' : ''}"><td>${rankLabel(r, st, i)}</td><td class="team">${esc(tname(r.code))} <small>${esc(r.code)}</small>${statusBadge(r.code, st, sc)}</td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td class="xs-hide">${r.gf}</td><td class="xs-hide">${r.ga}</td><td>${sign(r.gd)}</td><td class="pts">${r.pts}</td></tr>`).join('')}
+  </tbody></table></div>
+  <p class="legend">แถบเขียว = โซนเข้ารอบ Top 4 (อันดับ 1–${Q}) • “=” = ยังเท่ากันทุกเกณฑ์</p>
+  ${notes.length ? `<ul class="tie-notes plain">${notes.map((n) => `<li>${n.by === 'tie' ? `${esc(tname(n.hi))} กับ ${esc(tname(n.lo))}: ` : `${esc(tname(n.hi))} อยู่เหนือ ${esc(tname(n.lo))} ด้วย`} ${esc(tieText(n))}</li>`).join('')}</ul>` : ''}
+  </section>`;
+}
+function scenarioCard(g) {
+  const sc = scenario(g); const my = S.event.myTeam;
+  if (!team(my) || team(my).group !== g) return '';
+  if (!sc.myNext) {
+    const q = qStatus(sc.agg[my], sc.remaining);
+    return `<section class="card"><div class="kicker">เส้นทางเข้ารอบ</div><h3>สถานะ ${esc(myName())}</h3><p>${q ? `<span class="badge ${q.cls}">${esc(q.t)}</span>` : ''} ${sc.remaining ? `<span class="muted small">รอผลอีก ${sc.remaining} นัดในกลุ่ม</span>` : ''}</p></section>`;
+  }
+  const opp = sc.myNext.a === my ? sc.myNext.b : sc.myNext.a;
+  return `<section class="card"><div class="kicker">เส้นทางเข้ารอบ</div>
+    <h3>นัดถัดไป: ${esc(shortMe())} vs ${esc(tname(opp))} • ${esc(sc.myNext.start)} น.</h3>
+    <ul class="outcomes">${[['W', 'ชนะ'], ['D', 'เสมอ'], ['L', 'แพ้']].map(([k, l]) => { const o = outcomeText(sc.byNext[k]); return `<li class="${o.cls}"><b>${l}</b><span>${esc(o.t)}</span></li>`; }).join('')}</ul>
+    <p class="muted small">คำนวณจากทุกผลที่เป็นไปได้ของ ${sc.remaining} นัดที่เหลือในกลุ่ม ${esc(g)} (ชนะ 3 • เสมอ 1 • แพ้ 0 → ผลพบกันเอง) • ถ้าต้องใช้ผลต่างประตูของนัดที่ยังไม่แข่ง จะแสดงว่า “ยังไม่แน่นอน”</p></section>`;
+}
+function champBanner() {
+  const champ = koWin('final'); if (!champ) return '';
+  return `<section class="champ"><div class="kicker">แชมป์ ${esc(S.event.name)}</div><h2>🏆 ${esc(tname(champ))}</h2>${myPlacement() ? `<p style="margin:6px 0 0">${esc(myName())}: ${esc(myPlacement())}</p>` : ''}</section>`;
+}
+function subKO() {
+  const Q = S.event.qualify;
+  const quals = groups().map((g) => ({ g, st: standings(g) }));
+  const allDone = quals.every((q) => q.st.complete);
+  return `<section class="card"><h3>ทีมเข้ารอบ Top 4</h3>
+    <div class="qgrid">${quals.map((q) => q.st.ranked.slice(0, Q).map((r, i) => `<div class="q ${isMe(r.code) && q.st.played ? 'me' : ''}"><span class="badge ${i === 0 ? 'gold' : 'info'}">${esc(q.g)}${i + 1}</span> ${q.st.played ? esc(tname(r.code)) : '<span class="muted">รอผล</span>'}</div>`).join('')).join('')}</div>
+    <p class="muted small">${allDone ? 'รอบกลุ่มจบแล้ว — ตรวจสอบกับประกาศกรรมการอีกครั้ง' : 'อันดับชั่วคราว (รอบกลุ่มยังไม่จบ)'}</p>
+    <button class="btn" data-action="ko-suggest">ใส่คู่รอบรองฯ: แชมป์กลุ่ม พบ รองแชมป์อีกกลุ่ม</button>
+    <p class="muted small" style="margin-top:8px">⚠ ภาพตารางไม่ได้ระบุสายประกบ Top 4 — ใช้ปุ่มนี้เมื่อประกาศกรรมการตรงกันเท่านั้น หรือเลือกทีมเองในแต่ละนัด</p></section>
+  <div id="champ-slot">${champBanner()}</div>
+  <div class="bracket">
+    <div><h3 class="sec">รอบรองชนะเลิศ</h3>${matchCard('k:sf1')}${matchCard('k:sf2')}</div>
+    <div><h3 class="sec">ชิงชนะเลิศ & ชิงอันดับ 3</h3>${matchCard('k:final')}${matchCard('k:third')}</div>
+  </div>
+  <section class="card"><h3>กติกาน็อกเอาต์</h3><ul class="plain">${S.koNotes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul></section>`;
+}
+
+/* ---------- timer ---------- */
+function tPhases() { const p = PRESETS[T.preset] || PRESETS.group; return p.phases || [['พัก / ซ่อมหุ่น', Math.max(1, Math.min(180, T.custom | 0)) * 60, 'break']]; }
+function tRem() { return T.running ? Math.max(0, (T.endAt - Date.now()) / 1000) : T.remaining; }
+function tSetPreset(p) { T.preset = PRESETS[p] ? p : 'group'; T.idx = 0; T.running = false; T.remaining = tPhases()[0][1]; saveT(); keepAwake(false); }
+function timerMatchOptions() {
+  const opts = [];
+  S.matches.slice().sort((x, y) => byStart(x, y) || x.group.localeCompare(y.group)).forEach((m) => opts.push({ ref: 'g:' + m.id, label: `${m.start} กลุ่ม ${m.group}: ${tname(m.a)} vs ${tname(m.b)}`, mine: isMe(m.a) || isMe(m.b) }));
+  KO_KEYS.forEach((k) => { const t = koSides(k); opts.push({ ref: 'k:' + k, label: `${S.ko[k].start} ${S.ko[k].label}: ${t.a ? tname(t.a) : '?'} vs ${t.b ? tname(t.b) : '?'}`, mine: isMe(t.a) || isMe(t.b) }); });
+  return opts;
+}
+function defaultTimerRef() { const n = myFixtures().find((f) => !f.done); return n ? n.ref : ('g:' + (S.matches[0] ? S.matches[0].id : '')); }
+function viewTimer() {
+  const ph = tPhases(); const P = PRESETS[T.preset] || PRESETS.group; const done = T.idx >= ph.length;
+  const cur = done ? ['จบการแข่งขัน', 1, 'end'] : ph[T.idx];
+  if (!getMatch(T.ref)) { T.ref = defaultTimerRef(); saveT(); }
+  const rem = tRem();
+  return `${seg('preset', Object.entries(PRESETS).map(([k, v]) => [k, v.name]), T.preset, 't-preset', 'grid')}
+  <section class="card timer ${cur[2]}" id="timer-card">
+    <div class="phases">${ph.map((p, i) => `<span class="ph ${i < T.idx ? 'done' : i === T.idx ? 'cur' : ''}">${esc(p[0])} ${fmtMS(p[1])}</span>`).join('')}</div>
+    <div class="t-label" id="t-label">${esc(cur[0])}</div>
+    <div class="t-big" id="t-big" role="timer" aria-live="off">${fmtMS(done ? 0 : rem)}</div>
+    <div class="t-bar"><i id="t-bar" style="width:${done ? 100 : Math.max(0, Math.min(100, (1 - rem / cur[1]) * 100))}%"></i></div>
+    <div class="t-ctrl"><button class="btn" data-action="t-adj" data-d="-10" aria-label="ลด 10 วินาที">−10 วิ</button><button class="btn primary main" data-action="t-toggle" id="t-toggle">${T.running ? '❚❚ หยุด' : done ? '↺ เริ่มใหม่' : '▶ เริ่ม'}</button><button class="btn" data-action="t-adj" data-d="10" aria-label="เพิ่ม 10 วินาที">+10 วิ</button></div>
+    <div class="t-ctrl2"><button class="btn sm" data-action="t-reset">↺ เริ่มใหม่ทั้งแมตช์</button><button class="btn sm" data-action="t-next">⏭ ข้ามไปช่วงถัดไป</button><button class="btn sm" data-action="t-sound" aria-pressed="${!!T.sound}">${T.sound ? '🔔 เสียงเตือน: เปิด' : '🔕 เสียงเตือน: ปิด'}</button></div>
+    ${T.preset === 'rest' ? `<label class="inline">กำหนดเวลา (นาที) <input type="number" min="1" max="180" inputmode="numeric" data-change="t-custom" value="${esc(T.custom)}"></label>` : ''}
+    <p class="muted small" style="margin-top:10px">${esc(P.note)} • เตือนที่ 30 วิ, 10 วิ และ 3 วิสุดท้าย • เวลาทางการยึดตามกรรมการเสมอ</p>
+  </section>
+  <section class="card"><div class="kicker">สกอร์สด — บันทึกลงตารางผลอัตโนมัติ</div>
+    <select data-change="t-ref" aria-label="เลือกแมตช์">${timerMatchOptions().map((o) => `<option value="${o.ref}" ${o.ref === T.ref ? 'selected' : ''}>${o.mine ? '★ ' : ''}${esc(o.label)}</option>`).join('')}</select>
+    ${board(T.ref)}
+  </section>
+  <section class="card"><h3>เตือนกติกาในสนาม</h3><ul class="plain">${FIELD_REMINDERS.map(([r, t]) => `<li><b>${esc(r)}</b> ${esc(t)}</li>`).join('')}</ul></section>`;
+}
+function board(ref) {
+  const m = getMatch(ref); if (!m) return '';
+  const s = sidesOf(ref);
+  const side = (x) => {
+    const code = s[x]; const me = isMe(code);
+    return `<div class="bside ${me ? 'me' : ''}"><div class="bname">${code ? esc(tname(code)) : '<span class="muted">ยังไม่ระบุทีม</span>'}</div>
+      <div class="bscore">${num(m['g' + x]) ? m['g' + x] : '–'}</div>
+      <div class="bbtns"><button class="btn" data-action="score" data-ref="${ref}" data-side="${x}" data-d="-1" aria-label="ลดประตู">−</button><button class="btn primary" data-action="score" data-ref="${ref}" data-side="${x}" data-d="1" aria-label="เพิ่มประตู">+1</button></div>
+      ${me ? `<div class="ymini"><span class="ycard" aria-hidden="true"></span><div class="stepper sm"><button data-action="yellow" data-ref="${ref}" data-side="${x}" data-d="-1" aria-label="ลดใบเหลือง">−</button><b>${m['y' + x] || 0}</b><button data-action="yellow" data-ref="${ref}" data-side="${x}" data-d="1" aria-label="เพิ่มใบเหลือง">+</button></div></div>` : ''}
+    </div>`;
+  };
+  const ri = resInfo(ref);
+  return `<div class="board">${side('a')}<div class="bsep">:</div>${side('b')}</div>
+    ${ref.startsWith('k:') ? etPanel(ref) : ''}
+    <div class="row-between"><span class="badge ${ri.cls}">${esc(ri.t)}</span><span class="small muted">ใบเหลือง ${esc(shortMe())} รวม ${myYellow()}/4</span></div>`;
+}
+
+/* ---------- plan / rules / checks / teams ---------- */
+function viewPlan() {
+  const sub = S.ui.planTab || 'play';
+  return seg('planTab', [['play', 'แผนการเล่น'], ['rules', 'กติกา'], ['check', 'เช็กลิสต์'], ['teams', 'คู่แข่ง']], sub)
+    + (sub === 'rules' ? subRules() : sub === 'check' ? subChecks() : sub === 'teams' ? subTeams() : subPlay());
+}
+function subPlay() {
+  const pb = S.playbook; const i = Math.min(pb.length - 1, Math.max(0, +S.ui.play || 0)); const p = pb[i];
+  return `<p class="muted small">${esc(S.playbookNote)}</p>
+  <div class="chips">${pb.map((x, k) => `<button class="chip-btn ${k === i ? 'on' : ''}" data-action="ui" data-key="play" data-val="${k}">${esc(x.situation)}</button>`).join('')}</div>
+  ${p ? `<article class="card play">
+    <div class="kicker">สถานการณ์</div><h2>${esc(p.situation)}</h2>
+    <div class="goal">🎯 ${esc(p.goal)}</div>
+    <div class="robots"><div class="robot r1"><div class="rl">หุ่นบุก / ตัวที่ 1</div><p>${esc(p.r1)}</p></div><div class="robot r2"><div class="rl">หุ่นรับ / ตัวที่ 2</div><p>${esc(p.r2)}</p></div></div>
+    <div class="caution"><b>ข้อควรระวัง</b>${esc(p.caution)}</div>
+    <div class="kpi"><b>ตัวชี้วัด</b>${esc(p.kpi)}</div>
+  </article>` : ''}
+  <section class="card"><div class="row-between"><h3>การซ้อมเสริมก่อนแข่ง <span class="badge">${S.checklists.drills.filter((d) => d.done).length}/${S.checklists.drills.length}</span></h3><button class="btn sm" data-action="check-reset" data-list="drills">รีเซ็ต</button></div>${checkList('drills')}</section>
+  <section class="card"><details class="all"><summary>ดูแผนการเล่นทั้งหมด (${pb.length} สถานการณ์)</summary>
+    ${pb.map((x) => `<div class="pb-row"><b>${esc(x.situation)}</b>🎯 ${esc(x.goal)}<br><span class="muted">ตัวที่ 1:</span> ${esc(x.r1)}<br><span class="muted">ตัวที่ 2:</span> ${esc(x.r2)}<br><span class="muted">ระวัง:</span> ${esc(x.caution)} • <span class="muted">วัดผล:</span> ${esc(x.kpi)}</div>`).join('')}
+  </details></section>`;
+}
+function subRules() {
+  const R = S.rules; const c = { pass: 0, check: 0, fail: 0, '': 0 };
+  R.forEach((r) => { c[r.status || ''] = (c[r.status || ''] || 0) + 1; });
+  const pct = (n) => (R.length ? (n / R.length) * 100 : 0);
+  return `<section class="card"><h3>สถานะการตรวจตามกติกา</h3>
+    <div class="statbar"><span class="badge ok">ผ่าน ${c.pass}</span><span class="badge warn">ต้องตรวจ ${c.check}</span><span class="badge bad">ไม่ผ่าน ${c.fail}</span><span class="badge">ยังไม่ตรวจ ${c['']}</span></div>
+    <div class="stack" aria-hidden="true"><i class="s-ok" style="width:${pct(c.pass)}%"></i><i class="s-warn" style="width:${pct(c.check)}%"></i><i class="s-bad" style="width:${pct(c.fail)}%"></i></div>
+    <p class="muted small">${esc(S.event.rulesRef)}</p></section>
+  <section class="card">${R.map((r) => `<div class="rule"><div class="ref">${esc(r.ref)}</div><div><div class="cat">${esc(r.cat)}</div><p>${esc(r.text)}</p>
+    <div class="rstat">${[['pass', 'ผ่าน'], ['check', 'ต้องตรวจ'], ['fail', 'ไม่ผ่าน']].map(([v, l]) => `<button class="${v} ${r.status === v ? 'on' : ''}" data-action="rule" data-id="${esc(r.id)}" data-v="${v}" aria-pressed="${r.status === v}">${l}</button>`).join('')}</div></div></div>`).join('')}</section>
+  <section class="card"><h3>กติกาฉบับทางการ</h3><p><a href="${esc(S.event.rulesUrl)}" target="_blank" rel="noopener">${esc(S.event.rulesUrl)}</a><br><span class="muted small">คลิก GAME RULES JUNIOR ในหมวด SPIKE Remote Soccer</span></p><p class="muted small">การชี้ขาดเป็นอำนาจกรรมการ และคำชี้แจงอัปเดตของผู้จัดมีลำดับเหนือเอกสารเดิม (E17)</p></section>`;
+}
+function checkList(key) {
+  const list = S.checklists[key] || [];
+  return `<ul class="checks">${list.map((it) => `<li><button class="crow" data-action="check" data-list="${key}" data-id="${esc(it.id)}" aria-pressed="${!!it.done}"><span class="cbox" aria-hidden="true">✓</span><span class="ctext">${esc(it.text)}</span></button>${UI.editLists ? `<button class="icon-del" data-action="check-del" data-list="${key}" data-id="${esc(it.id)}" aria-label="ลบ ${esc(it.text)}">✕</button>` : ''}</li>`).join('')}</ul>
+  ${UI.editLists ? `<form class="add-row" data-submit="check-add" data-list="${key}"><input name="t" placeholder="เพิ่มรายการใหม่…" aria-label="เพิ่มรายการใหม่" autocomplete="off"><button class="btn primary" type="submit">เพิ่ม</button></form>` : ''}`;
+}
+function checkCard(key, title, note) {
+  const list = S.checklists[key] || []; const d = list.filter((x) => x.done).length;
+  return `<section class="card"><div class="row-between"><h3>${esc(title)} <span class="badge ${d === list.length && list.length ? 'ok' : ''}">${d}/${list.length}</span></h3><button class="btn sm" data-action="check-reset" data-list="${key}">รีเซ็ต</button></div>
+    <p class="muted small">${esc(note)}</p>${checkList(key)}</section>`;
+}
+function subChecks() {
+  return `<div class="toolbar"><span class="spacer"></span><button class="btn sm ${UI.editLists ? 'on' : ''}" data-action="toggle-lists">✎ ${UI.editLists ? 'เสร็จสิ้น' : 'แก้ไขรายการ'}</button></div>
+  ${checkCard('quick', 'Quick check หลังแต่ละนัด', 'ผู้เข้าแข่งขันเป็นผู้แก้หุ่นและโปรแกรมเอง • กด “รีเซ็ต” ก่อนเช็กนัดถัดไป')}
+  ${checkCard('gear', 'เตรียมอุปกรณ์ & ตรวจสเปกหุ่น', 'อ้างอิงข้อ A1 และ D1–D20 ในกติกา')}`;
+}
+function subTeams() {
+  return groups().map((g) => `<h3 class="sec">กลุ่ม ${esc(g)}</h3>` + S.teams.filter((t) => t.group === g).map(teamCard).join('')).join('');
+}
+function teamCard(t) {
+  const me = isMe(t.code); const st = standings(t.group).ranked.find((r) => r.code === t.code) || { p: 0, w: 0, d: 0, l: 0, pts: 0 };
+  const vs = me ? null : S.matches.find((m) => (m.a === t.code && isMe(m.b)) || (m.b === t.code && isMe(m.a)));
+  let vsTxt = '';
+  if (vs) {
+    if (hasScore(vs)) { const mine = isMe(vs.a) ? vs.ga : vs.gb, their = isMe(vs.a) ? vs.gb : vs.ga; vsTxt = `${mine > their ? 'ชนะ' : mine < their ? 'แพ้' : 'เสมอ'} ${mine}–${their}`; }
+    else vsTxt = 'ยังไม่แข่ง';
+  }
+  return `<article class="card team-card ${me ? 'mine' : ''}"><div class="row-between"><div><h3 style="margin:0">${esc(t.name)} ${me ? '<span class="badge gold">ทีมเรา</span>' : ''}</h3>
+    <div class="meta">${esc(t.code)}${t.from ? ' • ' + esc(t.from) : ''} • แข่ง ${st.p} ชนะ ${st.w} เสมอ ${st.d} แพ้ ${st.l} • ${st.pts} แต้ม</div></div><button class="btn sm" data-action="team-edit" data-code="${esc(t.code)}">แก้ไข</button></div>
+    ${vs ? `<div class="vsline">เจอ ${esc(shortMe())}: ${esc(vs.start)} น. • ${esc(vsTxt)}</div>` : ''}
+    <label class="field" style="margin-top:8px">${me ? 'บันทึกทีมเรา' : 'บันทึกสเกาท์ / จุดแข็ง-จุดอ่อน'}<textarea data-input="team-notes" data-code="${esc(t.code)}" rows="2" placeholder="${me ? 'เช่น หุ่นตัวไหนเล่นตำแหน่งใด แบตเตอรี่…' : 'เช่น หุ่นเร็ว เตะแรง ชอบบุกด้านซ้าย…'}">${esc(t.notes || '')}</textarea></label></article>`;
+}
+
+const VIEWS = { home: viewHome, schedule: viewSchedule, scores: viewScores, timer: viewTimer, plan: viewPlan };
+
+/* ------------------------------------------------------------------
+ * Render / routing
+ * ------------------------------------------------------------------ */
+function render() {
+  const tab = VIEWS[S.ui.tab] ? S.ui.tab : 'home';
+  $('#view').innerHTML = VIEWS[tab]();
+  $$('.tabbar a').forEach((a) => { const on = a.dataset.tab === tab; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  $('#brand-name').textContent = myName();
+  $('#brand-sub').textContent = S.event.title;
+  $('#clk-v-l').textContent = S.event.venueTzLabel;
+  $('#clk-h-l').textContent = S.event.homeTzLabel;
+  lastAutoRender = Date.now();
+  renderedIdx = T.idx;
+  tick(true);
+}
+function rerender() { const y = window.scrollY; render(); window.scrollTo(0, y); }
+function route() {
+  const h = (location.hash || '').slice(1);
+  const tab = VIEWS[h] ? h : 'home';
+  if (S.ui.tab !== tab) { S.ui.tab = tab; save(); }
+  render(); window.scrollTo(0, 0);
+  if (tab === 'schedule') scrollToNow();
+}
+function scrollToNow() {
+  const el = $('.tl.now') || ($('.tl.past') && $('.tl.future'));
+  if (el) el.scrollIntoView({ block: 'center' });
+}
+function navigate(tab) {
+  if (location.hash === '#' + tab) { S.ui.tab = tab; save(); render(); window.scrollTo(0, 0); if (tab === 'schedule') scrollToNow(); }
+  else location.hash = tab;
+}
+
+/* ------------------------------------------------------------------
+ * Modal + toast
+ * ------------------------------------------------------------------ */
+function openModal(html) {
+  const d = $('#modal'); $('#modal-body').innerHTML = html;
+  if (!d.open) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
+}
+function closeModal() { const d = $('#modal'); if (d.open) { if (d.close) d.close(); else d.removeAttribute('open'); } }
+const modalOpen = () => $('#modal').open;
+const modalHead = (title) => `<div class="modal-head"><h2>${esc(title)}</h2><button class="icon-btn" data-action="modal-close" aria-label="ปิด"><svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>`;
+let toastTimer = null;
+function toast(msg, undo = false) {
+  $('#toast-msg').textContent = msg;
+  $('#toast-undo').hidden = !undo;
+  const t = $('#toast'); t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), undo ? 6500 : 3500);
+}
+
+function openItemModal(id) {
+  const it = id ? S.schedule.find((i) => i.id === id) : { id: '', start: '', end: '', phase: '', title: '', place: '', plan: '', goal: '', type: 'admin', link: '' };
+  if (!it) return;
+  const links = S.matches.slice().sort(byStart).map((m) => [m.id, `${m.start} กลุ่ม ${m.group}: ${m.a} vs ${m.b}`]).concat(KO_KEYS.map((k) => [k, `${S.ko[k].start} ${S.ko[k].label}`]));
+  openModal(`${modalHead(id ? 'แก้ไขรายการ' : 'เพิ่มรายการ')}
+  <form class="form" data-submit="item-save" data-id="${esc(it.id)}">
+    <div class="grid2"><label>เริ่ม (เวลา${esc(S.event.venueTzLabel)})<input type="time" name="start" value="${esc(it.start)}" required></label><label>สิ้นสุด<input type="time" name="end" value="${esc(it.end)}" required></label></div>
+    <label>ช่วง / หัวข้อ<input name="phase" value="${esc(it.phase)}" placeholder="เช่น GROUP 1"></label>
+    <label>กิจกรรม / คู่แข่ง<input name="title" value="${esc(it.title)}" required></label>
+    <label>สนาม / สถานที่<input name="place" value="${esc(it.place)}"></label>
+    <label>แผนปฏิบัติ<textarea name="plan" rows="3">${esc(it.plan)}</textarea></label>
+    <label>เกณฑ์สำเร็จ / เช็กลิสต์<textarea name="goal" rows="2">${esc(it.goal)}</textarea></label>
+    <div class="grid2"><label>ประเภท<select name="type">${TYPES.map(([v, l]) => `<option value="${v}" ${v === it.type ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+    <label>เชื่อมกับแมตช์<select name="link"><option value="">— ไม่มี —</option>${links.map(([v, l]) => `<option value="${esc(v)}" ${v === it.link ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></label></div>
+    <div class="modal-actions">${id ? `<button type="button" class="btn danger-outline" data-action="item-delete" data-id="${esc(id)}">ลบรายการ</button>` : ''}<span class="spacer"></span><button type="button" class="btn" data-action="modal-close">ยกเลิก</button><button class="btn primary" type="submit">บันทึก</button></div>
+  </form>`);
+}
+function openShift() {
+  const items = sortedSchedule(); const st = dayStatus();
+  const def = (st.cur || st.next || items[0] || {}).id;
+  openModal(`${modalHead('เลื่อนเวลา (ล่าช้า / เร็วขึ้น)')}
+  <div class="form"><label>ตั้งแต่รายการ<select id="shift-from">${items.map((i) => `<option value="${esc(i.id)}" ${i.id === def ? 'selected' : ''}>${esc(i.start)} • ${esc(i.phase)} — ${esc(i.title)}</option>`).join('')}</select></label>
+  <div class="shift-btns">${[-15, -10, -5, 5, 10, 15].map((d) => `<button class="btn ${d > 0 ? 'primary' : ''}" data-action="shift-apply" data-min="${d}">${d > 0 ? '+' : '−'}${Math.abs(d)} นาที</button>`).join('')}</div>
+  <p class="muted small">เลื่อนรายการที่เลือกและทุกรายการหลังจากนั้น รวมถึงเวลาแมตช์ในหน้า “ผลแข่ง” และน็อกเอาต์ • กด “เลิกทำ” ได้ทันทีหลังเลื่อน</p></div>`);
+}
+function openTeamModal(code) {
+  const t = team(code); if (!t) return;
+  openModal(`${modalHead('แก้ไขข้อมูลทีม ' + t.code)}
+  <form class="form" data-submit="team-save" data-code="${esc(t.code)}">
+    <label>ชื่อทีม<input name="name" value="${esc(t.name)}" required></label>
+    <label>ประเทศ / หมายเหตุสั้น<input name="from" value="${esc(t.from || '')}"></label>
+    <label>บันทึกสเกาท์<textarea name="notes" rows="4">${esc(t.notes || '')}</textarea></label>
+    <div class="modal-actions"><span class="spacer"></span><button type="button" class="btn" data-action="modal-close">ยกเลิก</button><button class="btn primary" type="submit">บันทึก</button></div>
+  </form>`);
+}
+let deferredPrompt = null;
+function installHtml() {
+  const standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (standalone) return '<p class="small">✓ กำลังใช้งานในโหมดแอพ</p>';
+  if (deferredPrompt) return '<button class="btn primary" data-action="install">ติดตั้งแอพลงเครื่องนี้</button>';
+  if (!location.protocol.startsWith('http')) return '<p class="small muted">ตอนนี้เปิดจากไฟล์ในเครื่อง — ใช้งานได้ครบและออฟไลน์ • ถ้าต้องการติดตั้งเป็นแอพบนมือถือ ให้เปิดผ่านลิงก์เว็บไซต์ (GitHub Pages) ตามคู่มือใน README</p>';
+  if (/iphone|ipad|ipod/i.test(navigator.userAgent)) return '<p class="small">iPhone/iPad: เปิดใน Safari → กดปุ่ม <b>แชร์</b> → <b>เพิ่มไปยังหน้าจอโฮม</b></p>';
+  return '<p class="small">Android / Chrome: เมนู ⋮ → <b>ติดตั้งแอป</b> หรือ <b>เพิ่มลงในหน้าจอหลัก</b> • คอมพิวเตอร์: กดไอคอนติดตั้งท้ายช่องที่อยู่เว็บ</p>';
+}
+function openSettings() {
+  const e = S.event;
+  openModal(`${modalHead('ตั้งค่า & ข้อมูล')}
+  <div class="form">
+    <label>ทีมของเรา<select data-change="set" data-path="event.myTeam">${S.teams.map((t) => `<option value="${esc(t.code)}" ${t.code === e.myTeam ? 'selected' : ''}>${esc(t.code)} • ${esc(t.name)}</option>`).join('')}</select></label>
+    <div class="grid2"><label>วันแข่งขัน<input type="date" data-change="set" data-path="event.date" value="${esc(e.date)}"></label>
+    <label>ธีมสี<select data-change="theme">${[['auto', 'ตามเครื่อง'], ['light', 'สว่าง'], ['dark', 'มืด']].map(([v, l]) => `<option value="${v}" ${S.ui.theme === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>
+    <label>ชื่อรายการ<input data-change="set" data-path="event.name" value="${esc(e.name)}"></label>
+    <label>รุ่น / ประเภท<input data-change="set" data-path="event.category" value="${esc(e.category)}"></label>
+    <label>คำขวัญ / ชื่อแคมเปญ<input data-change="set" data-path="event.title" value="${esc(e.title)}"></label>
+  </div>
+  <h3>แชร์ & สำรองข้อมูล</h3>
+  <div class="btn-grid">
+    <button class="btn primary" data-action="copy-summary">คัดลอกสรุปผล (ส่ง LINE)</button>
+    ${navigator.share ? '<button class="btn" data-action="share-summary">แชร์สรุปผล…</button>' : ''}
+    <button class="btn" data-action="export">สำรองข้อมูล (.json)</button>
+    <button class="btn" data-action="import">นำเข้าข้อมูลสำรอง</button>
+    <button class="btn" data-action="print">พิมพ์ / บันทึก PDF หน้านี้</button>
+  </div>
+  <h3>ติดตั้งเป็นแอพ</h3>${installHtml()}
+  <h3>รีเซ็ต</h3>
+  <div class="btn-grid"><button class="btn danger-outline" data-action="reset-results">ล้างผลการแข่งขันทั้งหมด</button><button class="btn danger-outline" data-action="reset-checks">ล้างเช็กลิสต์ / สถานะกติกา</button><button class="btn danger" data-action="reset-all">คืนค่าเริ่มต้นทั้งหมด</button></div>
+  <p class="muted small" style="margin-top:14px">ข้อมูลทั้งหมดเก็บไว้ในอุปกรณ์เครื่องนี้เท่านั้น (ไม่ส่งขึ้นอินเทอร์เน็ต) และใช้งานออฟไลน์ได้ • ย้ายเครื่องหรือแชร์ให้โค้ชคนอื่น: “สำรองข้อมูล” แล้ว “นำเข้า” ที่อีกเครื่อง • เวอร์ชัน ${APP_VERSION}</p>`);
+}
+
+/* ------------------------------------------------------------------
+ * Summary / export / import
+ * ------------------------------------------------------------------ */
+function summaryText() {
+  const e = S.event; const L = [];
+  L.push(`🏆 ${myName()} | ${e.title}`);
+  L.push(`${e.name} • ${e.category}`);
+  L.push(`📅 ${fmtDateTh(e.date)} (เวลา${e.venueTzLabel})`);
+  const pl = myPlacement(); if (pl) L.push(`ผลงาน: ${pl}`);
+  const my = myGroup();
+  groups().slice().sort((a, b) => (a === my ? -1 : b === my ? 1 : a.localeCompare(b))).forEach((g) => {
+    const st = standings(g);
+    L.push(''); L.push(`⚽ รอบกลุ่ม ${g} (แข่งแล้ว ${st.played}/${st.total})`);
+    gMatches(g).slice().sort(byStart).forEach((m) => L.push(`${m.start}  ${tname(m.a)} ${hasScore(m) ? m.ga + '–' + m.gb : 'vs'} ${tname(m.b)}`));
+    if (st.played) {
+      L.push(`📊 ตารางคะแนนกลุ่ม ${g}`);
+      st.ranked.forEach((r) => L.push(`${r.posMax > r.pos ? r.pos + '=' : r.pos}. ${tname(r.code)} — ${r.pts} แต้ม (แข่ง ${r.p} ต่าง ${sign(r.gd)})`));
+    }
+  });
+  const koLines = KO_KEYS.map((k) => {
+    const t = koSides(k), m = S.ko[k];
+    if (!t.a && !t.b) return null;
+    let s = `${m.label}: ${t.a ? tname(t.a) : '?'} ${hasScore(m) ? m.ga + '–' + m.gb : 'vs'} ${t.b ? tname(t.b) : '?'}`;
+    if (hasScore(m) && m.ga === m.gb && koWin(k)) s += ` (ต่อเวลา: ${tname(koWin(k))} ชนะ)`;
+    return s;
+  }).filter(Boolean);
+  if (koLines.length) { L.push(''); L.push('🏁 รอบน็อกเอาต์'); koLines.forEach((x) => L.push(x)); }
+  if (koWin('final')) L.push(`🏆 แชมป์: ${tname(koWin('final'))}`);
+  L.push(''); L.push(`🟨 ใบเหลือง ${shortMe()}: ${myYellow()}/4`);
+  return L.join('\n');
+}
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; } catch (e) { /* fallback */ }
+  const ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select(); let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  ta.remove(); return ok;
+}
+function download(name, text, type) {
+  const blob = new Blob([text], { type: type || 'application/json' });
+  const url = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+function stamp() { const d = new Date(); return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}`; }
+function validData(d) { return d && typeof d === 'object' && Array.isArray(d.teams) && Array.isArray(d.matches) && Array.isArray(d.schedule) && d.ko && typeof d.ko === 'object'; }
+
+/* ------------------------------------------------------------------
+ * Audio / wake lock
+ * ------------------------------------------------------------------ */
+let actx = null;
+function unlockAudio() { try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === 'suspended') actx.resume(); } catch (e) { actx = null; } }
+function beep(freq, dur, vol) {
+  if (!T.sound || !actx) return;
+  try {
+    const o = actx.createOscillator(), g = actx.createGain(), t0 = actx.currentTime;
+    o.type = 'square'; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || 0.18, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0 + dur + 0.03);
+  } catch (e) { /* ignore */ }
+}
+let wakeLock = null;
+async function keepAwake(on) {
+  try {
+    if (on && 'wakeLock' in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); }
+    else if (!on && wakeLock) { await wakeLock.release(); wakeLock = null; }
+  } catch (e) { wakeLock = null; }
+}
+
+/* ------------------------------------------------------------------
+ * Actions
+ * ------------------------------------------------------------------ */
+const ACTIONS = {
+  ui(el) { S.ui[el.dataset.key] = el.dataset.val; save(); rerender(); },
+  go(el) {
+    if (el.dataset.key) S.ui[el.dataset.key] = el.dataset.val;
+    if (el.dataset.tref) { T.ref = el.dataset.tref; if (!T.running) { const p = presetFor(T.ref); if (p !== T.preset || T.idx >= tPhases().length) tSetPreset(p); } saveT(); }
+    save(); closeModal(); navigate(el.dataset.tab || 'home');
+  },
+  settings() { openSettings(); },
+  'modal-close'() { closeModal(); },
+  undo() {
+    if (!undoSnap) return;
+    S = merge(DEFAULTS(), JSON.parse(undoSnap)); undoSnap = null; save(); applyTheme(); rerender();
+    $('#toast').classList.remove('show'); toast('เลิกทำแล้ว');
+  },
+  score(el) {
+    const m = getMatch(el.dataset.ref); if (!m) return;
+    const s = el.dataset.side, o = s === 'a' ? 'b' : 'a', d = +el.dataset.d;
+    m['g' + s] = Math.max(0, Math.min(99, (num(m['g' + s]) ? m['g' + s] : 0) + d));
+    if (!num(m['g' + o])) m['g' + o] = 0;
+    save(); rerender();
+  },
+  'score-clear'(el) {
+    const m = getMatch(el.dataset.ref); if (!m) return;
+    snapshot(); m.ga = null; m.gb = null; m.ya = 0; m.yb = 0; if ('et' in m) { m.et = ''; m.etRounds = 1; }
+    save(); rerender(); toast('ล้างผลนัดนี้แล้ว', true);
+  },
+  yellow(el) {
+    const m = getMatch(el.dataset.ref); if (!m) return;
+    const k = 'y' + el.dataset.side; m[k] = Math.max(0, Math.min(9, (m[k] || 0) + (+el.dataset.d)));
+    save(); rerender();
+    const y = myYellow();
+    if (+el.dataset.d > 0) toast(y >= 4 ? `⚠ ใบเหลืองครบ ${y} ใบ — เสี่ยงถูกตัดสิทธิ์ (C26–C29)` : y === 3 ? '⚠ ใบเหลืองรวม 3 ใบแล้ว อีกใบเดียวตัดสิทธิ์ทั้งรายการ' : `ใบเหลืองรวม ${y}/4`);
+  },
+  'ko-et'(el) { const m = S.ko[el.dataset.k]; m.et = m.et === el.dataset.side ? '' : el.dataset.side; save(); rerender(); },
+  'ko-etr'(el) { const m = S.ko[el.dataset.k]; m.etRounds = Math.max(1, Math.min(20, (m.etRounds || 1) + (+el.dataset.d))); save(); rerender(); },
+  'ko-suggest'() {
+    const gs = groups(); const Q = S.event.qualify;
+    if (gs.length !== 2 || Q !== 2) { toast('ใช้ได้เฉพาะรูปแบบ 2 กลุ่ม กลุ่มละ 2 ทีม'); return; }
+    const [g1, g2] = gs; const a = standings(g1), b = standings(g2);
+    if (!a.played || !b.played) { toast('ยังไม่มีผลรอบกลุ่มเพียงพอ'); return; }
+    if (!confirm(`ใส่คู่รอบรองฯ ตามรูปแบบนี้?\nSF1: ${tname(a.ranked[0].code)} (${g1}1) vs ${tname(b.ranked[1].code)} (${g2}2)\nSF2: ${tname(b.ranked[0].code)} (${g2}1) vs ${tname(a.ranked[1].code)} (${g1}2)\n\nโปรดยืนยันกับประกาศกรรมการก่อน`)) return;
+    snapshot();
+    S.ko.sf1.a = a.ranked[0].code; S.ko.sf1.b = b.ranked[1].code;
+    S.ko.sf2.a = b.ranked[0].code; S.ko.sf2.b = a.ranked[1].code;
+    save(); rerender(); toast('ใส่คู่รอบรองฯ แล้ว', true);
+  },
+  'item-done'(el) { const it = S.schedule.find((i) => i.id === el.dataset.id); if (!it) return; it.done = !it.done; save(); rerender(); },
+  'toggle-edit'() { UI.editSchedule = !UI.editSchedule; rerender(); },
+  'item-edit'(el) { openItemModal(el.dataset.id); },
+  'item-add'() { openItemModal(null); },
+  'item-delete'(el) {
+    const it = S.schedule.find((i) => i.id === el.dataset.id); if (!it) return;
+    if (!confirm(`ลบรายการ “${it.title}” ?`)) return;
+    snapshot(); S.schedule = S.schedule.filter((i) => i.id !== el.dataset.id); save(); closeModal(); rerender(); toast('ลบรายการแล้ว', true);
+  },
+  'shift-open'() { openShift(); },
+  'shift-apply'(el) {
+    const sel = $('#shift-from'); const from = sel && S.schedule.find((i) => i.id === sel.value); if (!from) return;
+    const f0 = toMin(from.start), d = +el.dataset.min, label = from.start;
+    snapshot();
+    const mv = (o) => { if (toMin(o.start) >= f0) { o.start = fromMin(toMin(o.start) + d); o.end = fromMin(toMin(o.end) + d); } };
+    S.schedule.forEach(mv); S.matches.forEach(mv); KO_KEYS.forEach((k) => mv(S.ko[k]));
+    save(); closeModal(); rerender(); toast(`เลื่อนเวลา ${d > 0 ? '+' : '−'}${Math.abs(d)} นาที ตั้งแต่ ${label} แล้ว`, true);
+  },
+  rule(el) { const r = S.rules.find((x) => x.id === el.dataset.id); if (!r) return; r.status = r.status === el.dataset.v ? '' : el.dataset.v; save(); rerender(); },
+  check(el) { const it = (S.checklists[el.dataset.list] || []).find((x) => x.id === el.dataset.id); if (!it) return; it.done = !it.done; save(); rerender(); },
+  'check-del'(el) { const k = el.dataset.list; snapshot(); S.checklists[k] = S.checklists[k].filter((x) => x.id !== el.dataset.id); save(); rerender(); toast('ลบรายการแล้ว', true); },
+  'check-reset'(el) { const k = el.dataset.list; snapshot(); (S.checklists[k] || []).forEach((x) => { x.done = false; }); save(); rerender(); toast('รีเซ็ตเช็กลิสต์แล้ว', true); },
+  'toggle-lists'() { UI.editLists = !UI.editLists; rerender(); },
+  'team-edit'(el) { openTeamModal(el.dataset.code); },
+  async 'copy-summary'() {
+    const t = summaryText();
+    if (await copyText(t)) toast('คัดลอกสรุปผลแล้ว — วางใน LINE ได้เลย');
+    else openModal(`${modalHead('คัดลอกสรุปผล')}<textarea rows="14" readonly>${esc(t)}</textarea><p class="muted small">กดค้างที่ข้อความเพื่อเลือกทั้งหมดแล้วคัดลอก</p>`);
+  },
+  async 'share-summary'() { try { await navigator.share({ title: myName(), text: summaryText() }); } catch (e) { /* cancelled */ } },
+  export() {
+    download(`cwk-apra-2026-backup-${stamp()}.json`, JSON.stringify({ app: 'cwk-apra-planner', version: APP_VERSION, exportedAt: new Date().toISOString(), data: S }, null, 2));
+    toast('ดาวน์โหลดไฟล์สำรองแล้ว');
+  },
+  import() { $('#file-import').value = ''; $('#file-import').click(); },
+  print() { closeModal(); setTimeout(() => window.print(), 150); },
+  'reset-results'() {
+    if (!confirm('ล้างสกอร์ ใบเหลือง และคู่น็อกเอาต์ทั้งหมด?')) return;
+    snapshot();
+    S.matches.forEach((m) => { m.ga = null; m.gb = null; m.ya = 0; m.yb = 0; });
+    KO_KEYS.forEach((k) => Object.assign(S.ko[k], { a: '', b: '', ga: null, gb: null, et: '', etRounds: 1, ya: 0, yb: 0 }));
+    save(); closeModal(); rerender(); toast('ล้างผลการแข่งขันแล้ว', true);
+  },
+  'reset-checks'() {
+    if (!confirm('ล้างเครื่องหมายในเช็กลิสต์ ตารางเวลา และสถานะกติกาทั้งหมด?')) return;
+    snapshot();
+    Object.values(S.checklists).forEach((l) => l.forEach((x) => { x.done = false; }));
+    S.schedule.forEach((i) => { i.done = false; }); S.rules.forEach((r) => { r.status = ''; });
+    save(); closeModal(); rerender(); toast('ล้างเช็กลิสต์แล้ว', true);
+  },
+  'reset-all'() {
+    if (!confirm('คืนค่าเริ่มต้นทั้งหมด? (ผล บันทึก และการแก้ไขทั้งหมดจะหายไป)')) return;
+    snapshot(); const theme = S.ui.theme; S = DEFAULTS(); S.ui.theme = theme; S.ui.tab = 'home';
+    save(); closeModal(); applyTheme(); navigate('home'); toast('คืนค่าเริ่มต้นแล้ว', true);
+  },
+  async install() { if (!deferredPrompt) return; deferredPrompt.prompt(); try { await deferredPrompt.userChoice; } catch (e) { /* ignore */ } deferredPrompt = null; closeModal(); },
+
+  /* timer */
+  't-preset'(el) { tSetPreset(el.dataset.val); rerender(); },
+  't-toggle'() {
+    unlockAudio();
+    const ph = tPhases();
+    if (T.running) { T.remaining = tRem(); T.running = false; keepAwake(false); }
+    else {
+      if (T.idx >= ph.length) { T.idx = 0; T.remaining = ph[0][1]; }
+      if (T.remaining <= 0) T.remaining = ph[T.idx][1];
+      T.endAt = Date.now() + T.remaining * 1000; T.running = true; keepAwake(true);
+    }
+    lastBeepSec = null; saveT(); rerender();
+  },
+  't-reset'() { tSetPreset(T.preset); rerender(); },
+  't-next'() {
+    const ph = tPhases();
+    T.running = false; keepAwake(false);
+    if (T.idx < ph.length - 1) { T.idx++; T.remaining = ph[T.idx][1]; } else { T.idx = ph.length; T.remaining = 0; }
+    saveT(); rerender();
+  },
+  't-adj'(el) {
+    const d = +el.dataset.d;
+    if (T.running) T.endAt = Math.max(Date.now(), T.endAt + d * 1000);
+    else if (T.idx < tPhases().length) T.remaining = Math.max(0, T.remaining + d);
+    saveT(); tick(true);
+  },
+  't-sound'() { T.sound = !T.sound; if (T.sound) { unlockAudio(); beep(880, 0.08); } saveT(); rerender(); },
+};
+
+/* อัปเดตเฉพาะส่วนที่เกี่ยวข้อง โดยไม่ทำลายช่องที่กำลังพิมพ์อยู่ */
+function softRefresh(keepRef) {
+  const act = document.activeElement;
+  $$('.match[data-ref]').forEach((card) => {
+    const ref = card.dataset.ref;
+    if (!card.contains(act) && ref !== keepRef) { card.outerHTML = matchCard(ref); return; }
+    const ri = resInfo(ref); const r = card.querySelector('[data-res]');
+    if (r) { r.textContent = ri.t; r.className = 'res ' + ri.cls; }
+    const w = winnerCode(ref); const sd = sidesOf(ref);
+    card.querySelectorAll('.tline[data-side]').forEach((tl) => tl.classList.toggle('win', !!w && w === sd[tl.dataset.side]));
+    const et = card.querySelector('[data-et]'); if (et) et.innerHTML = etPanel(ref);
+  });
+  const lt = $('#live-table'); if (lt) lt.innerHTML = liveTables(S.ui.groupFilter || myGroup());
+  const cs = $('#champ-slot'); if (cs) cs.innerHTML = champBanner();
+}
+const INPUTS = {
+  score(el) {
+    const raw = el.value.replace(/\D/g, '').slice(0, 2);
+    if (raw !== el.value) el.value = raw;
+    const m = getMatch(el.dataset.ref); if (!m) return;
+    m['g' + el.dataset.side] = raw === '' ? null : +raw;
+    save(); softRefresh(el.dataset.ref);
+  },
+  'team-notes'(el) { const t = team(el.dataset.code); if (t) { t.notes = el.value; save(); } },
+};
+const CHANGES = {
+  'ko-team'(el) {
+    const k = el.dataset.k, side = el.dataset.side, v = el.value;
+    const used = ['sf1', 'sf2'].flatMap((x) => ['a', 'b'].map((s) => (x === k && s === side) ? '' : S.ko[x][s])).filter(Boolean);
+    S.ko[k][side] = v; save(); rerender();
+    if (v && used.includes(v)) toast(`⚠ ${tname(v)} ถูกเลือกในอีกนัดแล้ว`);
+  },
+  't-ref'(el) { T.ref = el.value; if (!T.running) { const p = presetFor(T.ref); if (p !== T.preset) tSetPreset(p); } saveT(); rerender(); },
+  't-custom'(el) { T.custom = Math.max(1, Math.min(180, parseInt(el.value, 10) || 15)); if (!T.running) { T.idx = 0; T.remaining = tPhases()[0][1]; } saveT(); rerender(); },
+  set(el) {
+    const path = el.dataset.path.split('.'); let o = S;
+    for (let i = 0; i < path.length - 1; i++) o = o[path[i]];
+    const v = el.value.trim(); if (!v) return;
+    o[path[path.length - 1]] = v; save(); rerender();
+  },
+  theme(el) { S.ui.theme = el.value; save(); applyTheme(); },
+};
+const SUBMITS = {
+  'check-add'(f) {
+    const inp = f.elements.t; const t = inp.value.trim(); if (!t) return;
+    S.checklists[f.dataset.list].push({ id: uid(), text: t, done: false }); save(); rerender();
+    const again = $(`form[data-list="${f.dataset.list}"] input`); if (again) again.focus();
+  },
+  'item-save'(f) {
+    const v = (n) => (f.elements[n] ? f.elements[n].value.trim() : '');
+    const data = { start: v('start'), end: v('end'), phase: v('phase'), title: v('title'), place: v('place'), plan: v('plan'), goal: v('goal'), type: v('type') || 'admin', link: v('link') };
+    if (!data.start || !data.end || !data.title) return;
+    if (toMin(data.end) <= toMin(data.start)) { toast('เวลาสิ้นสุดต้องหลังเวลาเริ่ม'); return; }
+    snapshot();
+    if (f.dataset.id) Object.assign(S.schedule.find((i) => i.id === f.dataset.id), data);
+    else S.schedule.push({ id: 's' + uid(), done: false, ...data });
+    save(); closeModal(); rerender(); toast('บันทึกรายการแล้ว', true);
+  },
+  'team-save'(f) {
+    const t = team(f.dataset.code); if (!t) return;
+    const name = f.elements.name.value.trim(); if (!name) return;
+    t.name = name; t.from = f.elements.from.value.trim(); t.notes = f.elements.notes.value;
+    save(); closeModal(); rerender(); toast('บันทึกข้อมูลทีมแล้ว');
+  },
+};
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-action]');
+  if (!el) return;
+  if (el.tagName === 'A') e.preventDefault();
+  const fn = ACTIONS[el.dataset.action];
+  if (fn) fn(el, e);
+});
+document.addEventListener('input', (e) => { const el = e.target.closest('[data-input]'); if (el && INPUTS[el.dataset.input]) INPUTS[el.dataset.input](el, e); });
+document.addEventListener('change', (e) => { const el = e.target.closest('[data-change]'); if (el && CHANGES[el.dataset.change]) CHANGES[el.dataset.change](el, e); });
+document.addEventListener('submit', (e) => { const f = e.target; const k = f.dataset && f.dataset.submit; if (!k) return; e.preventDefault(); if (SUBMITS[k]) SUBMITS[k](f); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.matches && e.target.matches('input[data-input="score"]')) e.target.blur(); });
+$('#modal').addEventListener('click', (e) => { if (e.target.id === 'modal') closeModal(); });
+$('#file-import').addEventListener('change', (e) => {
+  const file = e.target.files && e.target.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const parsed = JSON.parse(String(r.result)); const d = parsed && parsed.data ? parsed.data : parsed;
+      if (!validData(d)) throw new Error('bad');
+      if (!confirm('นำเข้าข้อมูลจากไฟล์นี้? ข้อมูลปัจจุบันในเครื่องจะถูกแทนที่')) return;
+      snapshot(); const theme = S.ui.theme; S = merge(DEFAULTS(), d); S.ui.theme = theme; S.version = DATA_VERSION;
+      save(); closeModal(); applyTheme(); rerender(); toast('นำเข้าข้อมูลแล้ว', true);
+    } catch (err) { toast('ไฟล์ไม่ถูกต้อง — ใช้ไฟล์ .json ที่ได้จาก “สำรองข้อมูล”'); }
+  };
+  r.readAsText(file);
+});
+window.addEventListener('hashchange', route);
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+window.addEventListener('storage', (e) => { if (e.key === KEY || e.key === TKEY) { load(); memo.clear(); applyTheme(); if (!modalOpen()) rerender(); } });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (T.running) keepAwake(true); tick(true); } });
+
+function applyTheme() {
+  const t = S.ui.theme;
+  if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
+}
+
+/* ------------------------------------------------------------------
+ * Clock tick
+ * ------------------------------------------------------------------ */
+let lastSec = -1, lastAutoRender = 0, lastBeepSec = null, renderedIdx = null;
+function phaseEnd() {
+  const ph = tPhases(); const ended = ph[T.idx] ? ph[T.idx][0] : '';
+  T.running = false; T.remaining = 0; keepAwake(false);
+  beep(520, 0.9, 0.22); try { navigator.vibrate && navigator.vibrate([300, 120, 300]); } catch (e) { /* ignore */ }
+  if (T.idx < ph.length - 1) { T.idx++; T.remaining = ph[T.idx][1]; toast(`หมดเวลา “${ended}” → ถัดไป: ${ph[T.idx][0]} (กด ▶ เมื่อกรรมการสั่ง)`); }
+  else { T.idx = ph.length; toast('หมดเวลาการแข่งขัน — ตรวจสกอร์ก่อนเซ็นใบคะแนน'); }
+  saveT();
+  if (S.ui.tab === 'timer') rerender();
+}
+function tick(force) {
+  const now = Date.now();
+  const rem = tRem();
+  if (T.running) {
+    const s = Math.ceil(rem);
+    if (s !== lastBeepSec) { lastBeepSec = s; if (s === 30 || s === 10) beep(660, 0.18); else if (s >= 1 && s <= 3) beep(880, 0.12); }
+    if (rem <= 0) { phaseEnd(); return; }
+  }
+  const ph = tPhases(); const done = T.idx >= ph.length; const cur = done ? null : ph[T.idx];
+  const big = $('#t-big');
+  if (big) {
+    if (renderedIdx !== T.idx && S.ui.tab === 'timer') { rerender(); return; }
+    big.textContent = fmtMS(done ? 0 : rem);
+    const bar = $('#t-bar'); if (bar) bar.style.width = (cur ? Math.max(0, Math.min(100, (1 - rem / cur[1]) * 100)) : 100) + '%';
+    const card = $('#timer-card'); if (card) card.classList.toggle('low', T.running && rem <= 10);
+  }
+  const pill = $('#tpill');
+  const showPill = T.running && S.ui.tab !== 'timer' && cur;
+  pill.hidden = !showPill;
+  if (showPill) pill.textContent = `⏱ ${cur[0]} ${fmtMS(rem)}`;
+
+  const sec = Math.floor(now / 1000);
+  if (sec === lastSec && !force) return;
+  lastSec = sec;
+  $('#clk-v').textContent = clockStr(S.event.venueTz);
+  $('#clk-h').textContent = clockStr(S.event.homeTz);
+  let expired = false;
+  $$('[data-until]').forEach((el) => { const left = (+el.dataset.until - now) / 1000; if (left <= 0 && left > -3) expired = true; el.textContent = fmtDur(left); });
+  $$('[data-from]').forEach((el) => { const f = +el.dataset.from, t = +el.dataset.to; el.style.width = Math.max(0, Math.min(100, ((now - f) / (t - f)) * 100)) + '%'; });
+  $$('[data-clock]').forEach((el) => { el.textContent = clockStr(S.event.venueTz); });
+  const idle = !modalOpen() && !(document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName));
+  if (!force && idle && (S.ui.tab === 'home' || S.ui.tab === 'schedule') && (expired || now - lastAutoRender > 30000)) rerender();
+}
+
+/* ------------------------------------------------------------------
+ * Boot
+ * ------------------------------------------------------------------ */
+load();
+applyTheme();
+if (!VIEWS[(location.hash || '').slice(1)]) history.replaceState(null, '', '#' + (VIEWS[S.ui.tab] ? S.ui.tab : 'home'));
+route();
+setInterval(tick, 250);
+if (T.running) keepAwake(true);
+if (location.protocol.startsWith('http')) {
+  const l = document.createElement('link'); l.rel = 'manifest'; l.href = 'manifest.webmanifest'; document.head.appendChild(l);
+  if ('serviceWorker' in navigator) window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
+window.CWK = { state: () => S, standings, scenario, summaryText };
+})();
+</script>
+</body>
+</html>
