@@ -406,6 +406,49 @@ dialog.wide{max-width:920px}
 .lb-nav span{text-align:center;flex:1}
 .ro .madds{display:none}
 
+/* practice mode */
+.seg.seg5 button{flex:1 1 0;min-width:0;padding:7px 3px;font-size:13px;white-space:normal;line-height:1.25}
+.psub{font-size:15px;margin:18px 0 8px}
+.pteams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:end}
+.pteams select{font-size:15px}
+.pvs{font-weight:800;color:var(--muted);padding-bottom:11px}
+.tog{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin:10px 0;cursor:pointer}
+.tog input{width:20px;height:20px;accent-color:var(--accent);flex:none}
+.pstart{width:100%;min-height:54px;font-size:18px;margin-top:16px}
+.pgoalbox{background:var(--ok-soft);color:var(--ok);border-radius:10px;padding:10px 12px}
+.pgoalbox b{font-size:15.5px}
+.pgoal{width:100%;min-height:52px;font-size:18px;margin-top:6px}
+.pev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:6px}
+.pev .btn{padding:4px 2px;font-size:13px;min-height:40px;gap:3px}
+.pres{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;font-size:16px;font-weight:700;margin:12px 0 4px;overflow-wrap:anywhere}
+.pres span{font-size:34px;font-weight:800;font-variant-numeric:tabular-nums}
+.evlist{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto}
+.evlist li{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);font-size:14px}
+.evlist li:last-child{border-bottom:0}
+.evlist .et{min-width:104px;color:var(--muted);font-variant-numeric:tabular-nums;font-size:13px}
+.pstats{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-bottom:6px}
+.timer.compact{padding-top:12px}
+.timer.compact .phead{text-align:left;margin-bottom:10px}
+.timer.compact .phead b{font-size:15.5px}
+.timer.compact .t-label{margin-top:2px;font-size:16px}
+.timer.compact .t-big{font-size:clamp(56px,17vw,104px);margin:2px 0 8px}
+.timer.compact .t-ctrl{margin-top:10px}
+.timer.compact .t-ctrl .main{min-height:50px;font-size:18px}
+.timer.compact .t-ctrl2{margin:10px 0 0}
+.pstat{background:var(--surface-2);border-radius:10px;padding:8px 10px;border:1px solid var(--border)}
+.pstat b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.pstat span{font-size:12px;color:var(--muted)}
+details.phist{border-top:1px solid var(--border);padding:10px 0}
+details.phist summary{cursor:pointer;list-style:none}
+details.phist summary::-webkit-details-marker{display:none}
+.ph-top{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px}
+.ph-score{font-size:15px;margin-top:3px}
+.ph-body{font-size:14px;margin-top:8px;display:grid;gap:4px}
+.scout-ref{background:var(--info-soft);border-radius:12px;padding:10px 12px;margin-top:10px}
+table.pfmt{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+.pfmt td,.pfmt th{padding:6px 4px;border-bottom:1px solid var(--border);text-align:left}
+.pfmt td:not(:first-child),.pfmt th:not(:first-child){text-align:center}
+
 @media (max-width:380px){
   main{padding:12px}
   .clocks{gap:6px} .clocks b{font-size:14.5px}
@@ -459,7 +502,7 @@ dialog.wide{max-width:920px}
 (() => {
 'use strict';
 
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.3.0';
 const KEY = 'cwk-apra-2026';
 const TKEY = 'cwk-apra-2026-timer';
 const DATA_VERSION = 1;
@@ -601,7 +644,9 @@ const DEFAULTS = () => ({
     ]),
     drills: L(['6-min scrimmage', '0–1 comeback', 'defend 1–0', '2-min golden goal', '1-on-1 robot', '5-min half endurance']),
   },
-  ui: { tab: 'home', scoresTab: 'group', planTab: 'play', groupFilter: '', play: '0', theme: 'auto' },
+  practice: [],
+  sparring: [],
+  ui: { tab: 'home', scoresTab: 'group', planTab: 'play', groupFilter: '', play: '0', theme: 'auto', pFilter: '' },
 });
 
 const FIELD_REMINDERS = [
@@ -620,6 +665,7 @@ const PRESETS = {
   final: { name: 'ชิงที่ 3 / ชิงแชมป์', note: 'ครึ่งละ 5 นาที (C4) • เตรียม 2 นาที • พักครึ่ง 2 นาที', phases: [['เตรียมก่อนแข่ง', 120, 'prep'], ['ครึ่งแรก', 300, 'play'], ['พักครึ่ง', 120, 'break'], ['ครึ่งหลัง', 300, 'play']] },
   et: { name: 'ต่อเวลา', note: 'F7: เตรียม 2 นาที → ต่อเวลา 2 นาที ยิงก่อนชนะ • ยังเสมอ → เหลือฝ่ายละ 1 หุ่น แล้ววนต่อ', phases: [['เตรียมต่อเวลา', 120, 'prep'], ['ต่อเวลา (ยิงก่อนชนะ)', 120, 'play']] },
   rest: { name: 'พัก / ซ่อม', note: 'จับเวลาพักระหว่างนัด • นักเรียนแก้หุ่นเฉพาะที่กฎอนุญาต', phases: null },
+  practice: { name: 'ซ้อมแข่ง', note: 'โหมดซ้อม — ผลเก็บในประวัติการซ้อม ไม่ปนกับผลแข่งจริง', phases: null },
 };
 
 /* ------------------------------------------------------------------
@@ -1210,7 +1256,10 @@ function subKO() {
 }
 
 /* ---------- timer ---------- */
-function tPhases() { const p = PRESETS[T.preset] || PRESETS.group; return p.phases || [['พัก / ซ่อมหุ่น', Math.max(1, Math.min(180, T.custom | 0)) * 60, 'break']]; }
+function tPhases() {
+  if (T.preset === 'practice') return (PRAC.cur && PRAC.cur.phases && PRAC.cur.phases.length) ? PRAC.cur.phases : [['ซ้อม', 180, 'play']];
+  const p = PRESETS[T.preset] || PRESETS.group; return p.phases || [['พัก / ซ่อมหุ่น', Math.max(1, Math.min(180, T.custom | 0)) * 60, 'break']];
+}
 function tRem() { return T.running ? Math.max(0, (T.endAt - Date.now()) / 1000) : T.remaining; }
 function tSetPreset(p) { T.preset = PRESETS[p] ? p : 'group'; T.idx = 0; T.running = false; T.remaining = tPhases()[0][1]; saveT(); keepAwake(false); }
 function timerMatchOptions() {
@@ -1220,26 +1269,32 @@ function timerMatchOptions() {
   return opts;
 }
 function defaultTimerRef() { const n = myFixtures().find((f) => !f.done); return n ? n.ref : ('g:' + (S.matches[0] ? S.matches[0].id : '')); }
-function viewTimer() {
+function timerCard(cls, head) {
   const ph = tPhases(); const P = PRESETS[T.preset] || PRESETS.group; const done = T.idx >= ph.length;
-  const cur = done ? ['จบการแข่งขัน', 1, 'end'] : ph[T.idx];
-  if (!getMatch(T.ref)) { T.ref = defaultTimerRef(); saveT(); }
+  const cur = done ? [T.preset === 'practice' ? 'จบการซ้อม' : 'จบการแข่งขัน', 1, 'end'] : ph[T.idx];
   const rem = tRem();
-  return `${seg('preset', Object.entries(PRESETS).map(([k, v]) => [k, v.name]), T.preset, 't-preset', 'grid')}
-  <section class="card timer ${cur[2]}" id="timer-card">
+  return `<section class="card timer ${cur[2]} ${cls || ''}" id="timer-card">${head || ''}
     <div class="phases">${ph.map((p, i) => `<span class="ph ${i < T.idx ? 'done' : i === T.idx ? 'cur' : ''}">${esc(p[0])} ${fmtMS(p[1])}</span>`).join('')}</div>
     <div class="t-label" id="t-label">${esc(cur[0])}</div>
     <div class="t-big" id="t-big" role="timer" aria-live="off">${fmtMS(done ? 0 : rem)}</div>
     <div class="t-bar"><i id="t-bar" style="width:${done ? 100 : Math.max(0, Math.min(100, (1 - rem / cur[1]) * 100))}%"></i></div>
     <div class="t-ctrl"><button class="btn" data-action="t-adj" data-d="-10" aria-label="ลด 10 วินาที">−10 วิ</button><button class="btn primary main" data-action="t-toggle" id="t-toggle">${T.running ? '❚❚ หยุด' : done ? '↺ เริ่มใหม่' : '▶ เริ่ม'}</button><button class="btn" data-action="t-adj" data-d="10" aria-label="เพิ่ม 10 วินาที">+10 วิ</button></div>
-    <div class="t-ctrl2"><button class="btn sm" data-action="t-reset">↺ เริ่มใหม่ทั้งแมตช์</button><button class="btn sm" data-action="t-next">⏭ ข้ามไปช่วงถัดไป</button><button class="btn sm" data-action="t-sound" aria-pressed="${!!T.sound}">${T.sound ? '🔔 เสียงเตือน: เปิด' : '🔕 เสียงเตือน: ปิด'}</button></div>
+    ${cls === 'compact'
+    ? `<div class="t-ctrl2"><button class="btn sm" data-action="t-reset" aria-label="เริ่มนับเวลาใหม่">↺ เริ่มใหม่</button><button class="btn sm" data-action="t-next" aria-label="ข้ามไปช่วงถัดไป">⏭ ข้ามช่วง</button><button class="btn sm" data-action="t-sound" aria-pressed="${!!T.sound}" aria-label="เสียงเตือน">${T.sound ? '🔔 เปิด' : '🔕 ปิด'}</button></div>`
+    : `<div class="t-ctrl2"><button class="btn sm" data-action="t-reset">↺ เริ่มใหม่ทั้งแมตช์</button><button class="btn sm" data-action="t-next">⏭ ข้ามไปช่วงถัดไป</button><button class="btn sm" data-action="t-sound" aria-pressed="${!!T.sound}">${T.sound ? '🔔 เสียงเตือน: เปิด' : '🔕 เสียงเตือน: ปิด'}</button></div>`}
     ${T.preset === 'rest' ? `<label class="inline">กำหนดเวลา (นาที) <input type="number" min="1" max="180" inputmode="numeric" data-change="t-custom" value="${esc(T.custom)}"></label>` : ''}
-    <p class="muted small" style="margin-top:10px">${esc(P.note)} • เตือนที่ 30 วิ, 10 วิ และ 3 วิสุดท้าย • เวลาทางการยึดตามกรรมการเสมอ</p>
-  </section>
-  <section class="card"><div class="kicker">สกอร์สด — บันทึกลงตารางผลอัตโนมัติ</div>
+    ${cls === 'compact' ? '' : `<p class="muted small" style="margin-top:10px">${esc(P.note)} • เตือนที่ 30 วิ, 10 วิ และ 3 วิสุดท้าย${T.preset === 'practice' ? '' : ' • เวลาทางการยึดตามกรรมการเสมอ'}</p>`}
+  </section>`;
+}
+function viewTimer() {
+  if (!getMatch(T.ref)) { T.ref = defaultTimerRef(); saveT(); }
+  const pc = T.preset === 'practice' && PRAC.cur ? PRAC.cur : null;
+  return `${seg('preset', Object.entries(PRESETS).filter(([k]) => k !== 'practice' || PRAC.cur).map(([k, v]) => [k, v.name]), T.preset, 't-preset', 'grid')}
+  ${timerCard()}
+  ${pc ? practiceTimerLink(pc) : `<section class="card"><div class="kicker">สกอร์สด — บันทึกลงตารางผลอัตโนมัติ</div>
     <select data-change="t-ref" aria-label="เลือกแมตช์">${timerMatchOptions().map((o) => `<option value="${o.ref}" ${o.ref === T.ref ? 'selected' : ''}>${o.mine ? '★ ' : ''}${esc(o.label)}</option>`).join('')}</select>
     ${board(T.ref)}
-  </section>
+  </section>`}
   <section class="card"><h3>เตือนกติกาในสนาม</h3><ul class="plain">${FIELD_REMINDERS.map(([r, t]) => `<li><b>${esc(r)}</b> ${esc(t)}</li>`).join('')}</ul></section>`;
 }
 function board(ref) {
@@ -1262,8 +1317,8 @@ function board(ref) {
 /* ---------- plan / rules / checks / teams ---------- */
 function viewPlan() {
   const sub = S.ui.planTab || 'play';
-  return seg('planTab', [['play', 'แผนการเล่น'], ['rules', 'กติกา'], ['check', 'เช็กลิสต์'], ['teams', 'คู่แข่ง']], sub)
-    + (sub === 'rules' ? subRules() : sub === 'check' ? subChecks() : sub === 'teams' ? subTeams() : subPlay());
+  return seg('planTab', [['play', 'แผนเล่น'], ['practice', 'ซ้อมแข่ง'], ['rules', 'กติกา'], ['check', 'เช็กลิสต์'], ['teams', 'คู่แข่ง']], sub, 'ui', 'seg5')
+    + (sub === 'practice' ? subPractice() : sub === 'rules' ? subRules() : sub === 'check' ? subChecks() : sub === 'teams' ? subTeams() : subPlay());
 }
 function subPlay() {
   const pb = S.playbook; const i = Math.min(pb.length - 1, Math.max(0, +S.ui.play || 0)); const p = pb[i];
@@ -1275,8 +1330,9 @@ function subPlay() {
     <div class="robots"><div class="robot r1"><div class="rl">หุ่นบุก / ตัวที่ 1</div><p>${esc(p.r1)}</p></div><div class="robot r2"><div class="rl">หุ่นรับ / ตัวที่ 2</div><p>${esc(p.r2)}</p></div></div>
     <div class="caution"><b>ข้อควรระวัง</b>${esc(p.caution)}</div>
     <div class="kpi"><b>ตัวชี้วัด</b>${esc(p.kpi)}</div>
+    ${PFORMATS.some((f) => f.play === p.situation) ? `<button class="btn" style="margin-top:10px;width:100%" data-action="p-launch" data-fmt="${PFORMATS.find((f) => f.play === p.situation).k}">▶ ซ้อมสถานการณ์นี้ในโหมดซ้อมแข่ง</button>` : ''}
   </article>` : ''}
-  <section class="card"><div class="row-between"><h3>การซ้อมเสริมก่อนแข่ง <span class="badge">${S.checklists.drills.filter((d) => d.done).length}/${S.checklists.drills.length}</span></h3><button class="btn sm" data-action="check-reset" data-list="drills">รีเซ็ต</button></div>${checkList('drills')}</section>
+  <section class="card"><div class="row-between"><h3>การซ้อมเสริมก่อนแข่ง <span class="badge">${S.checklists.drills.filter((d) => d.done).length}/${S.checklists.drills.length}</span></h3><button class="btn sm" data-action="check-reset" data-list="drills">รีเซ็ต</button></div><p class="muted small">กด “▶ ซ้อม” เพื่อจับเวลา นับสกอร์ บันทึกเหตุการณ์ และเก็บผลในประวัติการซ้อม</p>${checkList('drills')}</section>
   <section class="card"><details class="all"><summary>ดูแผนการเล่นทั้งหมด (${pb.length} สถานการณ์)</summary>
     ${pb.map((x) => `<div class="pb-row"><b>${esc(x.situation)}</b>🎯 ${esc(x.goal)}<br><span class="muted">ตัวที่ 1:</span> ${esc(x.r1)}<br><span class="muted">ตัวที่ 2:</span> ${esc(x.r2)}<br><span class="muted">ระวัง:</span> ${esc(x.caution)} • <span class="muted">วัดผล:</span> ${esc(x.kpi)}</div>`).join('')}
   </details></section>`;
@@ -1295,7 +1351,7 @@ function subRules() {
 }
 function checkList(key) {
   const list = S.checklists[key] || [];
-  return `<ul class="checks">${list.map((it) => `<li><button class="crow" data-action="check" data-list="${key}" data-id="${esc(it.id)}" aria-pressed="${!!it.done}"><span class="cbox" aria-hidden="true">✓</span><span class="ctext">${esc(it.text)}</span></button>${UI.editLists ? `<button class="icon-del" data-action="check-del" data-list="${key}" data-id="${esc(it.id)}" aria-label="ลบ ${esc(it.text)}">✕</button>` : ''}</li>`).join('')}</ul>
+  return `<ul class="checks">${list.map((it) => `<li><button class="crow" data-action="check" data-list="${key}" data-id="${esc(it.id)}" aria-pressed="${!!it.done}"><span class="cbox" aria-hidden="true">✓</span><span class="ctext">${esc(it.text)}</span></button>${key === 'drills' ? drillLaunch(it) : ''}${UI.editLists ? `<button class="icon-del" data-action="check-del" data-list="${key}" data-id="${esc(it.id)}" aria-label="ลบ ${esc(it.text)}">✕</button>` : ''}</li>`).join('')}</ul>
   ${UI.editLists ? `<form class="add-row" data-submit="check-add" data-list="${key}"><input name="t" placeholder="เพิ่มรายการใหม่…" aria-label="เพิ่มรายการใหม่" autocomplete="off"><button class="btn primary" type="submit">เพิ่ม</button></form>` : ''}`;
 }
 function checkCard(key, title, note) {
@@ -1631,6 +1687,39 @@ const ACTIONS = {
     save(); closeModal(); applyTheme(); navigate('home'); toast('คืนค่าเริ่มต้นแล้ว', true);
   },
   online() { openOnline(); },
+  'p-fmt'(el) { PRAC.draft.fmt = el.dataset.val; savePrac(); rerender(); },
+  'p-launch'(el) {
+    PRAC.draft.fmt = el.dataset.fmt; savePrac();
+    S.ui.planTab = 'practice'; save(); navigate('plan');
+    if (PRAC.cur) toast('มีการซ้อมค้างอยู่ — จบหรือยกเลิกก่อนเริ่มรูปแบบใหม่');
+  },
+  'p-start'() { startPractice(); },
+  'p-ev'(el) { practiceEvent(el.dataset.side, el.dataset.k); },
+  'p-undo'() {
+    const c = PRAC.cur; if (!c || !c.events.length) return;
+    const e = c.events.pop(); if (e.k === 'goal') c.done = false;
+    savePrac(); rerender(); toast(`ย้อน: ${PEV[e.k][1]} ${e.s === 'a' ? c.aName : c.bName}`);
+  },
+  'p-finish'() { openPracticeFinish(); },
+  'p-kpi'(el) { if (!PRAC.cur) return; PRAC.cur.kpi = el.dataset.v; PRAC.cur.kpiTouched = true; savePrac(); openPracticeFinish(); },
+  'p-save'() { savePractice(); },
+  'p-discard'() { if (!confirm('ทิ้งผลการซ้อมนี้? (ไม่บันทึกลงประวัติ)')) return; endPractice(); closeModal(); rerender(); toast('ทิ้งผลการซ้อมแล้ว'); },
+  'p-cancel'() { if (PRAC.cur && PRAC.cur.events.length && !confirm('ยกเลิกการซ้อมนี้? เหตุการณ์ที่บันทึกไว้จะหายไป')) return; endPractice(); rerender(); },
+  'p-retimer'() { if (T.running && !confirm('นาฬิกากำลังเดินอยู่ ต้องการหยุดแล้วใช้กับการซ้อมนี้?')) return; tSetPreset('practice'); rerender(); },
+  'p-del'(el) {
+    const r = S.practice.find((x) => x.id === el.dataset.id); if (!r) return;
+    if (!confirm(`ลบประวัติการซ้อม “${r.fmtName}” (${r.ga}–${r.gb})?`)) return;
+    snapshot(); S.practice = S.practice.filter((x) => x.id !== r.id); save(); rerender(); toast('ลบประวัติแล้ว', true);
+  },
+  'p-csv'() { download(`cwk-practice-${stamp()}.csv`, practiceCSV(), 'text/csv;charset=utf-8'); toast('ดาวน์โหลด .csv แล้ว — เปิดด้วย Excel หรือ Google Sheets ได้'); },
+  'spar-manage'() { openSparring(); },
+  'spar-del'(el) {
+    const sp = S.sparring.find((x) => x.id === el.dataset.id); if (!sp) return;
+    if (!confirm(`ลบทีมซ้อม “${sp.name}”? (ประวัติการซ้อมเดิมยังอยู่)`)) return;
+    S.sparring = S.sparring.filter((x) => x.id !== sp.id);
+    ['aRef', 'bRef'].forEach((k) => { if (PRAC.draft[k] === 'spar:' + sp.id) PRAC.draft[k] = ''; });
+    savePrac(); save(); openSparring(); rerender();
+  },
   'media-open'(el) { if (el.dataset.id) openMediaViewer(el.dataset.id); },
   'media-share'(el) { shareMedia(el.dataset.id); },
   async 'media-del'(el) {
@@ -1698,6 +1787,7 @@ function softRefresh(keepRef) {
   const cs = $('#champ-slot'); if (cs) cs.innerHTML = champBanner();
 }
 const INPUTS = {
+  'p-notes'(el) { if (PRAC.cur) { PRAC.cur.notes = el.value.slice(0, 1000); savePrac(); } },
   score(el) {
     const raw = el.value.replace(/\D/g, '').slice(0, 2);
     if (raw !== el.value) el.value = raw;
@@ -1709,6 +1799,16 @@ const INPUTS = {
 };
 const CHANGES = {
   'net-name'(el) { SD.name = el.value.trim().slice(0, 30); saveSync(); },
+  'p-team'(el) { PRAC.draft[el.dataset.side + 'Ref'] = el.value; savePrac(); rerender(); },
+  'p-draft'(el) {
+    const k = el.dataset.key; const d = PRAC.draft;
+    if (k === 'prep' || k === 'golden') d[k] = el.checked;
+    else if (k === 'halves') d.halves = el.value === '1' ? 1 : 2;
+    else if (k === 'min') d.min = Math.max(1, Math.min(10, parseInt(el.value, 10) || 3));
+    else if (k === 'sa' || k === 'sb') d[k] = Math.max(0, Math.min(9, parseInt(el.value, 10) || 0));
+    savePrac(); rerender();
+  },
+  'ui-sel'(el) { S.ui[el.dataset.key] = el.value; save(); rerender(); },
   'media-add'(el) { const files = Array.from(el.files || []); el.value = ''; addMedia(el.dataset.team, files); },
   'media-caption'(el) { setCaption(el.dataset.id, el.value.trim().slice(0, 120)); },
   'ko-team'(el) {
@@ -1729,6 +1829,13 @@ const CHANGES = {
 };
 const SUBMITS = {
   'net-unlock'(f) { unlock(f.elements.pin.value); },
+  'spar-add'(f) {
+    const name = f.elements.name.value.trim(); if (!name) return;
+    const sp = { id: 'sp' + uid(), name: name.slice(0, 40), note: f.elements.note.value.trim().slice(0, 80) };
+    S.sparring.push(sp);
+    if (!PRAC.draft.bRef) { PRAC.draft.bRef = 'spar:' + sp.id; savePrac(); }
+    save(); openSparring(); rerender(); toast('เพิ่มทีมซ้อมแล้ว');
+  },
   'check-add'(f) {
     const inp = f.elements.t; const t = inp.value.trim(); if (!t) return;
     S.checklists[f.dataset.list].push({ id: uid(), text: t, done: false }); save(); rerender();
@@ -1755,8 +1862,8 @@ const SUBMITS = {
 /* ในโหมดผู้ชม ห้ามแก้ข้อมูลที่ใช้ร่วมกัน */
 const SHARED_ACTIONS = new Set(['score', 'score-clear', 'yellow', 'ko-et', 'ko-etr', 'ko-suggest', 'item-done', 'item-edit', 'item-add', 'item-delete',
   'shift-open', 'shift-apply', 'rule', 'check', 'check-del', 'check-reset', 'toggle-lists', 'toggle-edit', 'team-edit', 'import',
-  'reset-results', 'reset-checks', 'reset-all', 'undo', 'media-del']);
-const SHARED_FIELDS = new Set(['score', 'team-notes', 'ko-team', 'set', 'check-add', 'item-save', 'team-save', 'media-add', 'media-caption']);
+  'reset-results', 'reset-checks', 'reset-all', 'undo', 'media-del', 'p-save', 'p-del', 'spar-del']);
+const SHARED_FIELDS = new Set(['score', 'team-notes', 'ko-team', 'set', 'check-add', 'item-save', 'team-save', 'media-add', 'media-caption', 'spar-add']);
 function roBlock() { toast('โหมดผู้ชม — แตะไอคอนเมฆด้านบนแล้วใส่รหัสโค้ชเพื่อแก้ไข'); }
 document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-action]');
@@ -1861,12 +1968,14 @@ function dbUrl(path, params) {
 }
 
 /* ---- แปลงข้อมูลเป็นรายการย่อย เพื่อส่งเฉพาะส่วนที่เปลี่ยน ---- */
-const SYNC_LISTS = [['teams', 'code'], ['matches', 'id'], ['schedule', 'id'], ['rules', 'id']];
+const SYNC_LISTS = [['teams', 'code'], ['matches', 'id'], ['schedule', 'id'], ['rules', 'id'], ['practice', 'id'], ['sparring', 'id']];
 const ITEM_TMPL = {
   teams: { code: '', name: '', group: '', from: '', notes: '' },
   matches: { id: '', start: '', end: '', group: '', field: '', a: '', b: '', ga: null, gb: null, ya: 0, yb: 0 },
   schedule: { id: '', start: '', end: '', phase: '', place: '', title: '', plan: '', goal: '', type: 'admin', link: '', done: false },
   rules: { id: '', ref: '', cat: '', text: '', status: '' },
+  practice: { id: '', at: 0, end: 0, fmt: '', fmtName: '', aRef: '', aName: '', bRef: '', bName: '', ga: 0, gb: 0, sa: 0, sb: 0, golden: false, winner: 'd', events: [], kpi: '', notes: '', by: '' },
+  sparring: { id: '', name: '', note: '' },
 };
 function toFlat(st) {
   const f = { event: st.event };
@@ -1892,6 +2001,7 @@ function fromFlat(f, ui) {
   const order = (arr) => arr.slice().sort((a, b) => (a._o || 0) - (b._o || 0)).map((x) => { const y = { ...x }; delete y._o; return y; });
   if (f.event) out.event = merge(base.event, f.event);
   SYNC_LISTS.forEach(([k]) => { const items = pick(k + '/'); if (items.length) out[k] = order(items).map((x) => ({ ...ITEM_TMPL[k], ...x })); });
+  out.practice.forEach((r) => { if (r.events && !Array.isArray(r.events)) r.events = Object.keys(r.events).sort((a, b) => a - b).map((i) => r.events[i]); if (!Array.isArray(r.events)) r.events = []; });
   KO_KEYS.forEach((k) => { if (f['ko/' + k]) out.ko[k] = merge(base.ko[k], f['ko/' + k]); });
   const cks = new Set([...Object.keys(base.checklists), ...Object.keys(f).filter((k) => k.startsWith('checklists/')).map((k) => k.split('/')[1])]);
   out.checklists = {};
@@ -1903,12 +2013,12 @@ function cleanVal(v) {
   if (Array.isArray(v)) return v.map((x) => { const c = cleanVal(x); return c === undefined ? null : c; });
   if (typeof v === 'object') {
     const o = {};
-    Object.keys(v).sort().forEach((k) => { const c = cleanVal(v[k]); if (c !== undefined && !(c && typeof c === 'object' && !Array.isArray(c) && !Object.keys(c).length)) o[k] = c; });
+    Object.keys(v).sort().forEach((k) => { const c = cleanVal(v[k]); if (c !== undefined && !(c && typeof c === 'object' && !Object.keys(c).length)) o[k] = c; });
     return o;
   }
   return v;
 }
-function canon(v) { const c = cleanVal(v); if (c === undefined || (c && typeof c === 'object' && !Array.isArray(c) && !Object.keys(c).length)) return ''; return JSON.stringify(c); }
+function canon(v) { const c = cleanVal(v); if (c === undefined || (c && typeof c === 'object' && !Object.keys(c).length)) return ''; return JSON.stringify(c); }
 function diffFlat(a, b) {
   const out = {}; b = b || {};
   Object.keys(a).forEach((k) => { if (canon(a[k]) !== canon(b[k])) out[k] = a[k]; });
@@ -2587,6 +2697,289 @@ async function exportZip(code) {
 }
 
 /* ------------------------------------------------------------------
+ * โหมดซ้อมแข่งขัน
+ * - เลือกรูปแบบ (ตามการซ้อมเสริมในแผน) + เลือกทีมทั้ง 2 ฝ่าย
+ * - ใช้นาฬิกาตัวเดียวกับหน้า "จับเวลา" (preset 'practice')
+ * - เก็บผลเป็นประวัติการซ้อม (S.practice) แยกจากผลการแข่งขันจริง
+ * ------------------------------------------------------------------ */
+const PKEY = 'cwk-apra-2026-practice';
+const firstGoal = (c) => ((c.events || []).find((e) => e.k === 'goal') || {}).s || '';
+const PFORMATS = [
+  { k: 'scrim', drill: 'c0', name: 'ซ้อมเต็มเกม 6 นาที', desc: 'แข่งเต็มเกมแบบรอบกลุ่ม ครึ่งละ 3 นาที พักครึ่ง 2 นาที (C2)', phases: [['ครึ่งแรก', 180, 'play'], ['พักครึ่ง', 120, 'break'], ['ครึ่งหลัง', 180, 'play']], prepOpt: true, start: [0, 0], play: 'สกอร์เสมอ', kpi: 'ชนะภายในเวลา 6 นาที', rules: ['C2–C4', 'C5', 'C6–C13', 'C26–C29'], check: (c, sc) => sc.a > sc.b },
+  { k: 'comeback', drill: 'c1', name: 'พลิกเกมจาก 0–1', desc: 'ฝ่าย A เริ่มเกมตามหลัง 0–1 มีเวลา 3 นาทีตีเสมอหรือพลิกชนะ', phases: [['ไล่ตีเสมอ', 180, 'play']], start: [0, 1], play: 'ตาม 1 ประตู', kpi: 'ตีเสมอหรือพลิกชนะภายใน 3 นาที', rules: ['C14–C17', 'C26–C29'], check: (c, sc) => sc.a >= sc.b },
+  { k: 'defend', drill: 'c2', name: 'รักษาสกอร์ 1–0', desc: 'ฝ่าย A เริ่มเกมนำ 1–0 ต้องรักษาสกอร์ไว้ให้ได้ 3 นาที', phases: [['รักษาสกอร์', 180, 'play']], start: [1, 0], play: 'นำ 1 ประตู', kpi: 'ไม่เสียประตูตลอด 3 นาที', rules: ['C18–C25', 'C26–C29'], check: (c, sc) => sc.b <= (c.sb || 0) },
+  { k: 'golden', drill: 'c3', name: 'Golden Goal 2 นาที', desc: 'เตรียม 2 นาที แล้วต่อเวลา 2 นาที ใครยิงก่อนชนะทันที (F7)', phases: [['เตรียมต่อเวลา', 120, 'prep'], ['ต่อเวลา (ยิงก่อนชนะ)', 120, 'play']], golden: true, start: [0, 0], play: 'น็อกเอาต์เสมอ', kpi: 'ยิงประตูแรกได้ก่อน', rules: ['F5–F7', 'C14–C17'], check: (c) => firstGoal(c) === 'a' },
+  { k: 'onevone', drill: 'c4', name: 'หุ่นเดี่ยว 1 ต่อ 1', desc: 'ฝ่ายละ 1 หุ่น 2 นาที ใครยิงก่อนชนะ (จำลองต่อเวลารอบที่ 2 ขึ้นไป)', phases: [['1 ต่อ 1 (ยิงก่อนชนะ)', 120, 'play']], golden: true, start: [0, 0], play: 'เสมอต่อเนื่อง / 1v1', kpi: 'หุ่นเดี่ยวยิงประตูแรกได้ก่อน', rules: ['F5–F7', 'C30'], check: (c) => firstGoal(c) === 'a' },
+  { k: 'endurance', drill: 'c5', name: 'ทนทานครึ่งละ 5 นาที', desc: 'จำลองนัดชิง ครึ่งละ 5 นาที (C4) ทดสอบแบตเตอรี่และความทนทานของหุ่น', phases: [['ครึ่งแรก', 300, 'play'], ['พักครึ่ง', 120, 'break'], ['ครึ่งหลัง', 300, 'play']], prepOpt: true, start: [0, 0], play: 'การฟื้นตัวหลังนัด', kpi: 'หุ่นไม่ค้าง/ไม่เสียตลอด 2 ครึ่ง', rules: ['C2–C4', 'C18–C25', 'D1–D7'], check: (c) => !(c.events || []).some((e) => e.s === 'a' && e.k === 'stuck') },
+  { k: 'custom', drill: '', name: 'กำหนดเอง', desc: 'ตั้งจำนวนครึ่ง เวลา สกอร์เริ่มต้น และแบบยิงก่อนชนะได้เอง', phases: null, prepOpt: true, start: [0, 0], play: '', kpi: 'ฝ่าย A ชนะ', rules: ['C2–C4'], check: (c, sc) => sc.a > sc.b },
+];
+const PEV = { goal: ['⚽', 'ประตู'], miss: ['🎯', 'ยิงพลาด'], yellow: ['🟨', 'ใบเหลือง/ฟาวล์'], stuck: ['⚠', 'หุ่นค้าง/เสีย'] };
+const P_DRAFT = { fmt: 'scrim', aRef: '', bRef: '', prep: true, halves: 2, min: 3, sa: 0, sb: 0, golden: false };
+let PRAC = { cur: null, draft: { ...P_DRAFT } };
+
+function loadPrac() {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch (e) { d = null; }
+  PRAC = { cur: null, draft: { ...P_DRAFT } };
+  if (d && typeof d === 'object') { PRAC.cur = d.cur && typeof d.cur === 'object' ? d.cur : null; PRAC.draft = { ...P_DRAFT, ...(d.draft || {}) }; }
+  if (PRAC.cur && !Array.isArray(PRAC.cur.events)) PRAC.cur.events = [];
+  if (T.preset === 'practice' && !PRAC.cur) tSetPreset('group');
+}
+function savePrac() { try { localStorage.setItem(PKEY, JSON.stringify(PRAC)); } catch (e) { /* ignore */ } }
+function onTimerScreen() { return S.ui.tab === 'timer' || (S.ui.tab === 'plan' && S.ui.planTab === 'practice' && !!PRAC.cur && T.preset === 'practice'); }
+const pFormat = (k) => PFORMATS.find((f) => f.k === k) || PFORMATS[0];
+const pCount = (c, side, k) => (c.events || []).filter((e) => e.s === side && e.k === k).length;
+const pScore = (c) => ({ a: (c.sa || 0) + pCount(c, 'a', 'goal'), b: (c.sb || 0) + pCount(c, 'b', 'goal') });
+const usRef = () => 'team:' + S.event.myTeam;
+function refExists(ref) {
+  const [k, id] = String(ref || '').split(':');
+  return k === 'team' ? !!team(id) : k === 'spar' ? S.sparring.some((x) => x.id === id) : false;
+}
+function sideName(ref) {
+  const [k, id] = String(ref || '').split(':');
+  if (k === 'team') return tname(id);
+  if (k === 'spar') { const sp = S.sparring.find((x) => x.id === id); return sp ? sp.name : 'ทีมซ้อม'; }
+  return '';
+}
+const sideLabel = (ref, name) => (String(ref || '').startsWith('team:') && ref !== usRef() ? 'จำลอง ' : '') + (name || sideName(ref));
+function sideOptions(sel, allowEmpty) {
+  const my = S.event.myTeam;
+  const o = (v, l) => `<option value="${esc(v)}" ${v === sel ? 'selected' : ''}>${esc(l)}</option>`;
+  return (allowEmpty ? o('', '— เลือกคู่ซ้อม —') : '')
+    + `<optgroup label="ทีมเรา">${o('team:' + my, myName())}</optgroup>`
+    + (S.sparring.length ? `<optgroup label="ทีมซ้อม (ในโรงเรียน / ทีมรับเชิญ)">${S.sparring.map((x) => o('spar:' + x.id, x.name)).join('')}</optgroup>` : '')
+    + `<optgroup label="จำลองเป็นคู่แข่งในรายการ">${S.teams.filter((t) => t.code !== my).map((t) => o('team:' + t.code, `${t.name} (${t.code})`)).join('')}</optgroup>`;
+}
+function buildPhases(f, d) {
+  let ph;
+  if (f.k === 'custom') {
+    const m = Math.max(1, Math.min(10, d.min | 0 || 3)) * 60;
+    ph = (d.halves | 0) === 1 ? [[d.golden ? 'ซ้อม (ยิงก่อนชนะ)' : 'เวลาซ้อม', m, 'play']] : [['ครึ่งแรก', m, 'play'], ['พักครึ่ง', 120, 'break'], ['ครึ่งหลัง', m, 'play']];
+  } else ph = f.phases.map((x) => x.slice());
+  if (f.prepOpt && d.prep) ph.unshift(['เตรียมหุ่น', 120, 'prep']);
+  return ph;
+}
+const pbFor = (f) => S.playbook.find((x) => x.situation === f.play) || null;
+const fmtDurShort = (ms) => `${Math.max(1, Math.round((ms || 0) / 60000))} นาที`;
+function fmtLocal(ms) {
+  try { return new Date(ms).toLocaleString('th-TH', { day: 'numeric', month: 'short', year: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch (e) { return new Date(ms).toLocaleString(); }
+}
+function drillLaunch(it) {
+  const f = PFORMATS.find((x) => x.drill && x.drill === it.id); if (!f) return '';
+  const n = S.practice.filter((r) => r.fmt === f.k).length;
+  return `<button class="btn sm" data-action="p-launch" data-fmt="${f.k}" aria-label="ซ้อม ${esc(it.text)}">▶ ซ้อม${n ? ` (${n})` : ''}</button>`;
+}
+function pPlayCard(f) {
+  const pb = pbFor(f);
+  return `<div class="pgoalbox"><div class="kicker" style="color:inherit;opacity:.8">เป้าหมายการซ้อม (KPI)</div><b>🎯 ${esc(f.kpi)}</b></div>`
+    + (pb ? `<div class="robots" style="margin-top:10px"><div class="robot r1"><div class="rl">หุ่นตัวที่ 1 • ${esc(pb.situation)}</div><p>${esc(pb.r1)}</p></div><div class="robot r2"><div class="rl">หุ่นตัวที่ 2</div><p>${esc(pb.r2)}</p></div></div><div class="caution"><b>ข้อควรระวัง</b>${esc(pb.caution)}</div>` : '');
+}
+function pRules(f) {
+  const rs = f.rules.map((ref) => S.rules.find((r) => r.ref === ref)).filter(Boolean);
+  if (!rs.length) return '';
+  return `<details class="all" style="margin-top:10px"><summary>กติกาที่เกี่ยวข้องกับการซ้อมนี้ (${rs.length})</summary><ul class="plain" style="margin-top:6px">${rs.map((r) => `<li><b>${esc(r.ref)} ${esc(r.cat)}</b> — ${esc(r.text)}</li>`).join('')}</ul></details>`;
+}
+function scoutRef(t) {
+  const md = teamMedia(t.code).slice(-4).reverse();
+  return `<div class="scout-ref"><div class="kicker">ให้ทีมซ้อมเลียนแบบสไตล์ ${esc(t.name)}</div><p class="small" style="margin:4px 0 ${md.length ? 8 : 0}px">${t.notes ? esc(t.notes) : 'ยังไม่มีบันทึกสเกาท์ — เพิ่มได้ที่แท็บ “คู่แข่ง”'}</p>${md.length ? `<div class="mstrip">${md.map(mediaThumb).join('')}</div>` : ''}</div>`;
+}
+
+/* ---- หน้าซ้อม ---- */
+function subPractice() { return PRAC.cur ? practiceLive() : practiceSetup() + practiceHistory(); }
+function practiceSetup() {
+  const d = PRAC.draft; const f = pFormat(d.fmt);
+  if (!refExists(d.aRef)) d.aRef = usRef();
+  if (d.bRef && !refExists(d.bRef)) d.bRef = '';
+  const bTeam = d.bRef.startsWith('team:') ? team(d.bRef.slice(5)) : null;
+  const ph = buildPhases(f, d); const total = ph.reduce((a, x) => a + x[1], 0);
+  const start = f.k === 'custom' ? [d.sa | 0, d.sb | 0] : f.start;
+  const golden = f.golden || (f.k === 'custom' && d.golden);
+  return `<section class="card">
+    <div class="kicker">โหมดซ้อมแข่งขัน</div><h2 style="margin-bottom:2px">ตั้งค่าการซ้อม</h2>
+    <p class="muted small">จับเวลาตามกติกา นับสกอร์และเหตุการณ์ แล้วเก็บเป็นประวัติการซ้อม (ไม่ปนกับผลการแข่งขันจริง)</p>
+    <h3 class="psub">1) รูปแบบการซ้อม</h3>
+    <div class="chips">${PFORMATS.map((x) => `<button class="chip-btn ${x.k === f.k ? 'on' : ''}" data-action="p-fmt" data-val="${x.k}">${esc(x.name)}</button>`).join('')}</div>
+    <p class="small">${esc(f.desc)}</p>
+    ${f.k === 'custom' ? `<div class="grid2">
+      <label class="field">จำนวนครึ่ง<select data-change="p-draft" data-key="halves"><option value="1" ${d.halves === 1 ? 'selected' : ''}>1 ครึ่ง</option><option value="2" ${d.halves !== 1 ? 'selected' : ''}>2 ครึ่ง (พัก 2 นาที)</option></select></label>
+      <label class="field">นาทีต่อครึ่ง<input type="number" min="1" max="10" inputmode="numeric" data-change="p-draft" data-key="min" value="${d.min | 0 || 3}"></label>
+      <label class="field">สกอร์เริ่ม ฝ่าย A<input type="number" min="0" max="9" inputmode="numeric" data-change="p-draft" data-key="sa" value="${d.sa | 0}"></label>
+      <label class="field">สกอร์เริ่ม ฝ่าย B<input type="number" min="0" max="9" inputmode="numeric" data-change="p-draft" data-key="sb" value="${d.sb | 0}"></label></div>
+      <label class="tog"><input type="checkbox" data-change="p-draft" data-key="golden" ${d.golden ? 'checked' : ''}> ยิงก่อนชนะ (จบทันทีเมื่อมีประตู)</label>` : ''}
+    ${f.prepOpt ? `<label class="tog"><input type="checkbox" data-change="p-draft" data-key="prep" ${d.prep ? 'checked' : ''}> เริ่มด้วยเวลาเตรียมหุ่น 2 นาที (ฝึกให้ทันตามกติกา C5)</label>` : ''}
+    <div class="phases" style="justify-content:flex-start;margin-top:8px">${ph.map((x) => `<span class="ph">${esc(x[0])} ${fmtMS(x[1])}</span>`).join('')}<span class="ph">รวม ${fmtMS(total)}</span>${start[0] || start[1] ? `<span class="ph cur">เริ่มที่ ${start[0]}–${start[1]}</span>` : ''}${golden ? '<span class="ph cur">ยิงก่อนชนะ</span>' : ''}</div>
+    <h3 class="psub">2) เลือกทีม</h3>
+    <div class="pteams"><label class="field">ฝ่าย A<select data-change="p-team" data-side="a" aria-label="ทีมฝ่าย A">${sideOptions(d.aRef, false)}</select></label><span class="pvs">VS</span><label class="field">ฝ่าย B (คู่ซ้อม)<select data-change="p-team" data-side="b" aria-label="ทีมฝ่าย B">${sideOptions(d.bRef, true)}</select></label></div>
+    <button class="link" data-action="spar-manage">+ เพิ่ม / จัดการทีมซ้อม</button>
+    ${bTeam ? scoutRef(bTeam) : ''}
+    <h3 class="psub">3) เป้าหมายจากแผนการเล่น</h3>
+    ${pPlayCard(f)}
+    ${pRules(f)}
+    <button class="btn primary pstart" data-action="p-start">▶ เริ่มซ้อม</button>
+  </section>`;
+}
+function practiceLive() {
+  const c = PRAC.cur; const f = pFormat(c.fmt); const sc = pScore(c);
+  const side = (sd) => {
+    const ref = c[sd + 'Ref'], name = c[sd + 'Name'];
+    return `<div class="bside ${ref === usRef() ? 'me' : ''}"><div class="bname">${esc(sideLabel(ref, name))}</div><div class="bscore">${sc[sd]}</div>
+      <button class="btn primary pgoal" data-action="p-ev" data-side="${sd}" data-k="goal" aria-label="ประตู ${esc(name)}">⚽ ประตู</button>
+      <div class="pev">${['miss', 'yellow', 'stuck'].map((k) => `<button class="btn sm" data-action="p-ev" data-side="${sd}" data-k="${k}" aria-label="${PEV[k][1]} ${esc(name)}" title="${PEV[k][1]}">${PEV[k][0]} <b>${pCount(c, sd, k)}</b></button>`).join('')}</div></div>`;
+  };
+  const ev = c.events.slice().reverse().slice(0, 50);
+  const fg = firstGoal(c);
+  const head = `<div class="phead"><div class="row-between" style="flex-wrap:nowrap"><div class="kicker" style="margin:0">กำลังซ้อม • ${esc(c.fmtName)}</div><button class="link" style="padding:0" data-action="p-cancel">ยกเลิก</button></div><b>${esc(sideLabel(c.aRef, c.aName))} vs ${esc(sideLabel(c.bRef, c.bName))}</b>
+    ${c.done && fg ? `<div class="alert" style="margin:8px 0 0">⚽ ประตูทองคำ — ${esc(fg === 'a' ? c.aName : c.bName)} ชนะ • กด “จบการซ้อม & บันทึกผล”</div>` : c.timeUp ? '<div class="alert" style="margin:8px 0 0">หมดเวลาซ้อมแล้ว • กด “จบการซ้อม & บันทึกผล”</div>' : ''}</div>`;
+  return `${T.preset === 'practice' ? timerCard('compact', head) : `<section class="card">${head}<p class="small" style="margin-top:10px">ตอนนี้นาฬิกาถูกใช้กับโหมดอื่น (หน้า “จับเวลา”)</p><button class="btn" data-action="p-retimer">⏱ ใช้นาฬิกากับการซ้อมนี้ (เริ่มนับใหม่)</button></section>`}
+  <section class="card"><div class="board">${side('a')}<div class="bsep">:</div>${side('b')}</div>
+    <p class="muted small" style="margin:0 0 10px">🎯 ยิงไม่เข้า • 🟨 ใบเหลือง/ฟาวล์ • ⚠ หุ่นค้างเกิน 5 วินาทีหรือเสีย (C18–C25)</p>
+    <div class="btn-row"><button class="btn" data-action="p-undo" ${c.events.length ? '' : 'disabled'}>↶ ย้อนเหตุการณ์ล่าสุด</button><button class="btn primary" data-action="p-finish">🏁 จบการซ้อม & บันทึกผล</button></div></section>
+  <section class="card">${pPlayCard(f)}${pRules(f)}</section>
+  <section class="card"><h3>เหตุการณ์ (${c.events.length})</h3>${ev.length ? `<ul class="evlist">${ev.map(evRow(c)).join('')}</ul>` : '<p class="muted small">ยังไม่มีเหตุการณ์ — กดปุ่มด้านบนเมื่อเกิดประตู ยิงพลาด ฟาวล์ หรือหุ่นค้าง</p>'}</section>`;
+}
+const evRow = (c) => (e) => `<li><span class="et">${esc(e.ph || '')} ${fmtMS(e.t || 0)}</span><span>${(PEV[e.k] || ['•'])[0]} ${esc(e.s === 'a' ? c.aName : c.bName)} — ${esc((PEV[e.k] || ['', e.k])[1])}</span></li>`;
+function practiceTimerLink(c) {
+  const sc = pScore(c);
+  return `<section class="card"><div class="kicker">กำลังซ้อม • ${esc(c.fmtName)}</div><h3>${esc(sideLabel(c.aRef, c.aName))} ${sc.a}–${sc.b} ${esc(sideLabel(c.bRef, c.bName))}</h3>
+    <button class="btn primary" data-action="go" data-tab="plan" data-key="planTab" data-val="practice">ไปหน้าซ้อม — นับสกอร์ / บันทึกเหตุการณ์</button></section>`;
+}
+function startPractice() {
+  const d = PRAC.draft; const f = pFormat(d.fmt);
+  if (!refExists(d.aRef) || !refExists(d.bRef)) { toast('เลือกทีมทั้ง 2 ฝ่ายก่อน'); return; }
+  if (d.aRef === d.bRef) { toast('ฝ่าย A และฝ่าย B ต้องเป็นคนละทีม'); return; }
+  if (T.running && T.preset !== 'practice' && !confirm('นาฬิกาจับเวลากำลังเดินอยู่ ต้องการหยุดแล้วใช้กับการซ้อมไหม?')) return;
+  const custom = f.k === 'custom';
+  const ph = buildPhases(f, d);
+  const fmtName = custom ? `กำหนดเอง ${d.halves === 1 ? '1' : '2'}×${d.min | 0 || 3} นาที${d.golden ? ' (ยิงก่อนชนะ)' : ''}` : f.name;
+  PRAC.cur = {
+    id: uid(), fmt: f.k, fmtName, phases: ph, aRef: d.aRef, aName: sideName(d.aRef), bRef: d.bRef, bName: sideName(d.bRef),
+    sa: custom ? d.sa | 0 : f.start[0], sb: custom ? d.sb | 0 : f.start[1], golden: !!(f.golden || (custom && d.golden)),
+    events: [], at: Date.now(), kpi: '', kpiTouched: false, notes: '', done: false, timeUp: false,
+  };
+  savePrac(); tSetPreset('practice'); rerender(); window.scrollTo(0, 0);
+  toast('พร้อมซ้อม — กด ▶ เริ่ม เมื่อหุ่นพร้อม');
+}
+function practiceEvent(sd, k) {
+  const c = PRAC.cur; if (!c || !PEV[k] || (sd !== 'a' && sd !== 'b')) return;
+  if (c.done) { openPracticeFinish(); return; }
+  const ph = T.preset === 'practice' ? tPhases() : null;
+  const cur = ph && T.idx < ph.length ? ph[T.idx] : null;
+  c.events.push({ s: sd, k, ph: cur ? cur[0] : 'หลังหมดเวลา', t: cur ? Math.max(0, Math.round(cur[1] - tRem())) : 0 });
+  if (c.events.length > 300) c.events.shift();
+  if (k === 'goal' && c.golden && (!cur || cur[2] === 'play')) {
+    if (T.running) { T.remaining = tRem(); T.running = false; keepAwake(false); saveT(); }
+    c.done = true; savePrac(); beep(988, 0.5, 0.2); rerender();
+    toast(`⚽ ประตูทองคำ! ${sd === 'a' ? c.aName : c.bName} ชนะ`); openPracticeFinish(); return;
+  }
+  savePrac(); rerender();
+  if (k === 'yellow' && pCount(c, sd, 'yellow') >= 3) toast(`⚠ ${sd === 'a' ? c.aName : c.bName} ใบเหลือง ${pCount(c, sd, 'yellow')} ใบในการซ้อมนี้ — ในการแข่งจริงครบ 4 ใบถูกตัดสิทธิ์`);
+}
+function openPracticeFinish() {
+  const c = PRAC.cur; if (!c) return; const f = pFormat(c.fmt); const sc = pScore(c);
+  if (!c.kpiTouched) c.kpi = f.check(c, sc) ? 'pass' : 'fail';
+  savePrac();
+  const win = sc.a > sc.b ? c.aName : sc.b > sc.a ? c.bName : '';
+  const line = (sd) => `${esc(c[sd + 'Name'])}: ${['goal', 'miss', 'yellow', 'stuck'].map((k) => `${PEV[k][0]} ${pCount(c, sd, k)}`).join(' • ')}`;
+  openModal(`${modalHead('บันทึกผลการซ้อม')}
+    <p class="muted small" style="margin:0">${esc(c.fmtName)} • ใช้เวลา ${fmtDurShort(Date.now() - c.at)}${c.sa || c.sb ? ` • เริ่มที่ ${c.sa}–${c.sb}` : ''}</p>
+    <div class="pres"><b style="text-align:right">${esc(sideLabel(c.aRef, c.aName))}</b><span>${sc.a}–${sc.b}</span><b style="text-align:left">${esc(sideLabel(c.bRef, c.bName))}</b></div>
+    <p style="text-align:center;font-weight:700;margin-bottom:10px">${win ? '🏆 ' + esc(win) + ' ชนะ' : 'เสมอ'}</p>
+    <p class="small muted" style="text-align:center">${line('a')}<br>${line('b')}</p>
+    <div class="netbox"><div><b>เป้าหมาย:</b> ${esc(f.kpi)}</div>
+      <div class="rstat" style="margin-top:6px"><button class="pass ${c.kpi === 'pass' ? 'on' : ''}" data-action="p-kpi" data-v="pass" aria-pressed="${c.kpi === 'pass'}">ผ่าน</button><button class="fail ${c.kpi === 'fail' ? 'on' : ''}" data-action="p-kpi" data-v="fail" aria-pressed="${c.kpi === 'fail'}">ไม่ผ่าน</button></div>
+      <div class="muted small">${c.kpiTouched ? 'เลือกเอง' : 'ระบบเลือกให้จากผลการซ้อม แตะเพื่อแก้ได้'}</div></div>
+    <label class="field" style="margin-top:12px">บันทึกหลังซ้อม<textarea data-input="p-notes" rows="3" maxlength="1000" placeholder="สิ่งที่ทำได้ดี / ต้องแก้ เช่น หุ่นตัวที่ 2 กลับตัวช้า">${esc(c.notes || '')}</textarea></label>
+    <div class="modal-actions"><button class="btn danger-outline" data-action="p-discard">ทิ้งผลนี้</button><span class="spacer"></span><button class="btn" data-action="modal-close">ซ้อมต่อ</button><button class="btn primary" data-action="p-save">บันทึกผล</button></div>`);
+}
+function endPractice() { PRAC.cur = null; savePrac(); if (T.preset === 'practice') tSetPreset('group'); }
+function savePractice() {
+  const c = PRAC.cur; if (!c) return; const f = pFormat(c.fmt); const sc = pScore(c);
+  const ta = $('#modal textarea[data-input="p-notes"]'); if (ta) c.notes = ta.value;
+  if (!c.kpiTouched) c.kpi = f.check(c, sc) ? 'pass' : 'fail';
+  S.practice.push({
+    id: 'pr' + Date.now().toString(36) + uid(), at: c.at, end: Date.now(), fmt: c.fmt, fmtName: c.fmtName,
+    aRef: c.aRef, aName: c.aName, bRef: c.bRef, bName: c.bName, ga: sc.a, gb: sc.b, sa: c.sa || 0, sb: c.sb || 0,
+    golden: !!c.golden, winner: sc.a > sc.b ? 'a' : sc.b > sc.a ? 'b' : 'd', events: c.events.slice(-300),
+    kpi: c.kpi || '', notes: String(c.notes || '').slice(0, 1000), by: SD.name || '',
+  });
+  const dr = f.drill && S.checklists.drills.find((x) => x.id === f.drill); if (dr) dr.done = true;
+  save(); endPractice(); closeModal(); rerender(); window.scrollTo(0, 0);
+  toast(`บันทึกผลการซ้อมแล้ว • KPI ${c.kpi === 'pass' ? 'ผ่าน' : 'ไม่ผ่าน'}`);
+}
+
+/* ---- ประวัติ + สถิติ ---- */
+function practiceStats(list) {
+  const me = usRef(); const s = { n: list.length, w: 0, d: 0, l: 0, gf: 0, ga: 0, goals: 0, shots: 0, yel: 0, stuck: 0, kp: 0, kn: 0, us: 0 };
+  list.forEach((r) => {
+    if (r.kpi) { s.kn++; if (r.kpi === 'pass') s.kp++; }
+    const us = r.aRef === me ? 'a' : r.bRef === me ? 'b' : null; if (!us) return;
+    s.us++; s.gf += us === 'a' ? r.ga : r.gb; s.ga += us === 'a' ? r.gb : r.ga;
+    if (r.winner === us) s.w++; else if (r.winner === 'd') s.d++; else s.l++;
+    const ev = r.events || []; const cnt = (k) => ev.filter((e) => e.s === us && e.k === k).length;
+    s.goals += cnt('goal'); s.shots += cnt('goal') + cnt('miss'); s.yel += cnt('yellow'); s.stuck += cnt('stuck');
+  });
+  return s;
+}
+function practiceHistory() {
+  const me = usRef();
+  const all = S.practice.slice().sort((a, b) => (b.at || 0) - (a.at || 0));
+  const opps = new Map();
+  all.forEach((r) => { const o = r.aRef === me ? [r.bRef, r.bName] : [r.aRef, r.aName]; if (o[0] && !opps.has(o[0])) opps.set(o[0], o[1]); });
+  const filt = opps.has(S.ui.pFilter) ? S.ui.pFilter : '';
+  const list = filt ? all.filter((r) => r.aRef === filt || r.bRef === filt) : all;
+  const st = practiceStats(list);
+  const tile = (v, l) => `<div class="pstat"><b>${v}</b><span>${l}</span></div>`;
+  const byFmt = PFORMATS.map((f) => { const rs = list.filter((r) => r.fmt === f.k); return [f, rs.length, rs.filter((r) => r.kpi === 'pass').length]; }).filter((x) => x[1]);
+  return `<section class="card"><div class="row-between"><h3 style="margin:0">ประวัติการซ้อม</h3>${all.length ? '<button class="btn sm" data-action="p-csv">⬇ ส่งออก .csv</button>' : ''}</div>
+  ${all.length ? `
+    <label class="field" style="margin:10px 0">ดูเฉพาะคู่ซ้อม<select data-change="ui-sel" data-key="pFilter"><option value="">ทั้งหมด (${all.length} ครั้ง)</option>${[...opps.entries()].map(([ref, name]) => `<option value="${esc(ref)}" ${ref === filt ? 'selected' : ''}>${esc(sideLabel(ref, name))}</option>`).join('')}</select></label>
+    <div class="pstats">
+      ${tile(st.n, 'ครั้งที่ซ้อม')}
+      ${st.us ? tile(`${st.w}-${st.d}-${st.l}`, `ชนะ-เสมอ-แพ้ (${esc(shortMe())})`) : ''}
+      ${st.us ? tile(`${st.gf}–${st.ga}`, 'ประตูได้–เสีย') : ''}
+      ${st.us ? tile(st.shots ? Math.round((st.goals / st.shots) * 100) + '%' : '–', `ยิงเข้า ${st.goals}/${st.shots}`) : ''}
+      ${tile(st.kn ? `${st.kp}/${st.kn}` : '–', 'ผ่านเป้าหมาย (KPI)')}
+      ${st.us ? tile(st.yel, 'ใบเหลือง/ฟาวล์') : ''}
+      ${st.us ? tile(st.stuck, 'หุ่นค้าง/เสีย') : ''}
+    </div>
+    ${byFmt.length ? `<details class="all"><summary>แยกตามรูปแบบการซ้อม</summary><table class="pfmt"><thead><tr><th>รูปแบบ</th><th>ครั้ง</th><th>ผ่าน KPI</th></tr></thead><tbody>${byFmt.map(([f, n, kp]) => `<tr><td>${esc(f.name)}</td><td>${n}</td><td>${kp}/${n}</td></tr>`).join('')}</tbody></table></details>` : ''}
+    <div style="margin-top:8px">${list.map(historyItem).join('')}</div>`
+    : '<p class="muted small" style="margin-top:8px">ยังไม่มีประวัติ — เลือกรูปแบบและทีมด้านบน แล้วกด “เริ่มซ้อม”</p>'}
+  </section>`;
+}
+function historyItem(r) {
+  const me = usRef(); const us = r.aRef === me ? 'a' : r.bRef === me ? 'b' : null;
+  const res = us ? (r.winner === us ? ['ok', 'ชนะ'] : r.winner === 'd' ? ['warn', 'เสมอ'] : ['bad', 'แพ้']) : null;
+  const ev = r.events || [];
+  const line = (sd) => `<div><b>${esc(r[sd + 'Name'])}</b>: ${['goal', 'miss', 'yellow', 'stuck'].map((k) => `${PEV[k][0]} ${ev.filter((e) => e.s === sd && e.k === k).length}`).join(' • ')}</div>`;
+  return `<details class="phist"><summary>
+    <div class="ph-top"><b>${esc(fmtLocal(r.at))}</b><span class="badge info">${esc(r.fmtName)}</span>${res ? `<span class="badge ${res[0]}">${res[1]}</span>` : ''}${r.kpi ? `<span class="badge ${r.kpi === 'pass' ? 'ok' : 'bad'}">KPI ${r.kpi === 'pass' ? 'ผ่าน' : 'ไม่ผ่าน'}</span>` : ''}</div>
+    <div class="ph-score">${esc(sideLabel(r.aRef, r.aName))} <b>${r.ga}–${r.gb}</b> ${esc(sideLabel(r.bRef, r.bName))}${r.sa || r.sb ? ` <span class="muted small">(เริ่ม ${r.sa}–${r.sb})</span>` : ''}</div></summary>
+    <div class="ph-body">${line('a')}${line('b')}
+      ${r.notes ? `<div><b>บันทึก:</b> ${esc(r.notes)}</div>` : ''}
+      ${ev.length ? `<ul class="evlist">${ev.map(evRow(r)).join('')}</ul>` : ''}
+      <div class="row-between"><span class="muted small">${r.by ? 'บันทึกโดย ' + esc(r.by) + ' • ' : ''}ใช้เวลา ${fmtDurShort((r.end || r.at) - r.at)}</span><button class="link" data-action="p-del" data-id="${esc(r.id)}">ลบ</button></div></div></details>`;
+}
+function practiceCSV() {
+  const q = (v) => `"${String(v === undefined || v === null ? '' : v).replace(/"/g, '""')}"`;
+  const head = ['วันที่เวลา', 'รูปแบบ', 'ฝ่าย A', 'ฝ่าย B', 'สกอร์ A', 'สกอร์ B', 'สกอร์เริ่ม', 'ผล (ฝ่าย A)', 'ยิงพลาด A', 'ยิงพลาด B', 'ใบเหลือง A', 'ใบเหลือง B', 'หุ่นค้าง A', 'หุ่นค้าง B', 'KPI', 'ใช้เวลา (นาที)', 'บันทึก', 'ผู้บันทึก'];
+  const rows = S.practice.slice().sort((a, b) => (a.at || 0) - (b.at || 0)).map((r) => {
+    const c = (sd, k) => (r.events || []).filter((e) => e.s === sd && e.k === k).length;
+    return [fmtLocal(r.at), r.fmtName, sideLabel(r.aRef, r.aName), sideLabel(r.bRef, r.bName), r.ga, r.gb, `${r.sa}–${r.sb}`,
+      r.winner === 'a' ? 'ชนะ' : r.winner === 'b' ? 'แพ้' : 'เสมอ', c('a', 'miss'), c('b', 'miss'), c('a', 'yellow'), c('b', 'yellow'),
+      c('a', 'stuck'), c('b', 'stuck'), r.kpi === 'pass' ? 'ผ่าน' : r.kpi === 'fail' ? 'ไม่ผ่าน' : '', Math.max(1, Math.round(((r.end || r.at) - r.at) / 60000)), r.notes, r.by];
+  });
+  return '﻿' + [head, ...rows].map((r) => r.map(q).join(',')).join('\r\n');
+}
+function openSparring() {
+  const ro = readOnly();
+  openModal(`${modalHead('ทีมซ้อม')}
+    <p class="muted small">เช่น ทีมรุ่นน้องในโรงเรียน หรือโรงเรียนที่มาซ้อมด้วย • ทีมในรายการแข่งเลือกได้อยู่แล้ว (สำหรับจำลองคู่แข่ง)</p>
+    ${S.sparring.length ? `<ul class="checks">${S.sparring.map((x) => `<li><span class="ctext" style="flex:1;padding:10px 0">${esc(x.name)}${x.note ? `<small class="muted"> • ${esc(x.note)}</small>` : ''}</span>${ro ? '' : `<button class="icon-del" data-action="spar-del" data-id="${esc(x.id)}" aria-label="ลบ ${esc(x.name)}">✕</button>`}</li>`).join('')}</ul>` : '<p class="small">ยังไม่มีทีมซ้อม</p>'}
+    ${ro ? '<p class="muted small">โหมดผู้ชม — ใส่รหัสโค้ชเพื่อเพิ่มทีมซ้อม</p>' : `<form class="form" data-submit="spar-add" style="margin-top:12px"><label>ชื่อทีมซ้อม<input name="name" maxlength="40" required placeholder="เช่น CWK ทีม B (รุ่นน้อง)" autocomplete="off"></label><label>หมายเหตุ<input name="note" maxlength="80" placeholder="เช่น ใช้หุ่นรุ่นเก่า, สไตล์บุกเร็ว" autocomplete="off"></label><button class="btn primary" type="submit">+ เพิ่มทีมซ้อม</button></form>`}`);
+}
+
+/* ------------------------------------------------------------------
  * Clock tick
  * ------------------------------------------------------------------ */
 let lastSec = -1, lastAutoRender = 0, lastBeepSec = null, renderedIdx = null;
@@ -2595,9 +2988,11 @@ function phaseEnd() {
   T.running = false; T.remaining = 0; keepAwake(false);
   beep(520, 0.9, 0.22); try { navigator.vibrate && navigator.vibrate([300, 120, 300]); } catch (e) { /* ignore */ }
   if (T.idx < ph.length - 1) { T.idx++; T.remaining = ph[T.idx][1]; toast(`หมดเวลา “${ended}” → ถัดไป: ${ph[T.idx][0]} (กด ▶ เมื่อกรรมการสั่ง)`); }
+  else if (T.preset === 'practice' && PRAC.cur) { T.idx = ph.length; PRAC.cur.timeUp = true; savePrac(); toast('หมดเวลาซ้อม — บันทึกผลได้เลย'); }
   else { T.idx = ph.length; toast('หมดเวลาการแข่งขัน — ตรวจสกอร์ก่อนเซ็นใบคะแนน'); }
   saveT();
-  if (S.ui.tab === 'timer') rerender();
+  if (onTimerScreen()) rerender();
+  if (T.idx >= ph.length && T.preset === 'practice' && PRAC.cur && S.ui.tab === 'plan' && S.ui.planTab === 'practice' && !modalOpen()) openPracticeFinish();
 }
 function tick(force) {
   const now = Date.now();
@@ -2610,13 +3005,13 @@ function tick(force) {
   const ph = tPhases(); const done = T.idx >= ph.length; const cur = done ? null : ph[T.idx];
   const big = $('#t-big');
   if (big) {
-    if (renderedIdx !== T.idx && S.ui.tab === 'timer') { rerender(); return; }
+    if (renderedIdx !== T.idx && onTimerScreen()) { rerender(); return; }
     big.textContent = fmtMS(done ? 0 : rem);
     const bar = $('#t-bar'); if (bar) bar.style.width = (cur ? Math.max(0, Math.min(100, (1 - rem / cur[1]) * 100)) : 100) + '%';
     const card = $('#timer-card'); if (card) card.classList.toggle('low', T.running && rem <= 10);
   }
   const pill = $('#tpill');
-  const showPill = T.running && S.ui.tab !== 'timer' && cur;
+  const showPill = T.running && !onTimerScreen() && cur;
   pill.hidden = !showPill;
   if (showPill) pill.textContent = `⏱ ${cur[0]} ${fmtMS(rem)}`;
 
@@ -2639,6 +3034,7 @@ function tick(force) {
  * ------------------------------------------------------------------ */
 load();
 loadSync();
+loadPrac();
 applyTheme();
 if (!VIEWS[(location.hash || '').slice(1)]) history.replaceState(null, '', '#' + (VIEWS[S.ui.tab] ? S.ui.tab : 'home'));
 route();
@@ -2650,7 +3046,7 @@ if (location.protocol.startsWith('http')) {
 }
 if (online()) connect();
 initMedia();
-window.CWK = { media: () => [...MEDIA.items.values()].map((x) => ({ ...x, thumb: x.thumb ? 'yes' : '' })), mediaErr: () => MEDIA.err, state: () => S, standings, scenario, summaryText, sync: () => ({ status: SY.status, canEdit: SD.canEdit, pending: pendingCount(), uid: SD.uid, synced: SD.synced, err: SY.err, room: CFG && CFG.room }) };
+window.CWK = { prac: () => PRAC, media: () => [...MEDIA.items.values()].map((x) => ({ ...x, thumb: x.thumb ? 'yes' : '' })), mediaErr: () => MEDIA.err, state: () => S, standings, scenario, summaryText, sync: () => ({ status: SY.status, canEdit: SD.canEdit, pending: pendingCount(), uid: SD.uid, synced: SD.synced, err: SY.err, room: CFG && CFG.room }) };
 })();
 </script>
 </body>
