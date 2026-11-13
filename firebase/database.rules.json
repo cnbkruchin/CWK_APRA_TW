@@ -4,6 +4,12 @@
       ".read": false,
       ".write": false
     },
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid && root.child('secret/adminKey').exists() && newData.val() === root.child('secret/adminKey').val()"
+      }
+    },
     "editors": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
@@ -25,6 +31,66 @@
       "$room": {
         ".read": "auth != null",
         ".write": "auth != null && root.child('secret/editPin').exists() && root.child('editors/' + auth.uid).val() === root.child('secret/editPin').val()"
+      }
+    },
+    "schoolIndex": {
+      ".read": "auth != null && root.child('secret/adminKey').exists() && root.child('admins/' + auth.uid).val() === root.child('secret/adminKey').val()",
+      ".write": "auth != null && root.child('secret/adminKey').exists() && root.child('admins/' + auth.uid).val() === root.child('secret/adminKey').val()"
+    },
+    "schoolKeys": {
+      ".read": false,
+      "$code": {
+        ".write": "auth != null && root.child('secret/adminKey').exists() && root.child('admins/' + auth.uid).val() === root.child('secret/adminKey').val()"
+      }
+    },
+    "schools": {
+      "$code": {
+        ".write": "auth != null && root.child('secret/adminKey').exists() && root.child('admins/' + auth.uid).val() === root.child('secret/adminKey').val()",
+        "info": {
+          ".read": "auth != null"
+        },
+        "editors": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && root.child('schoolKeys/' + $code + '/pin').exists() && newData.val() === root.child('schoolKeys/' + $code + '/pin').val()"
+          }
+        },
+        "rooms": {
+          ".read": "auth != null && root.child('schools/' + $code + '/info').exists()",
+          "$room": {
+            "data": {
+              ".write": "auth != null && root.child('schoolKeys/' + $code + '/pin').exists() && root.child('schools/' + $code + '/editors/' + auth.uid).val() === root.child('schoolKeys/' + $code + '/pin').val()"
+            },
+            "meta": {
+              ".write": "auth != null && root.child('schoolKeys/' + $code + '/pin').exists() && root.child('schools/' + $code + '/editors/' + auth.uid).val() === root.child('schoolKeys/' + $code + '/pin').val()"
+            }
+          }
+        },
+        "media": {
+          "$room": {
+            ".read": "auth != null && root.child('schools/' + $code + '/info').exists()",
+            ".write": "auth != null && root.child('schoolKeys/' + $code + '/pin').exists() && root.child('schools/' + $code + '/editors/' + auth.uid).val() === root.child('schoolKeys/' + $code + '/pin').val()"
+          }
+        },
+        "chat": {
+          "$ch": {
+            ".read": "auth != null && root.child('schools/' + $code + '/info').exists()",
+            "msgs": {
+              "$id": {
+                ".write": "auth != null && root.child('schools/' + $code + '/info').exists() && (newData.exists() ? (!data.exists() && newData.child('uid').val() === auth.uid) : (data.child('uid').val() === auth.uid || (auth != null && root.child('schoolKeys/' + $code + '/pin').exists() && root.child('schools/' + $code + '/editors/' + auth.uid).val() === root.child('schoolKeys/' + $code + '/pin').val())))",
+                ".validate": "newData.hasChildren(['uid', 'name', 'kind', 'at']) && newData.child('name').isString() && newData.child('name').val().length >= 1 && newData.child('name').val().length <= 40 && (newData.child('kind').val() === 'text' || newData.child('kind').val() === 'voice') && (!newData.child('text').exists() || (newData.child('text').isString() && newData.child('text').val().length <= 2000)) && newData.child('at').isNumber() && newData.child('at').val() <= now && (newData.child('role').val() !== 'coach' || (auth != null && root.child('schoolKeys/' + $code + '/pin').exists() && root.child('schools/' + $code + '/editors/' + auth.uid).val() === root.child('schoolKeys/' + $code + '/pin').val()))"
+              }
+            },
+            "audio": {
+              "$id": {
+                ".write": "auth != null && root.child('schools/' + $code + '/info').exists() && (newData.exists() ? !root.child('schools/' + $code + '/chat/' + $ch + '/msgs/' + $id).exists() : (root.child('schools/' + $code + '/chat/' + $ch + '/msgs/' + $id + '/uid').val() === auth.uid || (auth != null && root.child('schoolKeys/' + $code + '/pin').exists() && root.child('schools/' + $code + '/editors/' + auth.uid).val() === root.child('schoolKeys/' + $code + '/pin').val())))",
+                "$n": {
+                  ".validate": "newData.isString() && newData.val().length <= 720000"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
 /* Service worker: ทำให้แอพเปิดได้แม้ไม่มีอินเทอร์เน็ตในสนามแข่ง */
-const CACHE = 'cwk-apra-v1.3.0';
+const CACHE = 'cwk-apra-v2.0.0';
 const ASSETS = [
   './',
   './index.html',

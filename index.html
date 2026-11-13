@@ -406,6 +406,52 @@ dialog.wide{max-width:920px}
 .lb-nav span{text-align:center;flex:1}
 .ro .madds{display:none}
 
+/* school gate + admin */
+.gate .tabbar,.gate #net,.gate #tpill{display:none !important}
+.gatebox{max-width:470px;margin:20px auto;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px 20px;box-shadow:var(--shadow);text-align:center}
+.gatebox svg{width:64px;height:64px;border-radius:16px;margin-bottom:6px}
+.gatebox form{text-align:left;margin:16px 0 10px}
+.gatebox input[name=code]{font-size:22px !important;letter-spacing:.08em;text-align:center;text-transform:uppercase;font-weight:800}
+.gatebox .btn-row{justify-content:center}
+.schrow{border-top:1px solid var(--border);padding:12px 0;display:grid;gap:8px}
+.schrow code,.codebig{font-weight:800;letter-spacing:.06em;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.codebig{font-size:18px}
+
+/* team chat */
+.tabbar a{position:relative}
+.nbadge{position:absolute;top:0;left:calc(50% + 4px);min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:800;line-height:18px;padding:0 5px;text-align:center}
+@media (max-width:380px){.tabbar a{font-size:10.5px}.tabbar a svg{width:22px;height:22px}}
+.chat{display:flex;flex-direction:column;min-height:calc(100dvh - 150px)}
+.chat-head{display:flex;justify-content:space-between;align-items:center;gap:6px 10px;flex-wrap:wrap;padding:10px 14px;margin-bottom:8px}
+.chat-head .tog{margin:0;font-size:13px}
+.chat-list{flex:1;display:flex;flex-direction:column;gap:6px;padding:4px 2px 10px}
+.chat-day{align-self:center;font-size:12px;color:var(--muted);background:var(--surface-2);border-radius:99px;padding:2px 10px;margin:8px 0}
+.center{text-align:center}
+.msg{display:flex;flex-direction:column;align-items:flex-start;max-width:86%}
+.msg.mine{align-self:flex-end;align-items:flex-end}
+.mname{font-size:12px;font-weight:700;color:var(--muted);margin:0 0 2px 10px}
+.bub{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 16px 4px;padding:8px 12px;box-shadow:var(--shadow);min-width:64px}
+.msg.mine .bub{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);border-radius:16px 16px 4px 16px}
+.btext{font-size:15.5px;line-height:1.45;overflow-wrap:anywhere}
+.btext a{color:inherit;text-decoration:underline}
+.mmeta{font-size:11px;opacity:.75;margin-top:3px;text-align:right}
+.mdel{font-size:11px;padding:0;font-weight:600;color:inherit}
+.vbtn{display:flex;align-items:center;gap:8px;background:none;border:0;color:inherit;cursor:pointer;padding:2px 0;min-width:170px}
+.vico{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(127,127,127,.2);font-size:13px;flex:none}
+.vbar{flex:1;height:4px;background:rgba(127,127,127,.35);border-radius:2px;overflow:hidden}
+.vbar i{display:block;height:100%;width:0;background:currentColor}
+.vdur{font-size:12.5px;font-variant-numeric:tabular-nums}
+.composer{position:sticky;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 6px);background:var(--bg);padding:8px 0 4px;z-index:5}
+@media (min-width:760px){.composer{bottom:92px}}
+.chat-form{display:flex;align-items:flex-end;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:5px;box-shadow:var(--shadow)}
+.chat-form textarea{border:0 !important;min-height:40px !important;max-height:140px;resize:none;padding:9px 6px !important;background:transparent !important;flex:1;line-height:1.4}
+.chat-form .mic{width:42px;height:42px;font-size:19px;color:var(--text);flex:none}
+.chat-form .send{min-width:46px;min-height:42px;border-radius:21px;padding:0 12px;flex:none}
+.recbar{display:flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--accent);border-radius:22px;padding:6px 8px 6px 14px;flex-wrap:wrap}
+.on-chat #toast{bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 84px)}
+@media (min-width:760px){.on-chat #toast{bottom:170px}}
+.recdot{width:11px;height:11px;border-radius:50%;background:var(--accent);animation:pulse 1s steps(2,start) infinite}
+
 /* practice mode */
 .seg.seg5 button{flex:1 1 0;min-width:0;padding:7px 3px;font-size:13px;white-space:normal;line-height:1.25}
 .psub{font-size:15px;margin:18px 0 8px}
@@ -495,6 +541,7 @@ table.pfmt{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
   <a href="#scores" data-tab="scores"><svg class="ico" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/></svg><span>ผลแข่ง</span></a>
   <a href="#timer" data-tab="timer"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span>จับเวลา</span></a>
   <a href="#plan" data-tab="plan"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h4"/></svg><span>แผน/กติกา</span></a>
+  <a href="#chat" data-tab="chat" id="tab-chat" hidden><svg class="ico" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span>แชท</span><b class="nbadge" id="chat-badge" hidden></b></a>
 </nav>
 
 <script src="config.js"></script>
@@ -502,7 +549,7 @@ table.pfmt{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
 (() => {
 'use strict';
 
-const APP_VERSION = '1.3.0';
+const APP_VERSION = '2.0.0';
 const KEY = 'cwk-apra-2026';
 const TKEY = 'cwk-apra-2026-timer';
 const DATA_VERSION = 1;
@@ -688,9 +735,10 @@ function merge(def, val) {
 }
 function load() {
   let raw = null;
-  try { raw = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { raw = null; }
+  try { raw = JSON.parse(localStorage.getItem(dataKey()) || 'null'); } catch (e) { raw = null; }
   S = (raw && typeof raw === 'object') ? merge(DEFAULTS(), raw) : DEFAULTS();
   S.version = DATA_VERSION;
+  (S.schedule || []).forEach((i) => { if (typeof i.done !== 'boolean') i.done = false; });
   let t = null;
   try { t = JSON.parse(localStorage.getItem(TKEY) || 'null'); } catch (e) { t = null; }
   T = merge({ preset: 'group', idx: 0, remaining: 120, running: false, endAt: 0, ref: '', sound: true, custom: 15 }, t || {});
@@ -698,7 +746,7 @@ function load() {
 let saveWarned = false;
 function saveLocal() {
   memo.clear();
-  try { localStorage.setItem(KEY, JSON.stringify(S)); }
+  try { localStorage.setItem(dataKey(), JSON.stringify(S)); }
   catch (e) { if (!saveWarned) { saveWarned = true; toast('บันทึกลงเครื่องไม่ได้ (อาจเป็นโหมดส่วนตัว) — ใช้เมนู ⋮ > สำรองข้อมูล'); } }
 }
 /* บันทึกลงเครื่อง + ส่งขึ้นออนไลน์ (ถ้าเป็นโค้ชในโหมดออนไลน์) */
@@ -1382,25 +1430,39 @@ function teamCard(t) {
     ${mediaSection(t.code)}</article>`;
 }
 
-const VIEWS = { home: viewHome, schedule: viewSchedule, scores: viewScores, timer: viewTimer, plan: viewPlan };
+const VIEWS = { home: viewHome, schedule: viewSchedule, scores: viewScores, timer: viewTimer, plan: viewPlan, chat: viewChat };
 
 /* ------------------------------------------------------------------
  * Render / routing
  * ------------------------------------------------------------------ */
 function render() {
-  const tab = VIEWS[S.ui.tab] ? S.ui.tab : 'home';
+  const gate = needSchool();
+  document.body.classList.toggle('gate', gate);
+  $('#tab-chat').hidden = !chatOn();
+  if (gate) {
+    document.body.classList.remove('ro');
+    $('#view').innerHTML = viewGate();
+    $('#brand-sub').textContent = 'เข้าใช้งานด้วยรหัสโรงเรียน';
+    lastAutoRender = Date.now();
+    tick(true);
+    return;
+  }
+  const tab = VIEWS[S.ui.tab] && (S.ui.tab !== 'chat' || chatOn()) ? S.ui.tab : 'home';
   const ro = readOnly();
   document.body.classList.toggle('ro', ro);
-  $('#view').innerHTML = (ro ? roBar() : '') + VIEWS[tab]();
+  document.body.classList.toggle('on-chat', tab === 'chat');
+  $('#view').innerHTML = (ro && tab !== 'chat' ? roBar() : '') + VIEWS[tab]();
+  if (tab === 'chat') markRead();
+  renderChatBadge();
   if (tab === 'plan' && S.ui.planTab === 'teams' && online() && !MEDIA.wanted) { MEDIA.wanted = true; connectMedia(); }
   if (ro) {
-    $$('#view [data-input]').forEach((el) => { el.readOnly = true; });
+    $$('#view [data-input]:not([data-input="chat-draft"])').forEach((el) => { el.readOnly = true; });
     $$('#view select[data-change="ko-team"]').forEach((el) => { el.disabled = true; });
   }
   renderNet();
   $$('.tabbar a').forEach((a) => { const on = a.dataset.tab === tab; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   $('#brand-name').textContent = myName();
-  $('#brand-sub').textContent = S.event.title;
+  $('#brand-sub').textContent = SCH ? SCH.name : S.event.title;
   $('#clk-v-l').textContent = S.event.venueTzLabel;
   $('#clk-h-l').textContent = S.event.homeTzLabel;
   lastAutoRender = Date.now();
@@ -1410,17 +1472,18 @@ function render() {
 function rerender() { const y = window.scrollY; render(); window.scrollTo(0, y); }
 function route() {
   const h = (location.hash || '').slice(1);
-  const tab = VIEWS[h] ? h : 'home';
+  const tab = VIEWS[h] && (h !== 'chat' || chatOn()) ? h : 'home';
   if (S.ui.tab !== tab) { S.ui.tab = tab; save(); }
   render(); window.scrollTo(0, 0);
   if (tab === 'schedule') scrollToNow();
+  if (tab === 'chat') chatScrollBottom();
 }
 function scrollToNow() {
   const el = $('.tl.now') || ($('.tl.past') && $('.tl.future'));
   if (el) el.scrollIntoView({ block: 'center' });
 }
 function navigate(tab) {
-  if (location.hash === '#' + tab) { S.ui.tab = tab; save(); render(); window.scrollTo(0, 0); if (tab === 'schedule') scrollToNow(); }
+  if (location.hash === '#' + tab) { S.ui.tab = tab; save(); render(); window.scrollTo(0, 0); if (tab === 'schedule') scrollToNow(); if (tab === 'chat') chatScrollBottom(); }
   else location.hash = tab;
 }
 
@@ -1490,7 +1553,7 @@ function openSettings() {
   const e = S.event; const ro = readOnly(); const dis = ro ? 'disabled' : '';
   const ni = netInfo();
   openModal(`${modalHead('ตั้งค่า & ข้อมูล')}
-  ${CFG ? `<div class="netbox" style="margin-bottom:14px"><div class="net-st ${ni.cls}">${esc(ni.t)}</div><div class="muted small">${SD.disabled ? '' : SD.canEdit ? 'โหมดโค้ช — แก้ไขได้' : 'โหมดผู้ชม — ดูอย่างเดียว'}</div><button class="btn sm" style="justify-self:start;margin-top:6px" data-action="online">จัดการออนไลน์ / รหัสโค้ช</button></div>` : ''}
+  ${CFG ? `<div class="netbox" style="margin-bottom:14px"><div class="net-st ${ni.cls}">${esc(ni.t)}</div><div class="muted small">${SD.disabled ? '' : SD.canEdit ? 'โหมดโค้ช — แก้ไขได้' : 'โหมดผู้ชม — ดูอย่างเดียว'}</div><div class="btn-row" style="margin-top:6px"><button class="btn sm" data-action="online">จัดการออนไลน์ / รหัสโค้ช</button><button class="btn sm" data-action="admin-open">ผู้ดูแลระบบ (หลายโรงเรียน)</button></div>${SCH ? `<div class="small" style="margin-top:6px">โรงเรียน: <b>${esc(SCH.name)}</b></div>` : ''}</div>` : ''}
   <div class="form">
     <label>ทีมของเรา<select data-change="set" data-path="event.myTeam" ${dis}>${S.teams.map((t) => `<option value="${esc(t.code)}" ${t.code === e.myTeam ? 'selected' : ''}>${esc(t.code)} • ${esc(t.name)}</option>`).join('')}</select></label>
     <div class="grid2"><label>วันแข่งขัน<input type="date" data-change="set" data-path="event.date" value="${esc(e.date)}" ${dis}></label>
@@ -1687,6 +1750,23 @@ const ACTIONS = {
     save(); closeModal(); applyTheme(); navigate('home'); toast('คืนค่าเริ่มต้นแล้ว', true);
   },
   online() { openOnline(); },
+  'gate-offline'() { SD.disabled = true; saveSync(); rerender(); toast('ใช้แบบออฟไลน์ในเครื่องนี้ — ข้อมูลไม่แชร์กับใคร'); },
+  'school-leave'() {
+    if (!SCH || !confirm(`ออกจาก “${SCH.name}”?\nข้อมูลของโรงเรียนนี้ยังเก็บไว้ในเครื่อง ใส่รหัสเดิมเพื่อกลับมาได้`)) return;
+    closeModal(); switchSchool(null);
+  },
+  'admin-open'() { openAdmin(); },
+  'admin-logout'() { SD.isAdmin = false; saveSync(); closeModal(); toast('ออกจากผู้ดูแลระบบแล้ว'); },
+  'admin-copy'(el) { copyText(el.dataset.text || '').then((ok) => toast(ok ? 'คัดลอกแล้ว' : 'คัดลอกไม่ได้ — กดค้างที่ข้อความเพื่อคัดลอกเอง')); },
+  'admin-pin'(el) { adminSetPin(el.dataset.code); },
+  'admin-del'(el) { adminDelete(el.dataset.code); },
+  'admin-migrate'(el) { adminMigrate(el.dataset.code); },
+  'admin-join'(el) { closeModal(); switchSchool({ code: el.dataset.code, name: el.dataset.name || el.dataset.code }); },
+  'chat-rec'() { unlockPlayer(); chatRecStart(); },
+  'chat-rec-cancel'() { chatRecStop(false); },
+  'chat-rec-send'() { chatRecStop(true); },
+  'chat-play'(el) { unlockPlayer(); chatPlay(el.dataset.id, false); },
+  'chat-del'(el) { chatDelete(el.dataset.id); },
   'p-fmt'(el) { PRAC.draft.fmt = el.dataset.val; savePrac(); rerender(); },
   'p-launch'(el) {
     PRAC.draft.fmt = el.dataset.fmt; savePrac();
@@ -1787,6 +1867,7 @@ function softRefresh(keepRef) {
   const cs = $('#champ-slot'); if (cs) cs.innerHTML = champBanner();
 }
 const INPUTS = {
+  'chat-draft'(el) { CHAT.draft = el.value; el.style.height = 'auto'; el.style.height = Math.min(140, el.scrollHeight) + 'px'; },
   'p-notes'(el) { if (PRAC.cur) { PRAC.cur.notes = el.value.slice(0, 1000); savePrac(); } },
   score(el) {
     const raw = el.value.replace(/\D/g, '').slice(0, 2);
@@ -1809,6 +1890,10 @@ const CHANGES = {
     savePrac(); rerender();
   },
   'ui-sel'(el) { S.ui[el.dataset.key] = el.value; save(); rerender(); },
+  'chat-auto'(el) {
+    CHAT.auto = el.checked; try { localStorage.setItem('cwk-chat-auto', CHAT.auto ? '1' : '0'); } catch (e) { /* ignore */ }
+    if (CHAT.auto) { unlockPlayer(); toast('เปิดโหมดวอ — ข้อความเสียงใหม่จะเล่นเองเมื่อเปิดแอพอยู่'); }
+  },
   'media-add'(el) { const files = Array.from(el.files || []); el.value = ''; addMedia(el.dataset.team, files); },
   'media-caption'(el) { setCaption(el.dataset.id, el.value.trim().slice(0, 120)); },
   'ko-team'(el) {
@@ -1829,6 +1914,14 @@ const CHANGES = {
 };
 const SUBMITS = {
   'net-unlock'(f) { unlock(f.elements.pin.value); },
+  'school-join'(f) { joinSchool(f.elements.code.value); },
+  'admin-login'(f) { adminLogin(f.elements.key.value); },
+  'admin-create'(f) { adminCreate(f); },
+  'chat-send'(f) { const t = f.elements.t; chatSendText(t.value); t.value = ''; t.style.height = 'auto'; t.focus(); },
+  'chat-name'(f) {
+    const n = f.elements.n.value.trim().slice(0, 30); if (!n) return;
+    SD.name = n; saveSync(); renderComposer(); const t = $('#composer textarea'); if (t) t.focus();
+  },
   'spar-add'(f) {
     const name = f.elements.name.value.trim(); if (!name) return;
     const sp = { id: 'sp' + uid(), name: name.slice(0, 40), note: f.elements.note.value.trim().slice(0, 80) };
@@ -1889,6 +1982,10 @@ document.addEventListener('submit', (e) => {
   if (SUBMITS[k]) SUBMITS[k](f);
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.matches && e.target.matches('input[data-input="score"]')) e.target.blur(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter' || e.shiftKey || e.isComposing || !e.target.matches || !e.target.matches('textarea[data-input="chat-draft"]')) return;
+  e.preventDefault(); const f = e.target.form; if (f && f.requestSubmit) f.requestSubmit(); else if (f) f.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+});
 $('#modal').addEventListener('click', (e) => { if (e.target.id === 'modal') closeModal(); });
 $('#file-import').addEventListener('change', (e) => {
   const file = e.target.files && e.target.files[0]; if (!file) return;
@@ -1906,8 +2003,8 @@ $('#file-import').addEventListener('change', (e) => {
 });
 window.addEventListener('hashchange', route);
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
-window.addEventListener('storage', (e) => { if (e.key === KEY || e.key === TKEY) { load(); memo.clear(); applyTheme(); if (!modalOpen()) rerender(); } });
-window.addEventListener('online', () => { if (!online()) return; if (SY.status !== 'live') connect(); else { schedulePush(0); kickUpload(); } });
+window.addEventListener('storage', (e) => { if (e.key === dataKey() || e.key === TKEY) { load(); memo.clear(); applyTheme(); if (!modalOpen()) rerender(); } });
+window.addEventListener('online', () => { if (!online()) return; if (SY.status !== 'live') connect(); else { schedulePush(0); kickUpload(); } connectChat(); flushOut(); });
 $('#modal').addEventListener('close', () => { revokeView(); MEDIA.viewing = null; $$('#modal video').forEach((v) => { try { v.pause(); } catch (e) { /* ignore */ } }); });
 document.addEventListener('keydown', (e) => {
   if (!MEDIA.viewing || !modalOpen() || /INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || '')) return;
@@ -1919,7 +2016,7 @@ document.addEventListener('touchend', (e) => {
   if (swipeX === null) return; const dx = e.changedTouches[0].clientX - swipeX; swipeX = null;
   if (Math.abs(dx) < 50) return; const b = $(`.lb-nav [data-dir="${dx > 0 ? 'prev' : 'next'}"]`); if (b && !b.disabled) b.click();
 });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (T.running) keepAwake(true); tick(true); } });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (T.running) keepAwake(true); tick(true); if (S.ui.tab === 'chat') { markRead(); renderChatBadge(); } } });
 
 function applyTheme() {
   const t = S.ui.theme;
@@ -1941,10 +2038,11 @@ const CFG = (() => {
     room: String(c.room || 'apra2026').trim().replace(/[.#$[\]/\s]/g, '_') || 'apra2026',
     authURL: String(c.authURL || 'https://identitytoolkit.googleapis.com').replace(/\/+$/, ''),
     tokenURL: String(c.tokenURL || 'https://securetoken.googleapis.com').replace(/\/+$/, ''),
+    multiSchool: c.multiSchool === true,
   };
 })();
 const SY = { status: 'off', es: null, tree: null, meta: null, pushing: false, pushTimer: null, retryTimer: null, dirty: false, err: '' };
-const SD_DEFAULT = { key: '', uid: '', idToken: '', refreshToken: '', exp: 0, canEdit: false, name: '', flat: null, synced: false, disabled: false };
+const SD_DEFAULT = { key: '', uid: '', idToken: '', refreshToken: '', exp: 0, canEdit: false, name: '', flat: null, synced: false, disabled: false, isAdmin: false };
 let SD = { ...SD_DEFAULT };
 const clone = (x) => (x === undefined ? undefined : JSON.parse(JSON.stringify(x)));
 
@@ -1952,8 +2050,13 @@ function loadSync() {
   let d = null;
   try { d = JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch (e) { d = null; }
   SD = { ...SD_DEFAULT, ...(d && typeof d === 'object' ? d : {}) };
-  const key = CFG ? CFG.db + '|' + CFG.room : '';
-  if (SD.key !== key) { SD = { ...SD_DEFAULT, name: SD.name, disabled: SD.disabled, key }; saveSync(); }
+  const key = CFG ? CFG.db + '|' + spaceKey() : '';
+  if (SD.key !== key) {
+    // เปลี่ยนโรงเรียน/ห้อง: เก็บบัญชีเดิมไว้ แต่เริ่มสถานะซิงก์และสิทธิ์โค้ชใหม่
+    const sameDb = !!CFG && String(SD.key || '').split('|')[0] === CFG.db;
+    SD = sameDb ? { ...SD, key, flat: null, synced: false, canEdit: false } : { ...SD_DEFAULT, name: SD.name, disabled: SD.disabled, key };
+    saveSync();
+  }
 }
 function saveSync() { try { localStorage.setItem(SKEY, JSON.stringify(SD)); } catch (e) { /* ignore */ } }
 function online() { return !!CFG && !SD.disabled; }
@@ -2060,7 +2163,7 @@ function disconnect() { clearTimeout(SY.retryTimer); if (SY.es) { SY.es.close();
 function scheduleReconnect(ms) { clearTimeout(SY.retryTimer); SY.retryTimer = setTimeout(() => { if (online()) connect(); }, ms || 8000); }
 async function connect() {
   disconnect();
-  if (!online()) { setStatus('off'); return; }
+  if (!online() || needSchool()) { setStatus('off'); return; }
   const seq = ++connectSeq;
   setStatus('connecting');
   let tok;
@@ -2073,7 +2176,7 @@ async function connect() {
   }
   if (seq !== connectSeq) return;
   let es;
-  try { es = new EventSource(dbUrl('rooms/' + CFG.room, { auth: tok })); } catch (e) { SY.err = 'databaseURL ใน config.js ไม่ถูกต้อง'; setStatus('error'); return; }
+  try { es = new EventSource(dbUrl(roomPath(), { auth: tok })); } catch (e) { SY.err = 'databaseURL ใน config.js ไม่ถูกต้อง'; setStatus('error'); return; }
   SY.es = es;
   es.addEventListener('put', (ev) => onStream(ev, false));
   es.addEventListener('patch', (ev) => onStream(ev, true));
@@ -2131,7 +2234,7 @@ function applyRemote(first) {
     refreshView();
   }
   renderNet();
-  if (Object.keys(pending).length) schedulePush();
+  if (Object.keys(pending).length || (SD.canEdit && Object.keys(diffFlat(toFlat(S), SD.flat || {})).length)) schedulePush();
 }
 function announce(prev) {
   for (const m of S.matches) {
@@ -2170,7 +2273,7 @@ async function pushNow() {
     keys.forEach((k) => { body['data/' + k] = upd[k]; });
     body['meta/updatedAt'] = { '.sv': 'timestamp' };
     body['meta/by'] = SD.name || 'โค้ช';
-    const r = await fetch(dbUrl('rooms/' + CFG.room, { auth: tok }), { method: 'PATCH', body: JSON.stringify(body) });
+    const r = await fetch(dbUrl(roomPath(), { auth: tok }), { method: 'PATCH', body: JSON.stringify(body) });
     if (r.status === 401 || r.status === 403) {
       SD.canEdit = false; saveSync();
       S = clone(fromFlat(SD.flat || {}, S.ui)); memo.clear(); saveLocal();
@@ -2195,7 +2298,7 @@ async function unlock(pin) {
   if (!pin) return;
   try {
     const tok = await ensureToken();
-    const put = (body) => fetch(dbUrl('editors/' + SD.uid, { auth: tok }), { method: 'PUT', body });
+    const put = (body) => fetch(dbUrl(editorPath(), { auth: tok }), { method: 'PUT', body });
     let r = await put(JSON.stringify(pin));
     if (!r.ok && /^\d+$/.test(pin) && pin.length < 16) r = await put(pin); // เผื่อกรอกรหัสเป็นตัวเลขล้วนใน Firebase
     if (r.ok) {
@@ -2216,7 +2319,7 @@ function toggleOnline() {
   SD.disabled = !SD.disabled;
   if (!SD.disabled) SD.synced = false;
   saveSync();
-  if (SD.disabled) { disconnect(); setStatus('off'); } else connect();
+  if (SD.disabled) { disconnect(); disconnectChat(); setStatus('off'); } else { connect(); connectChat(); }
   rerender();
 }
 
@@ -2258,7 +2361,7 @@ function openOnline() {
   }
   const i = netInfo();
   openModal(`${modalHead('ออนไลน์ • ซิงก์ข้อมูล')}
-  <div class="netbox"><div class="net-st ${i.cls}" id="net-status">${esc(i.t)}</div><div class="muted small" id="net-meta">${esc(metaText())}</div><div class="muted small">ห้องข้อมูล: ${esc(CFG.room)}</div></div>
+  <div class="netbox"><div class="net-st ${i.cls}" id="net-status">${esc(i.t)}</div><div class="muted small" id="net-meta">${esc(metaText())}</div>${SCH ? `<div class="small">โรงเรียน: <b>${esc(SCH.name)}</b> • รหัส <span class="codebig" style="font-size:13px">${esc(SCH.code)}</span></div>` : `<div class="muted small">ห้องข้อมูล: ${esc(CFG.room)}</div>`}</div>
   ${SD.disabled ? '' : SD.canEdit ? `
   <h3>✓ โหมดโค้ช (แก้ไขได้)</h3>
   <p class="small">ทุกการแก้ไขจะส่งขึ้นออนไลน์อัตโนมัติและทุกเครื่องเห็นทันที ถ้าไม่มีสัญญาณจะเก็บไว้แล้วส่งเองเมื่อกลับมาออนไลน์</p>
@@ -2268,7 +2371,7 @@ function openOnline() {
   <p class="small">ดูตารางเวลา ผลการแข่ง และตารางคะแนนแบบสดได้ แต่แก้ไขไม่ได้ • โค้ชใส่รหัสเพื่อแก้ไข</p>
   <form class="add-row" data-submit="net-unlock"><input name="pin" type="password" autocomplete="current-password" placeholder="รหัสโค้ช" aria-label="รหัสโค้ช"><button class="btn primary" type="submit">ปลดล็อก</button></form>`}
   <h3>เครื่องนี้</h3>
-  <div class="btn-row"><button class="btn" data-action="net-toggle">${SD.disabled ? 'กลับมาเชื่อมต่อออนไลน์' : 'ใช้แบบออฟไลน์เฉพาะเครื่องนี้'}</button>${SD.disabled ? '' : '<button class="btn" data-action="net-reconnect">เชื่อมต่อใหม่</button>'}</div>
+  <div class="btn-row"><button class="btn" data-action="net-toggle">${SD.disabled ? 'กลับมาเชื่อมต่อออนไลน์' : 'ใช้แบบออฟไลน์เฉพาะเครื่องนี้'}</button>${SD.disabled ? '' : '<button class="btn" data-action="net-reconnect">เชื่อมต่อใหม่</button>'}${SCH ? '<button class="btn" data-action="school-leave">เปลี่ยน / ออกจากโรงเรียน</button>' : ''}</div>
   <p class="muted small" style="margin-top:10px">${SD.disabled ? 'เมื่อกลับมาเชื่อมต่อ ข้อมูลในเครื่องจะถูกแทนด้วยข้อมูลออนไลน์ล่าสุด' : 'มีสำเนาข้อมูลล่าสุดในเครื่อง จึงเปิดดูได้แม้ไม่มีสัญญาณ'} • นาฬิกาจับเวลา ธีม และหน้าที่เปิดอยู่เป็นของแต่ละเครื่อง</p>`);
 }
 
@@ -2330,7 +2433,7 @@ function venueParts(ms) { const d = new Date(+ms + S.event.venueTz * 3600000); r
 function fmtStampFull(ms) { const v = venueParts(ms); return `${v.d}/${v.mo}/${v.y} ${pad(v.h)}:${pad(v.mi)} น. (${S.event.venueTzLabel})`; }
 function mediaFileName(it) { const v = venueParts(it.createdAt); return `${it.team}_${v.y}${pad(v.mo)}${pad(v.d)}-${pad(v.h)}${pad(v.mi)}${pad(v.s)}_${it.id.slice(-4)}.${it.ext || (it.kind === 'video' ? 'mp4' : 'jpg')}`; }
 const folderName = (code) => safeName(`${code} ${tname(code)}`);
-function mediaVisible(it) { return !it.room || !CFG || it.room === CFG.room; }
+function mediaVisible(it) { return !it.room || !CFG || it.room === spaceKey(); }
 function teamMedia(code) { return [...MEDIA.items.values()].filter((it) => it.team === code && mediaVisible(it)).sort((a, b) => a.createdAt - b.createdAt); }
 function dataUrlToBlob(d) {
   const i = d.indexOf(','); const head = d.slice(0, i); const bin = atob(d.slice(i + 1));
@@ -2413,7 +2516,7 @@ async function addMedia(team, files) {
       size: pr.blob.size, w: pr.w || 0, h: pr.h || 0, dur: isFinite(pr.dur) ? Math.round(pr.dur * 10) / 10 : 0,
       caption: '', createdAt: Date.now(), by: SD.name || '', thumb: pr.thumb || '', room: '', cloud: 'local', uploaded: 0, chunks: 0, hasBlob: true,
     };
-    if (online() && SD.canEdit) { it.room = CFG.room; it.cloud = canCloud(it) ? 'queued' : 'toolarge'; if (it.cloud === 'toolarge') big++; }
+    if (online() && SD.canEdit) { it.room = spaceKey(); it.cloud = canCloud(it) ? 'queued' : 'toolarge'; if (it.cloud === 'toolarge') big++; }
     try { await idbPutBlob(it.id, pr.blob); await idbPutMeta(it); } catch (e) { toast('พื้นที่ในเครื่องไม่พอ หรือบันทึกไม่ได้'); break; }
     MEDIA.items.set(it.id, it); n++;
   }
@@ -2427,7 +2530,7 @@ async function getBlob(it) {
   if (b) return b;
   if (!online() || !it.room || it.cloud !== 'synced') throw new Error('unavailable');
   const tok = await ensureToken();
-  const r = await fetch(dbUrl(`media/${it.room}/blobs/${it.id}`, { auth: tok }));
+  const r = await fetch(dbUrl(`${mediaBase(it.room)}/blobs/${it.id}`, { auth: tok }));
   if (!r.ok) throw new Error('http ' + r.status);
   const obj = await r.json();
   if (!obj) throw new Error('missing');
@@ -2529,7 +2632,7 @@ async function deleteMedia(id) {
     else {
       try {
         const tok = await ensureToken();
-        const r = await fetch(dbUrl('media/' + it.room, { auth: tok }), { method: 'PATCH', body: JSON.stringify({ ['index/' + id]: null, ['blobs/' + id]: null }) });
+        const r = await fetch(dbUrl(mediaBase(it.room), { auth: tok }), { method: 'PATCH', body: JSON.stringify({ ['index/' + id]: null, ['blobs/' + id]: null }) });
         if (!r.ok) throw new Error('http ' + r.status);
       } catch (e) { toast('ลบจากออนไลน์ไม่สำเร็จ — ลองใหม่เมื่อมีสัญญาณ'); return false; }
     }
@@ -2567,26 +2670,26 @@ async function uploadOne(it) {
   const chunks = Math.max(1, Math.ceil(blob.size / CHUNK)); it.chunks = chunks;
   for (let n = it.uploaded || 0; n < chunks; n++) {
     if (!MEDIA.items.has(it.id)) return;
-    await mediaReq(`media/${it.room}/blobs/${it.id}/${n}`, 'PUT', await blobToB64(blob.slice(n * CHUNK, (n + 1) * CHUNK)));
+    await mediaReq(`${mediaBase(it.room)}/blobs/${it.id}/${n}`, 'PUT', await blobToB64(blob.slice(n * CHUNK, (n + 1) * CHUNK)));
     it.uploaded = n + 1; await idbPutMeta(it);
     $$(`[data-mprog="${it.id}"]`).forEach((el) => { el.textContent = `⬆ ${Math.round((it.uploaded / chunks) * 100)}%`; });
   }
   if (!MEDIA.items.has(it.id)) return;
-  await mediaReq(`media/${it.room}/index/${it.id}`, 'PUT', indexEntry(it));
+  await mediaReq(`${mediaBase(it.room)}/index/${it.id}`, 'PUT', indexEntry(it));
   it.cloud = 'synced'; delete it.dirty; await idbPutMeta(it);
 }
 async function runUpload() {
-  if (upRunning || !MEDIA.ready || !online() || !SD.canEdit || SY.status !== 'live' || MEDIA.err) return;
+  if (upRunning || !MEDIA.ready || !online() || needSchool() || !SD.canEdit || SY.status !== 'live' || MEDIA.err) return;
   upRunning = true; let changed = false;
   try {
     for (const it of MEDIA.items.values()) {
-      if (!it.room && it.hasBlob && it.cloud === 'local') { it.room = CFG.room; it.cloud = canCloud(it) ? 'queued' : 'toolarge'; await idbPutMeta(it); changed = true; }
+      if (!it.room && it.hasBlob && it.cloud === 'local') { it.room = spaceKey(); it.cloud = canCloud(it) ? 'queued' : 'toolarge'; await idbPutMeta(it); changed = true; }
     }
     for (;;) {
-      const it = [...MEDIA.items.values()].filter((x) => x.room === CFG.room && (x.cloud === 'queued' || x.dirty)).sort((a, b) => a.createdAt - b.createdAt)[0];
+      const it = [...MEDIA.items.values()].filter((x) => x.room === spaceKey() && (x.cloud === 'queued' || x.dirty)).sort((a, b) => a.createdAt - b.createdAt)[0];
       if (!it) break;
       if (it.cloud === 'queued') await uploadOne(it);
-      else { await mediaReq(`media/${it.room}/index/${it.id}`, 'PATCH', { caption: it.caption || '' }); delete it.dirty; await idbPutMeta(it); }
+      else { await mediaReq(`${mediaBase(it.room)}/index/${it.id}`, 'PATCH', { caption: it.caption || '' }); delete it.dirty; await idbPutMeta(it); }
       changed = true;
     }
   } catch (e) {
@@ -2600,11 +2703,11 @@ async function runUpload() {
 
 /* ---- รับรายการภาพจากออนไลน์ (เปิดเมื่อเข้าหน้า "คู่แข่ง") ---- */
 async function connectMedia() {
-  if (!online() || MEDIA.es) return;
+  if (!online() || needSchool() || MEDIA.es) return;
   let tok;
   try { tok = await ensureToken(); } catch (e) { setTimeout(connectMedia, 10000); return; }
   if (MEDIA.es || !online()) return;
-  const es = new EventSource(dbUrl(`media/${CFG.room}/index`, { auth: tok }));
+  const es = new EventSource(dbUrl(`${mediaBase(spaceKey())}/index`, { auth: tok }));
   MEDIA.es = es;
   const on = (ev, isPatch) => {
     let msg = null; try { msg = JSON.parse(ev.data); } catch (e) { msg = null; }
@@ -2623,7 +2726,7 @@ async function connectMedia() {
 }
 async function reconcileMedia() {
   if (!MEDIA.ready || !CFG) return;
-  const remote = MEDIA.remote || {}; const room = CFG.room; let changed = false;
+  const remote = MEDIA.remote || {}; const room = spaceKey(); let changed = false;
   for (const [id, m] of Object.entries(remote)) {
     if (!m || typeof m !== 'object' || !m.team || !m.kind) continue;
     const f = { team: m.team, kind: m.kind, mime: m.mime || '', ext: m.ext || '', size: +m.size || 0, w: +m.w || 0, h: +m.h || 0, dur: +m.dur || 0, caption: m.caption || '', createdAt: +m.createdAt || 0, by: m.by || '', thumb: m.thumb || '', chunks: +m.chunks || 1 };
@@ -2980,6 +3083,469 @@ function openSparring() {
 }
 
 /* ------------------------------------------------------------------
+ * หลายโรงเรียน (เปิดด้วย multiSchool: true ใน config.js)
+ * - ผู้ดูแลระบบสร้าง "รหัสโรงเรียน" + "รหัสโค้ช" ให้แต่ละโรงเรียน
+ * - แต่ละโรงเรียนมีข้อมูลแยกกันที่ schools/<รหัส>/… (ข้อมูลแข่ง ภาพ แชท)
+ * ------------------------------------------------------------------ */
+const SCHKEY = 'cwk-apra-school';
+let SCH = null; // { code, name }
+const schoolMode = () => !!(CFG && CFG.multiSchool);
+const needSchool = () => schoolMode() && !SCH && !SD.disabled;
+const chatOn = () => online() && !!SCH;
+function loadSchool() {
+  SCH = null;
+  if (!schoolMode()) return;
+  try { const d = JSON.parse(localStorage.getItem(SCHKEY) || 'null'); if (d && d.code) SCH = { code: String(d.code), name: String(d.name || d.code) }; } catch (e) { SCH = null; }
+}
+function saveSchool() { try { if (SCH) localStorage.setItem(SCHKEY, JSON.stringify(SCH)); else localStorage.removeItem(SCHKEY); } catch (e) { /* ignore */ } }
+function dataKey() { return SCH ? KEY + '|' + SCH.code : KEY; }
+function spaceKey() { if (!CFG) return ''; return SCH ? SCH.code + '/' + CFG.room : CFG.room; }
+function roomPath() { return SCH ? `schools/${SCH.code}/rooms/${CFG.room}` : `rooms/${CFG.room}`; }
+function editorPath() { return SCH ? `schools/${SCH.code}/editors/${SD.uid}` : `editors/${SD.uid}`; }
+function mediaBase(space) { const s = String(space || ''); const i = s.indexOf('/'); return i > 0 ? `schools/${s.slice(0, i)}/media/${s.slice(i + 1)}` : `media/${s}`; }
+function chatBase() { return SCH ? `schools/${SCH.code}/chat/main` : ''; }
+const normCode = (x) => String(x || '').toUpperCase().replace(/\s+/g, '').replace(/[^A-Z0-9-]/g, '');
+const validCode = (c) => /^[A-Z0-9][A-Z0-9-]{3,23}$/.test(c);
+function randFrom(alpha, n) { const r = new Uint8Array(n); crypto.getRandomValues(r); return [...r].map((x) => alpha[x % alpha.length]).join(''); }
+function genCode() { const x = randFrom('23456789ABCDEFGHJKMNPQRSTUVWXYZ', 8); return x.slice(0, 4) + '-' + x.slice(4); }
+function genPin() { return randFrom('abcdefghjkmnpqrstuvwxyz23456789', 8); }
+const appLink = () => location.href.split('#')[0];
+
+function viewGate() {
+  return `<section class="gatebox">
+    <svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#b51f32"/><circle cx="256" cy="256" r="170" fill="#fff"/><path d="M256 196L313 237.5 291.3 304.5H220.7L198.9 237.5Z" fill="#1f2a44"/></svg>
+    <h1>เข้าใช้งานด้วยรหัสโรงเรียน</h1>
+    <p class="muted small">แต่ละโรงเรียนมีข้อมูลการแข่ง แผน ภาพสเกาท์ และแชททีมของตัวเองแยกกัน</p>
+    <form class="form" data-submit="school-join"><label>รหัสโรงเรียน<input name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="เช่น K7M2-QX9P" maxlength="24" required></label>
+      <button class="btn primary" type="submit" style="min-height:50px;font-size:17px">เข้าใช้งาน</button></form>
+    <p class="small muted">ยังไม่มีรหัส? ขอได้จากผู้ดูแลระบบของแอพ • ใส่ครั้งเดียว เครื่องจะจำไว้</p>
+    <div class="btn-row" style="margin-top:12px"><button class="btn sm" data-action="gate-offline">ใช้แบบออฟไลน์ในเครื่องนี้</button><button class="btn sm" data-action="admin-open">ผู้ดูแลระบบ</button></div>
+  </section>`;
+}
+async function joinSchool(raw) {
+  const code = normCode(raw);
+  if (!validCode(code)) { toast('รหัสโรงเรียนไม่ถูกต้อง (ตัวอักษร A–Z ตัวเลข และ - อย่างน้อย 4 ตัว)'); return; }
+  try {
+    const tok = await ensureToken();
+    const r = await fetch(dbUrl(`schools/${code}/info`, { auth: tok }));
+    if (r.status === 401 || r.status === 403) { toast('อ่านข้อมูลไม่ได้ — ผู้ดูแลต้องวาง Rules ล่าสุดใน Firebase (ONLINE.md)'); return; }
+    if (!r.ok) { toast('เชื่อมต่อไม่สำเร็จ (' + r.status + ')'); return; }
+    const info = await r.json();
+    if (!info || !info.name) { toast('ไม่พบรหัสโรงเรียนนี้ — ตรวจตัวสะกดอีกครั้ง'); return; }
+    switchSchool({ code, name: String(info.name) });
+    toast(`เข้าสู่ ${info.name} แล้ว`);
+  } catch (e) { toast('ไม่มีสัญญาณอินเทอร์เน็ต — ครั้งแรกต้องต่อเน็ตเพื่อยืนยันรหัส'); }
+}
+function switchSchool(next) {
+  disconnect(); disconnectMedia(); disconnectChat();
+  SCH = next; saveSchool();
+  if (next) SD.disabled = false;
+  saveSync(); loadSync(); load(); memo.clear();
+  SY.tree = null; MEDIA.remote = null; MEDIA.wanted = false; MEDIA.err = '';
+  loadChatLocal(); applyTheme();
+  if (online() && !needSchool()) { connect(); connectChat(); }
+  navigate('home');
+}
+
+/* ---- ผู้ดูแลระบบ ---- */
+const adminReq = async (path, method, body) => {
+  const tok = await ensureToken();
+  const r = await fetch(dbUrl(path, { auth: tok }), { method, body: body === undefined ? undefined : JSON.stringify(body) });
+  if (r.status === 401 || r.status === 403) { const e = new Error('denied'); e.denied = true; throw e; }
+  if (!r.ok) throw new Error('http ' + r.status);
+  return r.json();
+};
+function openAdmin() {
+  if (!CFG) { toast('ต้องตั้งค่าออนไลน์ใน config.js ก่อน'); return; }
+  if (!SD.isAdmin) {
+    openModal(`${modalHead('ผู้ดูแลระบบ')}
+      <p class="small">สำหรับเจ้าของแอพ ใช้สร้างรหัสโรงเรียน ตั้งรหัสโค้ช และย้ายข้อมูลเดิม</p>
+      <form class="add-row" data-submit="admin-login"><input name="key" type="password" placeholder="รหัสผู้ดูแลระบบ" autocomplete="current-password" aria-label="รหัสผู้ดูแลระบบ"><button class="btn primary" type="submit">เข้าสู่ระบบ</button></form>
+      <p class="muted small" style="margin-top:10px">ตั้งรหัสผู้ดูแลใน Firebase ที่ <code>secret/adminKey</code> (ดู ONLINE.md)</p>`);
+    return;
+  }
+  openModal(`${modalHead('ผู้ดูแลระบบ • โรงเรียน')}<div id="admin-body"><p class="muted">กำลังโหลด…</p></div>`, 'wide');
+  renderAdmin();
+}
+async function adminLogin(key) {
+  key = String(key || '').trim(); if (!key) return;
+  try {
+    const tok = await ensureToken();
+    const r = await fetch(dbUrl('admins/' + SD.uid, { auth: tok }), { method: 'PUT', body: JSON.stringify(key) });
+    if (r.ok) { SD.isAdmin = true; saveSync(); toast('เข้าสู่ระบบผู้ดูแลแล้ว'); openAdmin(); }
+    else if (r.status === 401 || r.status === 403) toast('รหัสผู้ดูแลไม่ถูกต้อง (หรือยังไม่ได้ตั้ง secret/adminKey ใน Firebase)');
+    else toast('เข้าสู่ระบบไม่สำเร็จ (' + r.status + ')');
+  } catch (e) { toast('ไม่มีสัญญาณอินเทอร์เน็ต'); }
+}
+async function renderAdmin(notice) {
+  let list = {};
+  try { list = (await adminReq('schoolIndex', 'GET')) || {}; }
+  catch (e) {
+    if (e.denied) { SD.isAdmin = false; saveSync(); toast('สิทธิ์ผู้ดูแลหมดอายุหรือรหัสถูกเปลี่ยน — เข้าสู่ระบบใหม่'); openAdmin(); return; }
+    const b0 = $('#admin-body'); if (b0) b0.innerHTML = '<p class="alert bad">โหลดรายชื่อโรงเรียนไม่สำเร็จ — ตรวจสัญญาณ</p>'; return;
+  }
+  const body = $('#admin-body'); if (!body) return;
+  const rows = Object.entries(list).filter(([, x]) => x && typeof x === 'object').sort((a, b) => String(a[1].name).localeCompare(String(b[1].name), 'th'));
+  body.innerHTML = `${notice || ''}
+    <form class="form" data-submit="admin-create"><h3 style="margin:4px 0 0">สร้างโรงเรียนใหม่</h3>
+      <label>ชื่อโรงเรียน / ทีม<input name="name" required maxlength="60" placeholder="เช่น โรงเรียนจิตรลดา ทีม A" autocomplete="off"></label>
+      <div class="grid2"><label>รหัสโรงเรียน (แจกทั้งทีม)<input name="code" value="${genCode()}" maxlength="24" required autocomplete="off" spellcheck="false"></label>
+      <label>รหัสโค้ช (≥ 6 ตัว เฉพาะโค้ช)<input name="pin" value="${genPin()}" minlength="6" maxlength="40" required autocomplete="off" spellcheck="false"></label></div>
+      <p class="muted small" style="margin:0">รหัสโรงเรียนควรเป็นแบบสุ่ม (คนที่รู้รหัสจะเห็นข้อมูลและเข้าแชทของโรงเรียนนั้นได้)</p>
+      <button class="btn primary" type="submit">+ สร้างโรงเรียน</button></form>
+    <h3>โรงเรียนทั้งหมด (${rows.length})</h3>
+    ${rows.length ? rows.map(([code, x]) => `<div class="schrow"><div><b>${esc(x.name)}</b>${SCH && SCH.code === code ? ' <span class="badge ok">เครื่องนี้ใช้อยู่</span>' : ''}<div class="muted small">รหัส <code>${esc(code)}</code>${x.createdAt ? ' • สร้าง ' + esc(fmtLocal(x.createdAt)) : ''}</div></div>
+      <div class="btn-row"><button class="btn sm" data-action="admin-copy" data-text="${esc(`${x.name}\nรหัสโรงเรียน: ${code}\nลิงก์แอพ: ${appLink()}`)}">คัดลอกรหัส</button><button class="btn sm" data-action="admin-pin" data-code="${esc(code)}">ตั้งรหัสโค้ชใหม่</button><button class="btn sm" data-action="admin-migrate" data-code="${esc(code)}">นำเข้าข้อมูลระบบเดิม</button>${schoolMode() ? `<button class="btn sm" data-action="admin-join" data-code="${esc(code)}" data-name="${esc(x.name)}">เข้าโรงเรียนนี้</button>` : ''}<button class="btn sm danger-outline" data-action="admin-del" data-code="${esc(code)}">ลบ</button></div></div>`).join('') : '<p class="muted small">ยังไม่มีโรงเรียน</p>'}
+    ${schoolMode() ? '' : '<p class="alert" style="margin-top:12px">ตอนนี้แอพยังใช้แบบเดิม (multiSchool: false) — สร้างโรงเรียนและนำเข้าข้อมูลเตรียมไว้ได้ แล้วค่อยเปลี่ยนเป็น multiSchool: true ใน config.js</p>'}
+    <p style="margin-top:14px"><button class="link" data-action="admin-logout">ออกจากผู้ดูแลระบบ</button></p>`;
+}
+function shareInfo(name, code, pin) { return `${name}\nลิงก์แอพ: ${appLink()}\nรหัสโรงเรียน: ${code} (แจกทุกคนในทีม)${pin ? `\nรหัสโค้ช: ${pin} (เฉพาะโค้ช — ห้ามส่งในกลุ่มนักเรียน)` : ''}`; }
+async function adminCreate(f) {
+  const name = f.elements.name.value.trim().slice(0, 60), code = normCode(f.elements.code.value), pin = f.elements.pin.value.trim();
+  if (!name || !validCode(code) || pin.length < 6) { toast('กรอกชื่อ รหัสโรงเรียน (A–Z 0–9 - อย่างน้อย 4 ตัว) และรหัสโค้ชอย่างน้อย 6 ตัว'); return; }
+  try {
+    if (await adminReq(`schools/${code}/info`, 'GET')) { toast('รหัสนี้ถูกใช้แล้ว — เปลี่ยนรหัสโรงเรียน'); return; }
+    const now = { '.sv': 'timestamp' };
+    await adminReq('', 'PATCH', { [`schools/${code}/info`]: { name, createdAt: now }, [`schoolKeys/${code}/pin`]: pin, [`schoolIndex/${code}`]: { name, createdAt: now } });
+    const info = shareInfo(name, code, pin);
+    renderAdmin(`<div class="netbox" style="margin-bottom:14px"><b>✓ สร้าง “${esc(name)}” แล้ว</b>
+      <div>รหัสโรงเรียน: <span class="codebig">${esc(code)}</span> <span class="muted small">แจกทุกคนในทีม</span></div>
+      <div>รหัสโค้ช: <span class="codebig">${esc(pin)}</span> <span class="muted small">เฉพาะโค้ช</span></div>
+      <div class="muted small">ระบบเก็บรหัสโค้ชแบบอ่านกลับไม่ได้ จดไว้ตอนนี้ ถ้าลืมให้กด “ตั้งรหัสโค้ชใหม่”</div>
+      <button class="btn sm primary" style="justify-self:start;margin-top:6px" data-action="admin-copy" data-text="${esc(info)}">คัดลอกข้อความส่งให้โรงเรียน</button></div>`);
+  } catch (e) { toast(e.denied ? 'ไม่มีสิทธิ์ — ตรวจว่าวาง Rules ล่าสุดและเข้าสู่ระบบผู้ดูแลแล้ว' : 'สร้างไม่สำเร็จ — ตรวจสัญญาณ'); }
+}
+async function adminSetPin(code) {
+  const pin = (prompt(`ตั้งรหัสโค้ชใหม่ของ ${code} (อย่างน้อย 6 ตัว)\nโค้ชเดิมทุกเครื่องต้องใส่รหัสใหม่`, genPin()) || '').trim();
+  if (!pin) return;
+  if (pin.length < 6) { toast('รหัสโค้ชต้องยาวอย่างน้อย 6 ตัว'); return; }
+  try { await adminReq(`schoolKeys/${code}/pin`, 'PUT', pin); renderAdmin(`<div class="netbox" style="margin-bottom:14px"><b>✓ ตั้งรหัสโค้ชใหม่ของ ${esc(code)} แล้ว</b><div>รหัสโค้ช: <span class="codebig">${esc(pin)}</span></div><button class="btn sm" style="justify-self:start" data-action="admin-copy" data-text="${esc(pin)}">คัดลอกรหัสโค้ช</button></div>`); }
+  catch (e) { toast('ตั้งรหัสไม่สำเร็จ'); }
+}
+async function adminDelete(code) {
+  const typed = normCode(prompt(`ลบโรงเรียน ${code}?\nข้อมูลการแข่ง ภาพ/วิดีโอ และแชททั้งหมดของโรงเรียนนี้จะหายถาวร\n\nพิมพ์รหัสโรงเรียนเพื่อยืนยัน`) || '');
+  if (typed !== code) { if (typed) toast('รหัสไม่ตรง — ยกเลิกการลบ'); return; }
+  try {
+    await adminReq('', 'PATCH', { [`schools/${code}`]: null, [`schoolKeys/${code}`]: null, [`schoolIndex/${code}`]: null });
+    toast('ลบโรงเรียนแล้ว');
+    if (SCH && SCH.code === code) { closeModal(); switchSchool(null); } else renderAdmin();
+  } catch (e) { toast('ลบไม่สำเร็จ'); }
+}
+async function adminMigrate(code) {
+  const room = CFG.room;
+  if (!confirm(`คัดลอกข้อมูลจากระบบเดิม (ห้อง ${room}) เข้าโรงเรียน ${code}?\n- ข้อมูลการแข่ง แผน เช็กลิสต์ ประวัติซ้อม\n- ภาพ/วิดีโอสเกาท์\n\nข้อมูลห้อง ${room} ของโรงเรียนนี้ที่มีอยู่จะถูกแทนที่`)) return;
+  try {
+    toast('กำลังคัดลอกข้อมูลการแข่ง…');
+    const data = await adminReq(`rooms/${room}`, 'GET');
+    if (data) await adminReq(`schools/${code}/rooms/${room}`, 'PUT', data);
+    const idx = (await adminReq(`media/${room}/index`, 'GET')) || {};
+    const ids = Object.keys(idx);
+    for (let i = 0; i < ids.length; i++) {
+      toast(`กำลังคัดลอกภาพ/วิดีโอ ${i + 1}/${ids.length}…`);
+      const bl = await adminReq(`media/${room}/blobs/${ids[i]}`, 'GET');
+      if (bl) await adminReq(`schools/${code}/media/${room}/blobs/${ids[i]}`, 'PUT', bl);
+    }
+    if (ids.length) await adminReq(`schools/${code}/media/${room}/index`, 'PUT', idx);
+    renderAdmin(`<div class="netbox" style="margin-bottom:14px"><b>✓ นำเข้าข้อมูลระบบเดิมเข้า ${esc(code)} แล้ว</b><div class="small">ข้อมูลการแข่ง: ${data ? 'คัดลอกแล้ว' : 'ไม่มีข้อมูลเดิม'} • ภาพ/วิดีโอ: ${ids.length} ไฟล์</div></div>`);
+  } catch (e) { toast(e.denied ? 'ไม่มีสิทธิ์ — ตรวจว่าวาง Rules ล่าสุดแล้ว' : 'คัดลอกไม่สำเร็จ — ตรวจสัญญาณแล้วลองใหม่'); }
+}
+
+/* ------------------------------------------------------------------
+ * แชททีม (เฉพาะคนที่เข้าด้วยรหัสโรงเรียนเดียวกัน)
+ * - ข้อความ: ส่งถึงทุกเครื่องทันที • ไม่มีสัญญาณ = เข้าคิว แล้วส่งเองภายหลัง
+ * - ข้อความเสียง (แบบวอ): อัดแล้วส่ง • เปิด "เล่นเสียงอัตโนมัติ" ให้เสียงใหม่ดังเอง
+ * ------------------------------------------------------------------ */
+const CHAT = { es: null, tree: null, loaded: false, msgs: [], out: [], unread: 0, read: 0, draft: '', rec: null, auto: false, player: null, url: '', playing: '', err: '', busy: false, blobs: new Map(), unlocked: false, queue: [] };
+const ckey = (k) => `cwk-chat-${k}|${SCH ? SCH.code : ''}`;
+function loadChatLocal() {
+  CHAT.tree = null; CHAT.loaded = false; CHAT.msgs = []; CHAT.unread = 0; CHAT.err = ''; CHAT.queue = [];
+  try { CHAT.read = +localStorage.getItem(ckey('read')) || 0; } catch (e) { CHAT.read = 0; }
+  try { const o = JSON.parse(localStorage.getItem(ckey('out')) || '[]'); CHAT.out = Array.isArray(o) ? o : []; } catch (e) { CHAT.out = []; }
+  try { CHAT.auto = localStorage.getItem('cwk-chat-auto') === '1'; } catch (e) { CHAT.auto = false; }
+}
+function saveOut() { try { localStorage.setItem(ckey('out'), JSON.stringify(CHAT.out)); } catch (e) { /* ignore */ } }
+const chatId = () => Date.now().toString(36).padStart(9, '0') + Math.random().toString(36).slice(2, 6);
+function disconnectChat() { if (CHAT.es) { CHAT.es.close(); CHAT.es = null; } }
+function disconnectMedia() { if (MEDIA.es) { MEDIA.es.close(); MEDIA.es = null; } }
+async function connectChat() {
+  if (!chatOn() || CHAT.es) return;
+  let tok;
+  try { tok = await ensureToken(); } catch (e) { setTimeout(connectChat, 10000); return; }
+  if (CHAT.es || !chatOn()) return;
+  const base = chatBase();
+  const es = new EventSource(dbUrl(base + '/msgs', { auth: tok, orderBy: '"$key"', limitToLast: '200' }));
+  CHAT.es = es;
+  const on = (ev, isPatch) => {
+    if (CHAT.es !== es) return;
+    let msg = null; try { msg = JSON.parse(ev.data); } catch (e) { msg = null; }
+    if (!msg) return;
+    let tree = CHAT.tree || {};
+    if (isPatch) Object.entries(msg.data || {}).forEach(([k, v]) => { tree = setPath(tree, String(msg.path || '').replace(/\/+$/, '') + '/' + k, v); });
+    else tree = setPath(tree, msg.path, msg.data);
+    CHAT.tree = tree; CHAT.err = '';
+    onChatData();
+  };
+  es.addEventListener('put', (ev) => on(ev, false));
+  es.addEventListener('patch', (ev) => on(ev, true));
+  es.addEventListener('cancel', () => { es.close(); if (CHAT.es === es) CHAT.es = null; CHAT.err = 'อ่านแชทไม่ได้ — ผู้ดูแลต้องวาง Rules ล่าสุดใน Firebase (ONLINE.md)'; renderChatParts(); });
+  es.addEventListener('auth_revoked', () => { es.close(); if (CHAT.es === es) CHAT.es = null; SD.exp = 0; saveSync(); connectChat(); });
+  es.onopen = () => { flushOut(); renderChatParts(); };
+  es.onerror = () => { if (CHAT.es !== es) return; if (es.readyState === 2) { CHAT.es = null; setTimeout(connectChat, 10000); } renderChatParts(); };
+}
+function onChatData() {
+  const prev = new Set(CHAT.msgs.map((m) => m.id));
+  const first = !CHAT.loaded;
+  CHAT.msgs = Object.entries(CHAT.tree || {}).filter(([, m]) => m && typeof m === 'object' && m.kind)
+    .map(([id, m]) => ({ id, ...m })).sort((a, b) => (a.at || 0) - (b.at || 0) || (a.id < b.id ? -1 : 1));
+  CHAT.loaded = true;
+  const ids = new Set(CHAT.msgs.map((m) => m.id));
+  const n0 = CHAT.out.length; CHAT.out = CHAT.out.filter((o) => !ids.has(o.id)); if (CHAT.out.length !== n0) saveOut();
+  const viewing = S.ui.tab === 'chat' && document.visibilityState === 'visible' && !needSchool();
+  if (viewing) markRead();
+  CHAT.unread = CHAT.msgs.filter((m) => m.uid !== SD.uid && (m.at || 0) > CHAT.read).length;
+  if (!first) {
+    const fresh = CHAT.msgs.filter((m) => !prev.has(m.id) && m.uid !== SD.uid);
+    if (fresh.length) {
+      const m = fresh[fresh.length - 1];
+      if (!viewing) { toast(`💬 ${m.name}: ${m.kind === 'voice' ? '🎤 ข้อความเสียง' : String(m.text || '').slice(0, 80)}`); try { if (navigator.vibrate) navigator.vibrate(80); } catch (e) { /* ignore */ } }
+      if (CHAT.auto) fresh.filter((x) => x.kind === 'voice').forEach((x) => { CHAT.queue.push(x.id); });
+      if (CHAT.auto && !CHAT.playing) playNextQueued();
+    }
+  }
+  renderChatParts();
+}
+function markRead() {
+  const last = CHAT.msgs.reduce((a, m) => Math.max(a, m.at || 0), CHAT.read);
+  CHAT.read = last; CHAT.unread = 0;
+  try { localStorage.setItem(ckey('read'), String(last)); } catch (e) { /* ignore */ }
+}
+function renderChatBadge() { const b = $('#chat-badge'); if (b) { b.hidden = !CHAT.unread || S.ui.tab === 'chat'; b.textContent = CHAT.unread > 99 ? '99+' : String(CHAT.unread); } }
+function chatScrollBottom() { setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 0); }
+function chatSub() {
+  const pend = CHAT.out.filter((o) => !o.sent).length;
+  const st = !online() ? '🔴 ออฟไลน์' : CHAT.es && CHAT.loaded ? '🟢 เชื่อมต่อแล้ว' : CHAT.es ? 'กำลังโหลด…' : '🔴 ไม่มีสัญญาณ — ข้อความจะส่งเองเมื่อกลับมาออนไลน์';
+  return `${st}${pend ? ` • รอส่ง ${pend}` : ''} • ${SD.name ? 'ชื่อในแชท: ' + SD.name : 'ยังไม่ได้ตั้งชื่อ'}`;
+}
+function renderChatParts(forceBottom) {
+  renderChatBadge();
+  const list = $('#chat-list'); if (!list) return;
+  const near = window.innerHeight + window.scrollY >= document.body.scrollHeight - 180;
+  list.innerHTML = chatListHtml();
+  const sub = $('#chat-sub'); if (sub) sub.textContent = chatSub();
+  const er = $('#chat-err'); if (er) { er.hidden = !CHAT.err; er.textContent = CHAT.err; }
+  if (forceBottom || near) window.scrollTo(0, document.body.scrollHeight);
+}
+function renderComposer() { const c = $('#composer'); if (c) c.innerHTML = composerHtml(); }
+function viewChat() {
+  if (!chatOn()) return `<section class="card"><h2>แชททีม</h2><p>ใช้ได้เมื่อเข้าใช้งานด้วยรหัสโรงเรียนและออนไลน์อยู่</p></section>`;
+  return `<div class="chat">
+    <div class="card chat-head"><div style="min-width:0"><div class="kicker">แชททีม • ${esc(SCH.name)}</div><div class="small muted" id="chat-sub">${esc(chatSub())}</div></div>
+      <label class="tog"><input type="checkbox" data-change="chat-auto" ${CHAT.auto ? 'checked' : ''}> 🔊 เล่นเสียงอัตโนมัติ (วอ)</label></div>
+    <p class="alert bad" id="chat-err" ${CHAT.err ? '' : 'hidden'}>${esc(CHAT.err)}</p>
+    <div id="chat-list" class="chat-list" aria-live="polite">${chatListHtml()}</div>
+    <div class="composer" id="composer">${composerHtml()}</div>
+  </div>`;
+}
+function composerHtml() {
+  if (!SD.name) return `<form class="add-row" data-submit="chat-name"><input name="n" maxlength="30" required placeholder="ชื่อที่จะแสดงในแชท เช่น ครูเอ / น้องบีม" aria-label="ชื่อในแชท" autocomplete="off"><button class="btn primary" type="submit">เริ่มแชท</button></form>`;
+  if (CHAT.rec) return `<div class="recbar"><span class="recdot" aria-hidden="true"></span><b id="rec-time">${fmtClip((Date.now() - CHAT.rec.t0) / 1000)}</b><span class="small">กำลังอัดเสียง (สูงสุด 60 วิ)</span><span class="spacer"></span><button class="btn sm" data-action="chat-rec-cancel">✕ ยกเลิก</button><button class="btn sm primary" data-action="chat-rec-send">➤ ส่งเสียง</button></div>`;
+  return `<form class="chat-form" data-submit="chat-send"><button type="button" class="icon-btn mic" data-action="chat-rec" aria-label="อัดข้อความเสียง" title="อัดข้อความเสียง">🎤</button><textarea name="t" rows="1" data-input="chat-draft" maxlength="2000" placeholder="พิมพ์ข้อความถึงทีม…" aria-label="ข้อความ">${esc(CHAT.draft)}</textarea><button class="btn primary send" type="submit" aria-label="ส่งข้อความ">➤</button></form>`;
+}
+function dayLabel(ms) {
+  const d = new Date(ms || Date.now()), t = new Date(), y = new Date(Date.now() - 86400000);
+  const same = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  if (same(d, t)) return 'วันนี้'; if (same(d, y)) return 'เมื่อวาน';
+  try { return d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return d.toDateString(); }
+}
+const fmtTime = (ms) => { const d = new Date(ms || Date.now()); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+const linkify = (h) => h.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+function chatListHtml() {
+  const shown = new Set(CHAT.msgs.map((m) => m.id));
+  const all = [...CHAT.msgs, ...CHAT.out.filter((o) => !shown.has(o.id)).map((o) => ({ ...o.msg, id: o.id, uid: SD.uid, at: o.t, pending: !o.sent, sentWait: !!o.sent }))];
+  if (!CHAT.loaded && !all.length) return '<p class="muted small center">กำลังโหลดแชท…</p>';
+  if (!all.length) return '<p class="muted small center" style="margin-top:30px">ยังไม่มีข้อความ — ทักทายทีมได้เลย 👋</p>';
+  let last = '';
+  return all.map((m) => { const d = dayLabel(m.at); const sep = d !== last ? `<div class="chat-day">${esc(d)}</div>` : ''; last = d; return sep + bubble(m); }).join('');
+}
+function bubble(m) {
+  const mine = m.uid === SD.uid;
+  const body = m.kind === 'voice'
+    ? `<button class="vbtn" data-action="chat-play" data-id="${esc(m.id)}" aria-label="เล่นข้อความเสียง ${fmtClip(m.dur)}"><span class="vico" aria-hidden="true">${CHAT.playing === m.id ? '❚❚' : '▶'}</span><span class="vbar"><i></i></span><span class="vdur">🎤 ${fmtClip(m.dur)}</span></button>`
+    : `<div class="btext">${linkify(esc(m.text).replace(/\n/g, '<br>'))}</div>`;
+  const meta = m.pending ? '⏳ รอส่ง' : m.sentWait ? '✓ ส่งแล้ว' : fmtTime(m.at);
+  const canDel = mine || SD.canEdit;
+  return `<div class="msg ${mine ? 'mine' : ''}">${mine ? '' : `<div class="mname">${esc(m.name)}${m.role === 'coach' ? ' <span class="badge gold">โค้ช</span>' : ''}</div>`}<div class="bub">${body}<div class="mmeta">${meta}${canDel ? ` • <button class="link mdel" data-action="chat-del" data-id="${esc(m.id)}">ลบ</button>` : ''}</div></div></div>`;
+}
+async function chatReq(path, method, body, tok) {
+  const r = await fetch(dbUrl(path, { auth: tok }), { method, body: body === undefined ? undefined : JSON.stringify(body) });
+  if (r.status === 401 || r.status === 403) { const e = new Error('denied'); e.denied = true; throw e; }
+  if (!r.ok) throw new Error('http ' + r.status);
+}
+function chatSendText(text) {
+  text = String(text || '').trim().slice(0, 2000);
+  if (!text || !chatOn()) return;
+  CHAT.out.push({ id: chatId(), t: Date.now(), msg: { name: SD.name, role: SD.canEdit ? 'coach' : 'member', kind: 'text', text } });
+  CHAT.draft = ''; saveOut(); renderChatParts(true); flushOut();
+}
+async function flushOut() {
+  if (CHAT.busy || !chatOn()) return;
+  CHAT.busy = true;
+  let retry = false;
+  try {
+    for (;;) {
+      const o = CHAT.out.find((x) => !x.sent); if (!o) break;
+      const tok = await ensureToken();
+      const msg = { ...o.msg, uid: SD.uid, name: o.msg.name || SD.name || 'ไม่ระบุชื่อ', at: { '.sv': 'timestamp' } };
+      if (msg.kind === 'voice' && !o.up) {
+        const blob = await chatBlobLocal(o.id);
+        if (!blob) { CHAT.out = CHAT.out.filter((x) => x !== o); saveOut(); continue; }
+        const n = Math.max(1, Math.ceil(blob.size / CHUNK));
+        for (let i = o.upTo || 0; i < n; i++) { await chatReq(`${chatBase()}/audio/${o.id}/${i}`, 'PUT', await blobToB64(blob.slice(i * CHUNK, (i + 1) * CHUNK)), tok); o.upTo = i + 1; saveOut(); }
+        o.up = true; o.msg.chunks = n; o.msg.size = blob.size; msg.chunks = n; msg.size = blob.size; saveOut();
+      }
+      try { await chatReq(`${chatBase()}/msgs/${o.id}`, 'PUT', msg, tok); }
+      catch (e) {
+        if (!e.denied || msg.role !== 'coach') throw e;
+        o.msg.role = 'member'; msg.role = 'member'; await chatReq(`${chatBase()}/msgs/${o.id}`, 'PUT', msg, tok);
+      }
+      o.sent = true; saveOut();
+    }
+    CHAT.err = '';
+  } catch (e) {
+    if (e && e.denied) CHAT.err = 'ส่งข้อความไม่ได้ — ผู้ดูแลต้องวาง Rules ล่าสุดใน Firebase (ONLINE.md)';
+    else retry = true;
+  }
+  CHAT.busy = false; renderChatParts();
+  if (retry) setTimeout(flushOut, 8000);
+}
+async function chatDelete(id) {
+  const o = CHAT.out.find((x) => x.id === id);
+  if (o && !o.sent) { CHAT.out = CHAT.out.filter((x) => x !== o); saveOut(); renderChatParts(); return; }
+  const m = CHAT.msgs.find((x) => x.id === id); if (!m) return;
+  if (!confirm('ลบข้อความนี้? (หายจากทุกเครื่อง)')) return;
+  try {
+    const tok = await ensureToken();
+    if (m.kind === 'voice') await chatReq(`${chatBase()}/audio/${id}`, 'DELETE', undefined, tok);
+    await chatReq(`${chatBase()}/msgs/${id}`, 'DELETE', undefined, tok);
+  } catch (e) { toast(e && e.denied ? 'ลบได้เฉพาะข้อความของตัวเอง (โค้ชลบได้ทุกข้อความ)' : 'ลบไม่สำเร็จ — ตรวจสัญญาณ'); }
+}
+
+/* ---- ข้อความเสียง ---- */
+async function chatRecStart() {
+  if (CHAT.rec) return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) { toast('เบราว์เซอร์นี้อัดเสียงไม่ได้ — ลองอัปเดตเบราว์เซอร์'); return; }
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } }); }
+  catch (e) { toast('ไม่ได้รับอนุญาตให้ใช้ไมโครโฟน — เปิดสิทธิ์ไมค์ในการตั้งค่าเบราว์เซอร์'); return; }
+  const types = ['audio/mp4;codecs=mp4a.40.2', 'audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
+  const mime = types.find((t) => { try { return MediaRecorder.isTypeSupported(t); } catch (e) { return false; } }) || '';
+  let rec;
+  try { rec = new MediaRecorder(stream, mime ? { mimeType: mime, audioBitsPerSecond: 32000 } : undefined); } catch (e) { rec = new MediaRecorder(stream); }
+  const parts = [];
+  const st = { rec, stream, parts, t0: Date.now(), send: false, timer: null };
+  rec.ondataavailable = (e) => { if (e.data && e.data.size) parts.push(e.data); };
+  rec.onstop = () => {
+    stream.getTracks().forEach((t) => t.stop()); clearTimeout(st.timer);
+    if (CHAT.rec === st) CHAT.rec = null;
+    const dur = (Date.now() - st.t0) / 1000;
+    if (st.send) {
+      const blob = new Blob(parts, { type: (rec.mimeType || mime || 'audio/webm').split(';')[0] });
+      if (blob.size > 0 && dur >= 0.6) chatSendVoice(blob, dur); else toast('เสียงสั้นเกินไป');
+    }
+    renderComposer();
+  };
+  CHAT.rec = st;
+  rec.start(250);
+  st.timer = setTimeout(() => chatRecStop(true), 60000);
+  renderComposer();
+}
+function chatRecStop(send) {
+  const st = CHAT.rec; if (!st) return;
+  st.send = !!send;
+  try { st.rec.stop(); } catch (e) { st.stream.getTracks().forEach((t) => t.stop()); CHAT.rec = null; renderComposer(); }
+}
+async function chatSendVoice(blob, dur) {
+  const id = chatId();
+  CHAT.blobs.set(id, blob);
+  try { if (MEDIA.db) await idbPutBlob('chat:' + id, blob); } catch (e) { /* keep in memory */ }
+  CHAT.out.push({ id, t: Date.now(), msg: { name: SD.name, role: SD.canEdit ? 'coach' : 'member', kind: 'voice', dur: Math.round(dur * 10) / 10, mime: blob.type || 'audio/webm' } });
+  saveOut(); renderChatParts(true); flushOut();
+}
+async function chatBlobLocal(id) {
+  if (CHAT.blobs.has(id)) return CHAT.blobs.get(id);
+  try { const b = MEDIA.db ? await idbGetBlob('chat:' + id) : null; if (b) CHAT.blobs.set(id, b); return b || null; } catch (e) { return null; }
+}
+async function chatBlob(m) {
+  const local = await chatBlobLocal(m.id); if (local) return local;
+  const tok = await ensureToken();
+  const r = await fetch(dbUrl(`${chatBase()}/audio/${m.id}`, { auth: tok }));
+  if (!r.ok) throw new Error('http ' + r.status);
+  const obj = await r.json(); if (!obj) throw new Error('missing');
+  const n = m.chunks || Object.keys(obj).length; const parts = [];
+  for (let i = 0; i < n; i++) {
+    const c = obj[i] !== undefined ? obj[i] : obj[String(i)];
+    if (typeof c !== 'string') throw new Error('chunk');
+    parts.push(await (await fetch('data:application/octet-stream;base64,' + c)).blob());
+  }
+  const blob = new Blob(parts, { type: m.mime || 'audio/webm' });
+  CHAT.blobs.set(m.id, blob);
+  try { if (MEDIA.db) await idbPutBlob('chat:' + m.id, blob); } catch (e) { /* ignore */ }
+  return blob;
+}
+function chatPlayer() {
+  if (!CHAT.player) {
+    const p = new Audio(); p.preload = 'auto';
+    p.addEventListener('ended', () => { CHAT.playing = ''; updateVoiceUI(); playNextQueued(); });
+    p.addEventListener('timeupdate', () => {
+      if (!CHAT.playing) return;
+      const m = CHAT.msgs.find((x) => x.id === CHAT.playing); const d = isFinite(p.duration) && p.duration > 0 ? p.duration : (m && m.dur) || 0;
+      const bar = $(`.vbtn[data-id="${CHAT.playing}"] .vbar i`); if (bar && d) bar.style.width = Math.min(100, (p.currentTime / d) * 100) + '%';
+    });
+    CHAT.player = p;
+  }
+  return CHAT.player;
+}
+function unlockPlayer() {
+  if (CHAT.unlocked) return; CHAT.unlocked = true;
+  try {
+    const n = 800, buf = new ArrayBuffer(44 + n), v = new DataView(buf);
+    const w = (o, str) => { for (let i = 0; i < str.length; i++) v.setUint8(o + i, str.charCodeAt(i)); };
+    w(0, 'RIFF'); v.setUint32(4, 36 + n, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, 'data'); v.setUint32(40, n, true);
+    for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
+    const p = chatPlayer(); if (CHAT.playing) return;
+    p.src = URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+    const pr = p.play(); if (pr && pr.catch) pr.catch(() => {});
+  } catch (e) { /* ignore */ }
+}
+function updateVoiceUI() {
+  $$('.vbtn').forEach((b) => {
+    const on = b.dataset.id === CHAT.playing;
+    const ic = b.querySelector('.vico'); if (ic) ic.textContent = on ? '❚❚' : '▶';
+    if (!on) { const i = b.querySelector('.vbar i'); if (i) i.style.width = '0'; }
+  });
+}
+function playNextQueued() { const id = CHAT.queue.shift(); if (id) chatPlay(id, true); }
+async function chatPlay(id, auto) {
+  const o = CHAT.out.find((x) => x.id === id);
+  const m = CHAT.msgs.find((x) => x.id === id) || (o ? { id, ...o.msg } : null);
+  if (!m) return;
+  const p = chatPlayer();
+  if (CHAT.playing === id && !auto) { p.pause(); CHAT.playing = ''; updateVoiceUI(); return; }
+  try {
+    const blob = await chatBlob(m);
+    if (CHAT.url) URL.revokeObjectURL(CHAT.url);
+    CHAT.url = URL.createObjectURL(blob);
+    p.src = CHAT.url; CHAT.playing = id; updateVoiceUI();
+    await p.play();
+  } catch (e) {
+    CHAT.playing = ''; updateVoiceUI();
+    toast(auto ? `🎤 ข้อความเสียงจาก ${m.name} — แตะ ▶ เพื่อฟัง` : 'เล่นเสียงไม่ได้ — ตรวจสัญญาณหรือเสียงของเครื่อง');
+    if (auto) playNextQueued();
+  }
+}
+
+/* ------------------------------------------------------------------
  * Clock tick
  * ------------------------------------------------------------------ */
 let lastSec = -1, lastAutoRender = 0, lastBeepSec = null, renderedIdx = null;
@@ -3019,6 +3585,7 @@ function tick(force) {
   if (sec === lastSec && !force) return;
   lastSec = sec;
   $('#clk-v').textContent = clockStr(S.event.venueTz);
+  if (CHAT.rec) { const rt = $('#rec-time'); if (rt) rt.textContent = fmtClip((now - CHAT.rec.t0) / 1000); }
   $('#clk-h').textContent = clockStr(S.event.homeTz);
   let expired = false;
   $$('[data-until]').forEach((el) => { const left = (+el.dataset.until - now) / 1000; if (left <= 0 && left > -3) expired = true; el.textContent = fmtDur(left); });
@@ -3032,9 +3599,11 @@ function tick(force) {
 /* ------------------------------------------------------------------
  * Boot
  * ------------------------------------------------------------------ */
+loadSchool();
 load();
 loadSync();
 loadPrac();
+loadChatLocal();
 applyTheme();
 if (!VIEWS[(location.hash || '').slice(1)]) history.replaceState(null, '', '#' + (VIEWS[S.ui.tab] ? S.ui.tab : 'home'));
 route();
@@ -3046,7 +3615,8 @@ if (location.protocol.startsWith('http')) {
 }
 if (online()) connect();
 initMedia();
-window.CWK = { prac: () => PRAC, media: () => [...MEDIA.items.values()].map((x) => ({ ...x, thumb: x.thumb ? 'yes' : '' })), mediaErr: () => MEDIA.err, state: () => S, standings, scenario, summaryText, sync: () => ({ status: SY.status, canEdit: SD.canEdit, pending: pendingCount(), uid: SD.uid, synced: SD.synced, err: SY.err, room: CFG && CFG.room }) };
+connectChat();
+window.CWK = { school: () => SCH, chat: () => ({ msgs: CHAT.msgs, out: CHAT.out, unread: CHAT.unread, playing: CHAT.playing, err: CHAT.err, es: !!CHAT.es, loaded: CHAT.loaded, auto: CHAT.auto }), prac: () => PRAC, media: () => [...MEDIA.items.values()].map((x) => ({ ...x, thumb: x.thumb ? 'yes' : '' })), mediaErr: () => MEDIA.err, state: () => S, standings, scenario, summaryText, sync: () => ({ status: SY.status, canEdit: SD.canEdit, pending: pendingCount(), uid: SD.uid, synced: SD.synced, err: SY.err, room: CFG && spaceKey(), admin: SD.isAdmin }) };
 })();
 </script>
 </body>
